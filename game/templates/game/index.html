@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+
+{% load staticfiles %}
+
+{% static "" as base %}
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="{{base}}game/index.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="{{base}}game/index.js"></script>
+    <title>htmlike</title>
+  </head>
+  <body>
+    <header>
+      <div class="title">Hello, game!</div>
+    </header>
+    <div id="main">
+      <canvas id="screen" width="716" height="500">
+      </canvas>
+    </div>
+  </body>
+</html>
