@@ -4,21 +4,22 @@ var m = new map();
 var gdim = 13 * 4; // 12 is theo riginal image size, 4 the scaling;
 
 function handleKeys(e){
+    var pl = entitiesL[0];
     switch (e.which) {
         case 37: // left arrow
-        entitiesL[0].move(posx - 1, posy);
+        pl.move(pl.posx - 1, pl.posy);
         break;
 
         case 38: // up arrow
-        entitiesL[0].move(posx, posy - 1);
+        pl.move(pl.posx, pl.posy - 1);
         break;
 
         case 39: // right arrow
-        entitiesL[0].move(posx + 1, posy);
+        pl.move(pl.posx + 1, pl.posy);
         break;
 
         case 40: // down arrow
-        entitiesL[0].move(posx, posy + 1);
+        pl.move(pl.posx, pl.posy + 1);
         break;
     }
     m.render();
