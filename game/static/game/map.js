@@ -5,26 +5,36 @@
 * trasparency will work however;
 */
 
+var ox = 6, oy = 4; //Where the player is located repect the screen
+
 function map() { //todo rename to level
     this.level = [[], []];
 };
 
 
 map.prototype.render = function () {
-    context.clearRect(0, 0, w, h);
+    var p = entitiesL[0];
+    var px = p.posx, py = p.posy;
+    context.clearRect(0, 0, frame_width_px, frame_height_px);
     for(var l = 0; l < this.level.length; l++){
         var grid = this.level[l];
+        /*
+for(var i = px - render_distance; i <= px + render_distance && i < grid.length; i++){
+            for (var j = py - render_distance; j <= py + render_distance && i < grid[0].length; j++) {*/
+
         for(var i = 0; i < grid.length; i++){
             for (var j = 0; j < grid[0].length; j++) {
-                if(grid[i][j] != 0){
-                    context.drawImage(grid[i][j], i * gdim, j * gdim);
+                if(i >= 0 && j >= 0){
+                    if(grid[i][j] != 0){
+                        context.drawImage(grid[i][j], (ox + i - px) * gdim, (oy + j - py) * gdim);
+                    }
                 }
             }
         }
     }
 
-    for (var i = 0; i < window.entitiesL.length; i++) {
-        context.drawImage(entitiesL[i].image, posx * gdim, posy * gdim);
+    for (var i = 0; i < entitiesL.length; i++) {
+        context.drawImage(entitiesL[i].image, ox * gdim, oy * gdim);
     }
 
 };
@@ -63,6 +73,7 @@ map.prototype.loadMap = function(){
                 grid[i][j] = grass;
             }
         }
+        this.level[l] = grid;
     }
 
 
@@ -73,4 +84,5 @@ map.prototype.loadMap = function(){
             }
         }
     }
+    console.log("LoadMap ended");
 };
