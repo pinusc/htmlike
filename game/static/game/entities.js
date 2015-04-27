@@ -3,14 +3,17 @@ greeny.src = '/static/game/greeny.png';
 grass.src = '/static/game/grass.png';
 dirt.src = '/static/game/dirt.png';
 
-var entitiesL = [greeny];
+var entitiesL = [new entity(greeny)];
 
-var entities = {
-    move: function(x, y) {
-        console.log(x + " : " + y)
-        if(!window.level[1][x][y]){
-            posx = x;
-            posy = y;
-        }
+function entity(img){
+    var posx, posy;
+    this.image = img;
+};
+
+entity.prototype.move = function(x, y) {
+    console.log(x + " : " + y)
+    if(!window.m.level[1][x][y]){
+        posx = x;
+        posy = y;
     }
-}
+};
