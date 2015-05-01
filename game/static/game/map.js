@@ -4,9 +4,8 @@
 * They are rendered in order, so that level[1] overrides level[0];
 * trasparency will work however;
 */
-var grass = new Image(), dirt = new Image();
-grass.src = '/static/game/grass.png';
-dirt.src = '/static/game/dirt.png';
+var grass = new Tile('/static/game/grass.png');
+var dirt = new Tile('/static/game/dirt.png');
 
 var ox = 6, oy = 4; //Where the player is located repect the screen
 
@@ -29,7 +28,7 @@ for(var i = px - render_distance; i <= px + render_distance && i < grid.length; 
             for (var j = 0; j < grid[0].length; j++) {
                 if(i >= 0 && j >= 0){
                     if(grid[i][j] != 0){
-                        context.drawImage(grid[i][j], (ox + i - px) * gdim, (oy + j - py) * gdim);
+                        context.drawImage(grid[i][j].image, (ox + i - px) * gdim, (oy + j - py) * gdim);
                     }
                 }
             }
