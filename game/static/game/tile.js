@@ -1,4 +1,4 @@
-function tile(image){
+function Tile(image){
     if (image instanceof Image){
         this.image = image;
     } else {
