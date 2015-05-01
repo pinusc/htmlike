@@ -46,20 +46,21 @@ Entity.prototype.render = function() {
 
 Entity.prototype.act = function() {
     /** This is going to be the AI of the entity.
-    * For now, it's simply "walk around in random directions".
+    * For now, it's simply "chase the player" using a very naive algorithm
     */
-    var inc = Math.random() < .5;  //Math.random returns between 0 and 1.
     var x = this.posx, y = this.posy;
-    if (inc) {
-        if (Math.random() < .5){  // right
+    var px = entitiesL[0].posx, py = entitiesL[0].posy;  // player position
+    var xdiff = Math.abs(x - px), ydiff = Math.abs(y - py);
+    if(xdiff > ydiff) {
+        if(px > x){  // the player is right
             x++;
-        } else { // down
-            y++;
+        } else {
+            x--;
         }
     } else {
-        if (Math.random() < .5){  // left
-            x--;
-        } else { // up
+        if(py > y) {  // the player is down
+            y++;
+        } else {
             y--;
         }
     }
