@@ -2,9 +2,9 @@ var greeny = new Image(), princess = new Image();
 greeny.src = '/static/game/greeny.png';
 princess.src = '/static/game/princess.png';
 
-var entitiesL = [new entity(greeny)];
+var entitiesL = [new Entity(greeny)];
 
-function entity(image){
+function Entity(image){
     if (image instanceof Image){
         this.image = image;
     } else {
@@ -15,7 +15,7 @@ function entity(image){
     this.posx = 0;
 };
 
-entity.prototype.move = function(x, y) {
+Entity.prototype.move = function(x, y) {
     //If X and Y are in the margins
     if( x >= 0 &&
         x < m.level[0].length &&
