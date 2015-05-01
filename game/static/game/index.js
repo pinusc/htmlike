@@ -20,6 +20,10 @@ function handleKeys(e){
         pl.move(pl.posx, pl.posy + 1);
         break;
     }
+
+    for (var i = 1; i < entitiesL.length; i++) { // Starting at 1 so doesn't affect player
+        entitiesL[i].act();
+    }
     m.render();
 }
 
