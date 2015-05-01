@@ -1,7 +1,6 @@
-var greeny = new Image(), grass = new Image(), dirt = new Image();
+var greeny = new Image(), princess = new Image();
 greeny.src = '/static/game/greeny.png';
-grass.src = '/static/game/grass.png';
-dirt.src = '/static/game/dirt.png';
+princess.src = '/static/game/princess.png';
 
 var entitiesL = [new entity(greeny)];
 

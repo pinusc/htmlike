@@ -4,6 +4,9 @@
 * They are rendered in order, so that level[1] overrides level[0];
 * trasparency will work however;
 */
+var grass = new Image(), dirt = new Image();
+grass.src = '/static/game/grass.png';
+dirt.src = '/static/game/dirt.png';
 
 var ox = 6, oy = 4; //Where the player is located repect the screen
 
@@ -75,7 +78,6 @@ map.prototype.loadMap = function(){
         }
         this.level[l] = grid;
     }
-
 
     for(var i = 0; i < 15; i++){  // TODO remove hardcoded 15
         for (var j = 0; j < 15; j++) {
