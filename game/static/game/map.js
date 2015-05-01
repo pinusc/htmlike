@@ -36,7 +36,7 @@ for(var i = px - render_distance; i <= px + render_distance && i < grid.length; 
     }
 
     for (var i = 0; i < entitiesL.length; i++) {
-        context.drawImage(entitiesL[i].image, ox * gdim, oy * gdim);
+        entitiesL[i].render();
     }
 
 };

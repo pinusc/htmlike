@@ -27,3 +27,13 @@ Entity.prototype.move = function(x, y) {
         }
     }
 };
+Entity.prototype.render = function() {
+    var coord = this.getRelativeCoordinate();
+    var x = coord[0];
+    var y = coord[1];
+    console.log(this.image.naturalHeight)
+    if (this.image.naturalHeight > gdim) { // If image is 2 tiles high
+        y -= gdim;  // So that bottom of image corresponds to tile
+    }
+    context.drawImage(this.image, x, y);
+}
