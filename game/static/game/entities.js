@@ -4,10 +4,15 @@ princess.src = '/static/game/princess.png';
 
 var entitiesL = [new entity(greeny)];
 
-function entity(img){
+function entity(image){
+    if (image instanceof Image){
+        this.image = image;
+    } else {
+        this.image = new Image()
+        this.image.src = image;
+    }
     this.posy = 0;
     this.posx = 0;
-    this.image = img;
 };
 
 entity.prototype.move = function(x, y) {
