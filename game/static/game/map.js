@@ -22,9 +22,9 @@ map.prototype.render = function () {
         var grid = this.level[l];
 
         for(var i = 0; i < grid.length; i++){
-            for (var j = 0; j < grid[0].length; j++) {
+            for (var j = 0; j < grid[i].length; j++) {
                 if(i >= 0 && j >= 0){
-                    if(grid[i][j] != 0){  // TODO: sustitute with Tile.render() method
+                    if(grid[i][j] !== 0){  // TODO: sustitute with Tile.render() method
                         context.drawImage(grid[i][j].image, (ox + i - px) * gdim, (oy + j - py) * gdim);
                     }
                 }
@@ -39,31 +39,33 @@ map.prototype.render = function () {
 
 };
 
-map.prototype.loadMap = function(){
-    this.level[1] = [
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ],
-        [0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ],
-        [0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ],
-        [0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ],
-        [0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ],
-        [0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ],
-    ];
 
+map.prototype.parseLevel = function(t) {
+    console.log(t);
+    for(var i = 0; i < 15; i++){  // TODO remove hardcoded 15
+        var l = new Array();
+        for (var j = 0; j < 15; j++) {
+            if(t.t[i][j] === '#'){
+                l[j] = dirt;
+                // console.log('#');
+            } else {
+                l[j] = 0;
+                // console.log('w');
+            }
+            this.level[1][i] = l;
+        }
+    }
+    return 0;
+};
+
+map.prototype.loadMap = function(){
+    var x = this;
+    ajaxGet('level', function(content){
+        //onSuccess
+        // alert("before call parseLevel")
+        x.parseLevel(content);
+        return 0;
+    })
     // initial level is grass only
     for(var l = 0; l < 1; l++){
         var grid = this.level[l];
@@ -74,14 +76,6 @@ map.prototype.loadMap = function(){
             }
         }
         this.level[l] = grid;
-    }
-
-    for(var i = 0; i < 15; i++){  // TODO remove hardcoded 15
-        for (var j = 0; j < 15; j++) {
-            if(this.level[1][i][j] == 1){
-                this.level[1][i][j] = dirt;
-            }
-        }
     }
     console.log("LoadMap ended");
 };
