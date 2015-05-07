@@ -2,7 +2,8 @@ var greeny = new Image(), princess = new Image();
 greeny.src = '/static/game/greeny.png';
 princess.src = '/static/game/princess.png';
 
-var entitiesL = [new Entity(greeny), new Entity(princess)];
+var entitiesL = [new Entity(princess)];
+var player = Player(greeny);
 
 function Entity(image){
     if (image instanceof Image){
@@ -28,9 +29,8 @@ Entity.prototype.move = function(x, y) {
     }
 };
 
-Entity.prototype.getRelativeCoordinate = function() {
-    var p = entitiesL[0]; //the player
-    var px = p.posx, py = p.posy;
+Entity.prototype.getRelativeCoordinate = function() { //the player
+    var px = player.posx, py = player.posy;
     return [(ox + this.posx - px) * gdim, (oy + this.posy - py) * gdim];
 }
 
@@ -49,7 +49,7 @@ Entity.prototype.act = function() {
     * For now, it's simply "chase the player" using a very naive algorithm
     */
     var x = this.posx, y = this.posy;
-    var px = entitiesL[0].posx, py = entitiesL[0].posy;  // player position
+    var px = player.posx, py = player.posy;
     var xdiff = Math.abs(x - px), ydiff = Math.abs(y - py);
     if(xdiff > ydiff) {
         if(px > x){  // the player is right

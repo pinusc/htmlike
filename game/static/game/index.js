@@ -1,27 +1,26 @@
 var context, frame_height_px, frame_width_px, frame_height, frame_width;
 var m = new map();
-var gdim = 13 * 4; // 12 is theo riginal image size, 4 the scaling;
+var gdim = 13 * 4; // 12 is the original image size, 4 the scaling;
 function handleKeys(e){
-    var pl = entitiesL[0];
     switch (e.which) {
         case 37: // left arrow
-        pl.move(pl.posx - 1, pl.posy);
+        player.move(player.posx - 1, player.posy);
         break;
 
         case 38: // up arrow
-        pl.move(pl.posx, pl.posy - 1);
+        player.move(player.posx, player.posy - 1);
         break;
 
         case 39: // right arrow
-        pl.move(pl.posx + 1, pl.posy);
+        player.move(player.posx + 1, player.posy);
         break;
 
         case 40: // down arrow
-        pl.move(pl.posx, pl.posy + 1);
+        player.move(player.posx, player.posy + 1);
         break;
     }
 
-    for (var i = 1; i < entitiesL.length; i++) { // Starting at 1 so doesn't affect player
+    for (var i = 0; i < entitiesL.length; i++) { // Starting at 1 so doesn't affect player
         entitiesL[i].act();
     }
     m.render();

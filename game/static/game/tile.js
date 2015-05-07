@@ -6,3 +6,7 @@ function Tile(image){
         this.image.src = image;
     }
 }
+
+Tile.prototype.render = function() {
+
+}

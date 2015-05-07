@@ -15,19 +15,16 @@ function map() { //todo rename to level
 
 
 map.prototype.render = function () {
-    var p = entitiesL[0];
+    var p = player;
     var px = p.posx, py = p.posy;
     context.clearRect(0, 0, frame_width_px, frame_height_px);
     for(var l = 0; l < this.level.length; l++){
         var grid = this.level[l];
-        /*
-for(var i = px - render_distance; i <= px + render_distance && i < grid.length; i++){
-            for (var j = py - render_distance; j <= py + render_distance && i < grid[0].length; j++) {*/
 
         for(var i = 0; i < grid.length; i++){
             for (var j = 0; j < grid[0].length; j++) {
                 if(i >= 0 && j >= 0){
-                    if(grid[i][j] != 0){
+                    if(grid[i][j] != 0){  // TODO: sustitute with Tile.render() method
                         context.drawImage(grid[i][j].image, (ox + i - px) * gdim, (oy + j - py) * gdim);
                     }
                 }
@@ -38,6 +35,7 @@ for(var i = px - render_distance; i <= px + render_distance && i < grid.length; 
     for (var i = 0; i < entitiesL.length; i++) {
         entitiesL[i].render();
     }
+    player.render();
 
 };
 
