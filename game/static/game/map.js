@@ -62,19 +62,6 @@ map.prototype.parseLevel = function(t) {
             this.level[1][i] = l;
         }
     }
-    return 0;
-};
-
-map.prototype.loadMap = function(){
-    /**
-    * Get the map file with an AJAX request, then call parseLevel for using it.
-    */
-    var x = this;
-    ajaxGet('level', function(content){
-        //onSuccess
-        x.parseLevel(content);
-        return 0;
-    })
     // initial level is grass only
     for(var l = 0; l < 1; l++){
         var grid = this.level[l];
@@ -86,5 +73,19 @@ map.prototype.loadMap = function(){
         }
         this.level[l] = grid;
     }
+    return 0;
+};
+
+map.prototype.loadMap = function(){
+    /**
+    * Get the map file with an AJAX request, then call parseLevel for using it.
+    */
+    var x = this;
+    ajaxGet('level', '', function(content){
+        //onSuccess
+        x.parseLevel(content);
+        x.render();
+        return;
+    });
     console.log("LoadMap ended");
 };

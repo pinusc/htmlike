@@ -28,7 +28,7 @@ function handleKeys(e){
         break;
     }
 
-    for (var i = 0; i < entitiesL.length; i++) { // Starting at 1 so doesn't affect player
+    for (var i = 0; i < entitiesL.length; i++) {
         entitiesL[i].act();
     }
     m.render();
@@ -48,8 +48,7 @@ $(document).ready(function (){
     $canvas.attr("height", height);
 
     context = $canvas[0].getContext('2d');
+    $(document.body).on('keydown', handleKeys);
 
     m.loadMap()
-    m.render();
-    $(document.body).on('keydown', handleKeys);
 });
