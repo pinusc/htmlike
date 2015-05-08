@@ -26,7 +26,8 @@ Entity.prototype.move = function(x, y) {
         y < m.level[0][0].length)){
 
         return;
-    } else if(window.m.level[1][x][y]){  // there isn't any blocking tile
+    } else if((window.m.level[1][x][y] && window.m.level[1][x][y].block) ||
+              (window.m.level[0][x][y] && window.m.level[0][x][y].block)){  // there isn't any blocking tile
         return;
     }
     for(var i = 0; i < entitiesL.length; i++){  // Check if any entity is blocking the way

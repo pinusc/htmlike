@@ -1,4 +1,5 @@
-function Tile(image){
+function Tile(image, block){
+    this.block = block || false;
     if (image instanceof Image){
         this.image = image;
     } else {

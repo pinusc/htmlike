@@ -4,8 +4,6 @@
 * They are rendered in order, so that level[1] overrides level[0];
 * trasparency will work however;
 */
-var grass = new Tile('/static/game/grass.png');
-var dirt = new Tile('/static/game/dirt.png');
 
 var ox = 6, oy = 4; //Where the player is located repect the screen
 
@@ -46,11 +44,9 @@ map.prototype.parseLevel = function(t) {
         var l = new Array();
         for (var j = 0; j < 15; j++) {
             if(t.t[i][j] === '#'){
-                l[j] = dirt;
-                // console.log('#');
+                l[j] = new Tile('/static/game/dirt.png', true);
             } else {
                 l[j] = 0;
-                // console.log('w');
             }
             this.level[1][i] = l;
         }
@@ -72,7 +68,7 @@ map.prototype.loadMap = function(){
         for(var i = 0; i < 21; i++){  // TODO remove hardcoded 15
             grid[i] = [];
             for (var j = 0; j < 21; j++) {
-                grid[i][j] = grass;
+                grid[i][j] = new Tile('/static/game/grass.png');
             }
         }
         this.level[l] = grid;
