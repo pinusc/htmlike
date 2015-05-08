@@ -14,6 +14,7 @@ function Entity(image){
     }
     this.posy = 0;
     this.posx = 0;
+    this.hp = 10;
 };
 
 Entity.prototype.move = function(x, y) {
@@ -29,10 +30,10 @@ Entity.prototype.move = function(x, y) {
     }
     for(var i = 0; i < entitiesL.length; i++){  // Check if any entity is blocking the way
         if (entitiesL[i].posx === x && entitiesL[i].posy === y){
-            return;
+            return this.attack(entitiesL[i]);
         }
     }
-    if(player.posx === x && player.posy === y) return;  // Check if player is blocking
+    if(player.posx === x && player.posy === y) return this.attack(player);  // Check if player is blocking
     this.posx = x;
     this.posy = y;
 };
@@ -73,4 +74,22 @@ Entity.prototype.act = function() {
         }
     }
     this.move(x, y);
+}
+
+Entity.prototype.attack = function(enemy) {
+    console.log("HP: " + this.hp);
+    if(Math.random() < 0.3) {// 33% probability, TODO remove hardcode
+        enemy.damage(1);
+    }
+}
+
+Entity.prototype.damage = function(damage) {
+    this.hp -= damage;
+    if (this.hp <= 0){
+        this.die();
+    }
+}
+
+Entity.prototype.die = function() {
+    entitiesL.splice(entitiesL.indexOf(this), 1);
 }
