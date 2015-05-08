@@ -9,6 +9,10 @@ def index(request):
 
 @ajax
 def level(request):
+    """
+    Return a JSON level, for now it is loaded from a file, in future it will be
+    generated
+    """
     print("called level")
     t = [  ## x and y are reversed
         "  #####        ",

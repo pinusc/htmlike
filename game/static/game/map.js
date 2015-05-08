@@ -8,11 +8,17 @@
 var ox = 6, oy = 4; //Where the player is located repect the screen
 
 function map() { //todo rename to level
+    /**
+    * This is the constructor for the map object that will contain every tile in the game.
+    */
     this.level = [[], []];
 };
 
 
 map.prototype.render = function () {
+    /**
+    * Render tiles and entities relatively to the camera ie the player.
+    */
     var p = player;
     var px = p.posx, py = p.posy;
     context.clearRect(0, 0, frame_width_px, frame_height_px);
@@ -39,6 +45,11 @@ map.prototype.render = function () {
 
 
 map.prototype.parseLevel = function(t) {
+    /**
+    * Parses the level contained in t and set the map's level to t.
+    * t is an array of strings where a space means nothing and a # means a block of dirt.
+    * In future this will be implemented in JSON or XML.
+    */
     console.log(t);
     for(var i = 0; i < 15; i++){  // TODO remove hardcoded 15
         var l = new Array();
@@ -55,10 +66,12 @@ map.prototype.parseLevel = function(t) {
 };
 
 map.prototype.loadMap = function(){
+    /**
+    * Get the map file with an AJAX request, then call parseLevel for using it.
+    */
     var x = this;
     ajaxGet('level', function(content){
         //onSuccess
-        // alert("before call parseLevel")
         x.parseLevel(content);
         return 0;
     })

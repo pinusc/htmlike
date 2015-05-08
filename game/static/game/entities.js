@@ -19,6 +19,10 @@ function Entity(image){
 };
 
 Entity.prototype.move = function(x, y) {
+    /**
+    * Checks if anything is blocking at position (x, y), tiles or entities or
+    * player. If not, moves there. If an entity is blocking, attack it
+    */
     //If X and Y are in the margins
     if( !(x >= 0 &&
         x < m.level[0].length &&
@@ -41,11 +45,19 @@ Entity.prototype.move = function(x, y) {
 };
 
 Entity.prototype.getRelativeCoordinate = function() { //the player
+    /**
+    * Returns coordinates relative to the player
+    * use din render() for rendering entities in the right place
+    */
     var px = player.posx, py = player.posy;
     return [(ox + this.posx - px) * gdim, (oy + this.posy - py) * gdim];
 }
 
 Entity.prototype.render = function() {
+    /**
+    * draws the entity on a canvas, using the relative coordinate given by
+    * getRelativeCoordinate()
+    */
     var coord = this.getRelativeCoordinate();
     var x = coord[0];
     var y = coord[1];
@@ -58,6 +70,7 @@ Entity.prototype.render = function() {
 Entity.prototype.act = function() {
     /** This is going to be the AI of the entity.
     * For now, it's simply "chase the player" using a very naive algorithm
+    * If the entity bumps in the player, it attack it (implemented in move())
     */
     var x = this.posx, y = this.posy;
     var px = player.posx, py = player.posy;
@@ -79,6 +92,10 @@ Entity.prototype.act = function() {
 }
 
 Entity.prototype.attack = function(enemy) {
+    /**
+    * Randomly attack the given enemy.
+    * For now, there's an hardcoded 30% chace to hit.
+    */
     if(this.isPlayer){
         console.log("Player HP: " + this.hp);
     } else {
@@ -90,6 +107,10 @@ Entity.prototype.attack = function(enemy) {
 }
 
 Entity.prototype.damage = function(damage) {
+    /**
+    * Handle damage subtracting it from hp, if after damage the entity goes
+    * less than or equal 0hp, it dies.
+    */
     this.hp -= damage;
     if (this.hp <= 0){
         this.die();
@@ -97,6 +118,9 @@ Entity.prototype.damage = function(damage) {
 }
 
 Entity.prototype.heal = function(heal){
+    /**
+    * Handle heal, adding it to the hp if it doesn't exceed the maxhp
+    */
     this.hp += heal;
     if (this.hp > this.maxhp){
         this.hp = this.maxhp;
@@ -105,5 +129,8 @@ Entity.prototype.heal = function(heal){
 }
 
 Entity.prototype.die = function() {
+    /**
+    * Handle the death of the entity by removing it from entitiesL
+    */
     entitiesL.splice(entitiesL.indexOf(this), 1);
 }
