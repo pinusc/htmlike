@@ -18,15 +18,23 @@ function Entity(image){
 
 Entity.prototype.move = function(x, y) {
     //If X and Y are in the margins
-    if( x >= 0 &&
+    if( !(x >= 0 &&
         x < m.level[0].length &&
         y >= 0 &&
-        y < m.level[0][0].length){
-        if(!window.m.level[1][x][y]){
-            this.posx = x;
-            this.posy = y;
+        y < m.level[0][0].length)){
+
+        return;
+    } else if(window.m.level[1][x][y]){  // there isn't any blocking tile
+        return;
+    }
+    for(var i = 0; i < entitiesL.length; i++){  // Check if any entity is blocking the way
+        if (entitiesL[i].posx === x && entitiesL[i].posy === y){
+            return;
         }
     }
+    if(player.posx === x && player.posy === y) return;  // Check if player is blocking
+    this.posx = x;
+    this.posy = y;
 };
 
 Entity.prototype.getRelativeCoordinate = function() { //the player
