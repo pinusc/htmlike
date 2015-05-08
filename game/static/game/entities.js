@@ -15,6 +15,7 @@ function Entity(image){
     this.posy = 0;
     this.posx = 0;
     this.hp = 10;
+    this.maxhp = this.hp;
 };
 
 Entity.prototype.move = function(x, y) {
@@ -77,7 +78,11 @@ Entity.prototype.act = function() {
 }
 
 Entity.prototype.attack = function(enemy) {
-    console.log("HP: " + this.hp);
+    if(this.isPlayer){
+        console.log("Player HP: " + this.hp);
+    } else {
+        console.log("Entity HP: " + this.hp);
+    }
     if(Math.random() < 0.3) {// 33% probability, TODO remove hardcode
         enemy.damage(1);
     }
@@ -88,6 +93,14 @@ Entity.prototype.damage = function(damage) {
     if (this.hp <= 0){
         this.die();
     }
+}
+
+Entity.prototype.heal = function(heal){
+    this.hp += heal;
+    if (this.hp > this.maxhp){
+        this.hp = this.maxhp;
+    }
+    console.log("Player HP: " + this.hp);
 }
 
 Entity.prototype.die = function() {

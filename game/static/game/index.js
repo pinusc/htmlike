@@ -18,6 +18,14 @@ function handleKeys(e){
         case 40: // down arrow
         player.move(player.posx, player.posy + 1);
         break;
+
+        case 13: //enter
+        player.heal(1);
+        break;
+
+        default:
+        console.log("Key pressed: " + e.which);
+        break;
     }
 
     for (var i = 0; i < entitiesL.length; i++) { // Starting at 1 so doesn't affect player
