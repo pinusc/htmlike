@@ -41,15 +41,6 @@ Entity.prototype.move = function(x, y) {
     this.render();
 };
 
-Entity.prototype.getRelativeCoordinate = function() { //the player
-    /**
-    * Returns coordinates relative to the player
-    * use din render() for rendering entities in the right place
-    */
-    var px = player.posx, py = player.posy;
-    return [(ox + this.posx - px) * gdim, (oy + this.posy - py) * gdim];
-}
-
 Entity.prototype.render = function() {
     /**
     * Sets the image coordinates on canvas;
