@@ -1,6 +1,6 @@
 var greeny = new Image(), princess = new Image();
-greeny.src = '/static/game/greeny.png';
-princess.src = '/static/game/princess.png';
+greeny.src = '/static/game/assets/greeny.png';
+princess.src = '/static/game/assets/princess.png';
 
 var entitiesL = [new Entity(princess)];
 var player = Player(greeny);

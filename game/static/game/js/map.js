@@ -55,7 +55,7 @@ map.prototype.parseLevel = function(t) {
         var l = new Array();
         for (var j = 0; j < 15; j++) {
             if(t.t[i][j] === '#'){
-                l[j] = new Tile('/static/game/dirt.png', true);
+                l[j] = new Tile('/static/game/assets/dirt.png', true);
             } else {
                 l[j] = 0;
             }
@@ -68,7 +68,7 @@ map.prototype.parseLevel = function(t) {
         for(var i = 0; i < 21; i++){  // TODO remove hardcoded 15
             grid[i] = [];
             for (var j = 0; j < 21; j++) {
-                grid[i][j] = new Tile('/static/game/grass.png');
+                grid[i][j] = new Tile('/static/game/assets/grass.png');
             }
         }
         this.level[l] = grid;
