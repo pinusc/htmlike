@@ -7,8 +7,7 @@ function Entity(image, x, y){
     this.hp = 10;
     this.maxhp = this.hp;
 
-    this.image.x = gdim * this.posx;
-    this.image.y = gdim * this.posy;
+    this.render();
 };
 
 Entity.prototype.move = function(x, y) {
@@ -38,8 +37,8 @@ Entity.prototype.move = function(x, y) {
 
     this.posx = x;
     this.posy = y;
-    this.image.x = gdim * x;
-    this.image.y = gdim * y;
+
+    this.render();
 };
 
 Entity.prototype.getRelativeCoordinate = function() { //the player
@@ -53,15 +52,16 @@ Entity.prototype.getRelativeCoordinate = function() { //the player
 
 Entity.prototype.render = function() {
     /**
-    * draws the entity on a canvas, using the relative coordinate given by
-    * getRelativeCoordinate()
+    * Sets the image coordinates on canvas;
+    *
     */
-    var coord = this.getRelativeCoordinate();
-    var x = coord[0];
-    var y = coord[1];
-    if (this.image.naturalHeight > gdim) { // If image is 2 tiles high
+    var x = this.posx * gdim;
+    var y = this.posy * gdim;
+    if (this.image.height > gdim) { // If image is 2 tiles high
         y -= gdim;  // So that bottom of image corresponds to tile
     }
+    this.image.x = x;
+    this.image.y = y;
 
 }
 
