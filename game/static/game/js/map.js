@@ -12,6 +12,8 @@ function map() { //todo rename to level
     * This is the constructor for the map object that will contain every tile in the game.
     */
     this.level = [[], []];
+    this.entitiesL = [];
+    this.player;
 };
 
 
@@ -19,9 +21,10 @@ map.prototype.render = function () {
     /**
     * Render tiles and entities relatively to the camera ie the player.
     */
-    var p = player;
+    /*
+var p = player;
     var px = p.posx, py = p.posy;
-    context.clearRect(0, 0, frame_width_px, frame_height_px);
+    //context.clearRect(0, 0, frame_width_px, frame_height_px);
     for(var l = 0; l < this.level.length; l++){
         var grid = this.level[l];
 
@@ -39,7 +42,8 @@ map.prototype.render = function () {
     for (var i = 0; i < entitiesL.length; i++) {
         entitiesL[i].render();
     }
-    player.render();
+    player.render();*/
+
 
 };
 
@@ -50,28 +54,27 @@ map.prototype.parseLevel = function(t) {
     * t is an array of strings where a space means nothing and a # means a block of dirt.
     * In future this will be implemented in JSON or XML.
     */
-    console.log(t);
+    // initial level is grass only
+    for(var l = 0; l < 1; l++){
+        var grid = this.level[l];
+        for(var i = 0; i < 15; i++){  // TODO remove hardcoded 15
+            grid[i] = [];
+            for (var j = 0; j < 15; j++) {
+                grid[i][j] = new Tile('grass', i, j);
+            }
+        }
+        this.level[l] = grid;
+    }
     for(var i = 0; i < 15; i++){  // TODO remove hardcoded 15
         var l = new Array();
         for (var j = 0; j < 15; j++) {
             if(t.t[i][j] === '#'){
-                l[j] = new Tile('/static/game/assets/dirt.png', true);
+                l[j] = new Tile('dirt', i, j, true);
             } else {
                 l[j] = 0;
             }
             this.level[1][i] = l;
         }
-    }
-    // initial level is grass only
-    for(var l = 0; l < 1; l++){
-        var grid = this.level[l];
-        for(var i = 0; i < 21; i++){  // TODO remove hardcoded 15
-            grid[i] = [];
-            for (var j = 0; j < 21; j++) {
-                grid[i][j] = new Tile('/static/game/assets/grass.png');
-            }
-        }
-        this.level[l] = grid;
     }
     return 0;
 };
@@ -80,12 +83,25 @@ map.prototype.loadMap = function(){
     /**
     * Get the map file with an AJAX request, then call parseLevel for using it.
     */
-    var x = this;
-    ajaxGet('level', '', function(content){
-        //onSuccess
-        x.parseLevel(content);
-        x.render();
-        return;
-    });
+
+    var that = this;
+
+    var t = $.ajax({
+        type: "GET",
+        url: 'level',
+        async: false
+    }).responseText;
+    that.parseLevel(JSON.parse(t).content);
+    that.player = Player('greeny');
+    that.entitiesL[0] = new Entity('princess');
+
     console.log("LoadMap ended");
+};
+
+map.prototype.getWidth = function() {
+    return this.level[0].length;
+};
+
+map.prototype.getHeight = function() {
+    return this.level[0][0].length;
 };

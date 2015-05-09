@@ -1,21 +1,14 @@
-var greeny = new Image(), princess = new Image();
-greeny.src = '/static/game/assets/greeny.png';
-princess.src = '/static/game/assets/princess.png';
-
-var entitiesL = [new Entity(princess)];
-var player = Player(greeny);
-
-function Entity(image){
-    if (image instanceof Image){
-        this.image = image;
-    } else {
-        this.image = new Image()
-        this.image.src = image;
-    }
-    this.posy = 0;
-    this.posx = 0;
+function Entity(image, x, y){
+    x = x || 0;
+    y = y || 0;
+    this.image = game.add.sprite(0, 0, image);
+    this.posy = y;
+    this.posx = x;
     this.hp = 10;
     this.maxhp = this.hp;
+
+    this.image.x = gdim * this.posx;
+    this.image.y = gdim * this.posy;
 };
 
 Entity.prototype.move = function(x, y) {
@@ -34,14 +27,19 @@ Entity.prototype.move = function(x, y) {
               (window.m.level[0][x][y] && window.m.level[0][x][y].block)){  // there isn't any blocking tile
         return;
     }
-    for(var i = 0; i < entitiesL.length; i++){  // Check if any entity is blocking the way
-        if (entitiesL[i].posx === x && entitiesL[i].posy === y){
-            return this.attack(entitiesL[i]);
+    for(var i = 0; i < m.entitiesL.length; i++){  // Check if any entity is blocking the way
+        if (m.entitiesL[i].posx === x && m.entitiesL[i].posy === y){
+            return this.attack(m.entitiesL[i]);
         }
     }
-    if(player.posx === x && player.posy === y) return this.attack(player);  // Check if player is blocking
+    if(this.isPlayer){
+
+    } else if (player.posx === x && player.posy === y) return this.attack(player);  // Check if player is blocking
+
     this.posx = x;
     this.posy = y;
+    this.image.x = gdim * x;
+    this.image.y = gdim * y;
 };
 
 Entity.prototype.getRelativeCoordinate = function() { //the player
@@ -64,7 +62,7 @@ Entity.prototype.render = function() {
     if (this.image.naturalHeight > gdim) { // If image is 2 tiles high
         y -= gdim;  // So that bottom of image corresponds to tile
     }
-    context.drawImage(this.image, x, y);
+
 }
 
 Entity.prototype.act = function() {
@@ -132,5 +130,6 @@ Entity.prototype.die = function() {
     /**
     * Handle the death of the entity by removing it from entitiesL
     */
-    entitiesL.splice(entitiesL.indexOf(this), 1);
+    m.entitiesL.splice(m.entitiesL.indexOf(this), 1);
+    this.image.destroy(true);
 }

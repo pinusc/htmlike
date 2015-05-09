@@ -1,7 +1,9 @@
 var context, frame_height_px, frame_width_px, frame_height, frame_width;
+var game;
 var m = new map();
 var gdim = 13 * 4; // 12 is the original image size, 4 the scaling;
 function handleKeys(e){
+    player = m.player;  //much less ugly than repeating it
     switch (e.which) {
         case 37: // left arrow
         player.move(player.posx - 1, player.posy);
@@ -28,14 +30,13 @@ function handleKeys(e){
         break;
     }
 
-    for (var i = 0; i < entitiesL.length; i++) {
-        entitiesL[i].act();
+    for (var i = 0; i < m.entitiesL.length; i++) {
+        m.entitiesL[i].act();
     }
-    m.render();
 }
 
 $(document).ready(function (){
-    var $canvas = $("#screen");  //canvas
+//    var $canvas = $("#screen");  //canvas
 
     // Set canvas height and width based on container dimensions
     var width = $("#main").css("width");
@@ -44,11 +45,29 @@ $(document).ready(function (){
     frame_height_px = parseInt(height.substring(0, height.length - 2));
     frame_height = frame_height_px / gdim;
     frame_width = frame_width_px / gdim;
-    $canvas.attr("width", width);
-    $canvas.attr("height", height);
 
-    context = $canvas[0].getContext('2d');
-    $(document.body).on('keydown', handleKeys);
+    game = new Phaser.Game(frame_width_px, frame_height_px, Phaser.AUTO, 'main',
+        { preload: preload, create: create, update: update });
 
-    m.loadMap()
+
 });
+
+function create() {
+    $(document.body).on('keydown', handleKeys);
+//    player = game.add.sprite(0, 0, 'greeny');
+    m.loadMap();
+    game.world.setBounds(0, 0, m.getWidth() * gdim, m.getHeight() * gdim);
+    game.camera.follow(m.player.image);
+    m.player.fixedToCamera = false;
+}
+
+function update() {
+
+}
+
+function preload() {
+    game.load.image('greeny', '/static/game/assets/greeny.png');
+    game.load.image('princess', '/static/game/assets/princess.png');
+    game.load.image('grass', '/static/game/assets/grass.png');
+    game.load.image('dirt', '/static/game/assets/dirt.png');
+}
