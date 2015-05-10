@@ -17,37 +17,6 @@ function map() { //todo rename to level
 };
 
 
-map.prototype.render = function () {
-    /**
-    * Render tiles and entities relatively to the camera ie the player.
-    */
-    /*
-var p = player;
-    var px = p.posx, py = p.posy;
-    //context.clearRect(0, 0, frame_width_px, frame_height_px);
-    for(var l = 0; l < this.level.length; l++){
-        var grid = this.level[l];
-
-        for(var i = 0; i < grid.length; i++){
-            for (var j = 0; j < grid[i].length; j++) {
-                if(i >= 0 && j >= 0){
-                    if(grid[i][j] !== 0){  // TODO: sustitute with Tile.render() method
-                        context.drawImage(grid[i][j].image, (ox + i - px) * gdim, (oy + j - py) * gdim);
-                    }
-                }
-            }
-        }
-    }
-
-    for (var i = 0; i < entitiesL.length; i++) {
-        entitiesL[i].render();
-    }
-    player.render();*/
-
-
-};
-
-
 map.prototype.parseLevel = function(t) {
     /**
     * Parses the level contained in t and set the map's level to t.
