@@ -1,4 +1,12 @@
 function Entity(image, x, y){
+    /**
+    * Any living (or moving) object is an Entity.
+    * Attributes:
+    * int hp;
+    * int posx, posy;
+    * Phaser.Sprite() image;
+    * int maxhp;
+    */
     x = x || 0;
     y = y || 0;
     this.image = game.add.sprite(0, 0, image);
@@ -13,7 +21,7 @@ function Entity(image, x, y){
 Entity.prototype.move = function(x, y) {
     /**
     * Checks if anything is blocking at position (x, y), tiles or entities or
-    * player. If not, moves there. If an entity is blocking, attack it
+    * player. If not, moves there. If an entity is blocking, attacks it
     */
     //If X and Y are in the margins
     if( !(x >= 0 &&
@@ -26,14 +34,16 @@ Entity.prototype.move = function(x, y) {
               (window.m.level[0][x][y] && window.m.level[0][x][y].block)){  // there isn't any blocking tile
         return;
     }
-    for(var i = 0; i < m.entitiesL.length; i++){  // Check if any entity is blocking the way
+
+    /* Check if any entity is blocking the way */
+    for(var i = 0; i < m.entitiesL.length; i++){
         if (m.entitiesL[i].posx === x && m.entitiesL[i].posy === y){
             return this.attack(m.entitiesL[i]);
         }
     }
-    if(this.isPlayer){
 
-    } else if (player.posx === x && player.posy === y) return this.attack(player);  // Check if player is blocking
+    /* Check if player is blocking. If True, attack it */
+    if (! this.isPlayer && player.posx === x && player.posy === y) return this.attack(player);
 
     this.posx = x;
     this.posy = y;
@@ -57,7 +67,8 @@ Entity.prototype.render = function() {
 }
 
 Entity.prototype.act = function() {
-    /** This is going to be the AI of the entity.
+    /**
+    * This is going to be the AI of the entity.
     * For now, it's simply "chase the player" using a very naive algorithm
     * If the entity bumps in the player, it attack it (implemented in move())
     */
@@ -85,11 +96,6 @@ Entity.prototype.attack = function(enemy) {
     * Randomly attack the given enemy.
     * For now, there's an hardcoded 30% chace to hit.
     */
-    if(this.isPlayer){
-        console.log("Player HP: " + this.hp);
-    } else {
-        console.log("Entity HP: " + this.hp);
-    }
     if(Math.random() < 0.3) {// 33% probability, TODO remove hardcode
         enemy.damage(1);
     }
@@ -114,12 +120,12 @@ Entity.prototype.heal = function(heal){
     if (this.hp > this.maxhp){
         this.hp = this.maxhp;
     }
-    console.log("Player HP: " + this.hp);
 }
 
 Entity.prototype.die = function() {
     /**
     * Handle the death of the entity by removing it from entitiesL
+    * and telling Phaser not to render it anymore
     */
     m.entitiesL.splice(m.entitiesL.indexOf(this), 1);
     this.image.destroy(true);

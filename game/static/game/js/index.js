@@ -3,6 +3,11 @@ var game;
 var m = new map();
 var gdim = 13 * 4; // 12 is the original image size, 4 the scaling;
 function handleKeys(e){
+    /**
+    * Takes care of any key event.
+    * If an arrow is pressed, moves the player in the given direction
+    * If Enter is pressed, heals the player
+    */
     player = m.player;  //much less ugly than repeating it
     switch (e.which) {
         case 37: // left arrow
@@ -36,7 +41,7 @@ function handleKeys(e){
 }
 
 $(document).ready(function (){
-//    var $canvas = $("#screen");  //canvas
+    /* initializazion */
 
     // Set canvas height and width based on container dimensions
     var width = $("#main").css("width");
@@ -46,6 +51,7 @@ $(document).ready(function (){
     frame_height = frame_height_px / gdim;
     frame_width = frame_width_px / gdim;
 
+    // TODO see if Phaser can handle the size itself
     game = new Phaser.Game(frame_width_px, frame_height_px, Phaser.AUTO, 'main',
         { preload: preload, create: create, update: update });
 
@@ -66,8 +72,11 @@ function update() {
 }
 
 function preload() {
+    /* entities */
     game.load.image('greeny', '/static/game/assets/greeny.png');
     game.load.image('princess', '/static/game/assets/princess.png');
+
+    /* tiles */
     game.load.image('grass', '/static/game/assets/grass.png');
     game.load.image('dirt', '/static/game/assets/dirt.png');
 }

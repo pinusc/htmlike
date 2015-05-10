@@ -23,6 +23,7 @@ map.prototype.parseLevel = function(t) {
     * t is an array of strings where a space means nothing and a # means a block of dirt.
     * In future this will be implemented in JSON or XML.
     */
+
     // initial level is grass only
     for(var l = 0; l < 1; l++){
         var grid = this.level[l];
@@ -34,6 +35,8 @@ map.prototype.parseLevel = function(t) {
         }
         this.level[l] = grid;
     }
+
+    // read the map
     for(var i = 0; i < 15; i++){  // TODO remove hardcoded 15
         var l = new Array();
         for (var j = 0; j < 15; j++) {
@@ -50,7 +53,8 @@ map.prototype.parseLevel = function(t) {
 
 map.prototype.loadMap = function(){
     /**
-    * Get the map file with an AJAX request, then call parseLevel for using it.
+    * Get the map file with an AJAX request, then call parseLevel for having it
+    * parsed
     */
 
     var that = this;
@@ -60,17 +64,23 @@ map.prototype.loadMap = function(){
         url: 'level',
         async: false
     }).responseText;
-    that.parseLevel(JSON.parse(t).content);
-    that.player = Player('greeny');
-    that.entitiesL[0] = new Entity('princess');
+    this.parseLevel(JSON.parse(t).content);
+    this.player = Player('greeny');
+    this.entitiesL[0] = new Entity('princess');
 
     console.log("LoadMap ended");
 };
 
 map.prototype.getWidth = function() {
+    /**
+    * Returns width of the map, in tiles
+    */
     return this.level[0].length;
 };
 
 map.prototype.getHeight = function() {
+    /**
+    * Returns height of the map, in tiles
+    */
     return this.level[0][0].length;
 };
