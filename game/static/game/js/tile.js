@@ -13,7 +13,3 @@ function Tile(image, posx, posy, block){
     this.image.x = posx * gdim;
     this.image.y = posy * gdim;
 }
-
-Tile.prototype.render = function() {
-
-}
