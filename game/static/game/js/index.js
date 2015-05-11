@@ -2,11 +2,13 @@ var context, frame_height_px, frame_width_px, frame_height, frame_width;
 var game;
 var m = new map();
 var gdim = 13 * 4; // 12 is the original image size, 4 the scaling;
+var debug = false;
 function handleKeys(e){
     /**
     * Takes care of any key event.
     * If an arrow is pressed, moves the player in the given direction
     * If Enter is pressed, heals the player
+    * F3: toggle debug info
     */
     player = m.player;  //much less ugly than repeating it
     switch (e.which) {
@@ -28,6 +30,10 @@ function handleKeys(e){
 
         case 13: //enter
         player.heal(1);
+        break;
+
+        case 51:
+        debug = !debug;
         break;
 
         default:
@@ -52,10 +58,8 @@ $(document).ready(function (){
     frame_width = frame_width_px / gdim;
 
     // TODO see if Phaser can handle the size itself
-    game = new Phaser.Game(frame_width_px, frame_height_px, Phaser.AUTO, 'main',
-        { preload: preload, create: create, update: update });
-
-
+    game = new Phaser.Game(frame_width_px, frame_height_px, Phaser.CANVAS, 'main',
+        { preload: preload, create: create, update: update, render: render });
 });
 
 function create() {
@@ -69,6 +73,13 @@ function create() {
 
 function update() {
 
+}
+
+function render() {
+    if(debug){
+        game.debug.text("DEBUG:", 10, 10);
+        game.debug.text("playerHP: " + m.player.hp, 10, 25);
+    }
 }
 
 function preload() {
