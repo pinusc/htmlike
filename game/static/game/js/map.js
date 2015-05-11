@@ -13,8 +13,7 @@ function map() { //todo rename to level
     */
     this.level = [[], []];
     this.entitiesL = [];
-    this.player;
-};
+}
 
 
 map.prototype.parseLevel = function(t) {
@@ -23,13 +22,14 @@ map.prototype.parseLevel = function(t) {
     * t is an array of strings where a space means nothing and a # means a block of dirt.
     * In future this will be implemented in JSON or XML.
     */
+    var i, j, l;
 
     // initial level is grass only
-    for(var l = 0; l < 1; l++){
+    for(l = 0; l < 1; l++){
         var grid = this.level[l];
-        for(var i = 0; i < 15; i++){  // TODO remove hardcoded 15
+        for(i = 0; i < 15; i++){  // TODO remove hardcoded 15
             grid[i] = [];
-            for (var j = 0; j < 15; j++) {
+            for (j = 0; j < 15; j++) {
                 grid[i][j] = new Tile('grass', i, j);
             }
         }
@@ -37,9 +37,9 @@ map.prototype.parseLevel = function(t) {
     }
 
     // read the map
-    for(var i = 0; i < 15; i++){  // TODO remove hardcoded 15
-        var l = new Array();
-        for (var j = 0; j < 15; j++) {
+    for(i = 0; i < 15; i++){  // TODO remove hardcoded 15
+        l = [];
+        for (j = 0; j < 15; j++) {
             if(t.t[i][j] === '#'){
                 l[j] = new Tile('dirt', i, j, true);
             } else {

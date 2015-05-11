@@ -16,7 +16,7 @@ function Entity(image, x, y){
     this.maxhp = this.hp;
 
     this.render();
-};
+}
 
 Entity.prototype.move = function(x, y) {
     /**
@@ -64,7 +64,7 @@ Entity.prototype.render = function() {
     this.image.x = x;
     this.image.y = y;
 
-}
+};
 
 Entity.prototype.act = function() {
     /**
@@ -89,7 +89,7 @@ Entity.prototype.act = function() {
         }
     }
     this.move(x, y);
-}
+};
 
 Entity.prototype.attack = function(enemy) {
     /**
@@ -99,7 +99,7 @@ Entity.prototype.attack = function(enemy) {
     if(Math.random() < 0.3) {// 33% probability, TODO remove hardcode
         enemy.damage(1);
     }
-}
+};
 
 Entity.prototype.damage = function(damage) {
     /**
@@ -110,7 +110,7 @@ Entity.prototype.damage = function(damage) {
     if (this.hp <= 0){
         this.die();
     }
-}
+};
 
 Entity.prototype.heal = function(heal){
     /**
@@ -129,4 +129,4 @@ Entity.prototype.die = function() {
     */
     m.entitiesL.splice(m.entitiesL.indexOf(this), 1);
     this.image.destroy(true);
-}
+};
