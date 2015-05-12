@@ -46,6 +46,14 @@ function handleKeys(e){
     }
 }
 
+function gofull() {
+    if (game.scale.isFullScreen){
+        game.scale.stopFullScreen();
+    } else {
+        game.scale.startFullScreen(false);
+    }
+}
+
 function handleTap(){
     player = m.player;
     if (Math.floor(game.input.pointer1.x/(this.game.width/3)) === 0) {
@@ -61,6 +69,8 @@ function handleTap(){
 
     else if (Math.floor(game.input.pointer1.y/(this.game.height/3)) === 2) {
         player.move(player.posx, player.posy + 1);
+    } else {
+        gofull();
     }
 }
 
@@ -90,6 +100,9 @@ function create() {
     //input
     $(document.body).on('keydown', handleKeys);
     game.input.onTap.add(handleTap);
+
+    //fullscreen
+    game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
 }
 
 function update() {
