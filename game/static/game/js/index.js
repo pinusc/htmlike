@@ -46,6 +46,24 @@ function handleKeys(e){
     }
 }
 
+function handleTap(){
+    player = m.player;
+    if (Math.floor(game.input.pointer1.x/(this.game.width/3)) === 0) {
+        player.move(player.posx - 1, player.posy);
+    }
+
+    else if (Math.floor(game.input.pointer1.x/(this.game.width/3)) === 2) {
+        player.move(player.posx + 1, player.posy);
+    }
+    else if (Math.floor(game.input.pointer1.y/(this.game.height/3)) === 0) {
+        player.move(player.posx, player.posy - 1);
+    }
+
+    else if (Math.floor(game.input.pointer1.y/(this.game.height/3)) === 2) {
+        player.move(player.posx, player.posy + 1);
+    }
+}
+
 $(document).ready(function (){
     /* initializazion */
 
@@ -63,32 +81,19 @@ $(document).ready(function (){
 });
 
 function create() {
-    $(document.body).on('keydown', handleKeys);
 //    player = game.add.sprite(0, 0, 'greeny');
     m.loadMap();
     game.world.setBounds(0, 0, m.getWidth() * gdim, m.getHeight() * gdim);
     game.camera.follow(m.player.image);
     m.player.fixedToCamera = false;
+
+    //input
+    $(document.body).on('keydown', handleKeys);
+    game.input.onTap.add(handleTap);
 }
 
 function update() {
-    player = m.player;
-    if(game.input.pointer1.isDown){
-        if (Math.floor(game.input.pointer1.x/(this.game.width/3)) === 0) {
-            player.move(player.posx - 1, player.posy);
-        }
 
-        else if (Math.floor(game.input.pointer1.x/(this.game.width/3)) === 2) {
-            player.move(player.posx + 1, player.posy);
-        }
-        else if (Math.floor(game.input.pointer1.y/(this.game.height/3)) === 0) {
-            player.move(player.posx, player.posy - 1);
-        }
-
-        else if (Math.floor(game.input.pointer1.y/(this.game.height/3)) === 2) {
-            player.move(player.posx, player.posy + 1);
-        }
-    }
 }
 
 function render() {
