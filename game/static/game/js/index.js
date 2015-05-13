@@ -25,14 +25,23 @@ function create() {
     m.loadMap();
     game.world.setBounds(0, 0, m.getWidth() * gdim, m.getHeight() * gdim);
     game.camera.follow(m.player.image);
-    m.player.fixedToCamera = false;
+    m.player.fixedToCamera = true;
 
     //input
     $(document.body).on('keydown', handleKeys);
     game.input.onTap.add(handleTap);
+    dbutton = game.add.button(game.width - 32 * 4, 0, 'debug_button', toggleDebug(), this);
+    dbutton.onInputDown.add(dbutton_down, this);
+    dbutton.fixedToCamera = true;
+
+    fbutton = game.add.button(game.width - 32 * 4, 64, 'fullscreen_button', toggleDebug(), this);
+    fbutton.onInputDown.add(fbutton_down, this);
+    fbutton.fixedToCamera = true;
+    //game.world.bringToTop(debug_button);
 
     //fullscreen
     game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
+
 }
 
 function update() {
@@ -59,6 +68,10 @@ function preload() {
     /* tiles */
     game.load.image('grass', '/static/game/assets/grass.png');
     game.load.image('dirt', '/static/game/assets/dirt.png');
+
+    /* ui */
+    game.load.image('debug_button', '/static/game/assets/debug_button.png');
+    game.load.image('fullscreen_button', '/static/game/assets/fullscreen_button.png');
 }
 
 
@@ -71,7 +84,8 @@ function renderDebug(){
     for(var i = 0; i < dbl.length; i++){
         x += 15;
         var m = dbl[i];
-        game.debug.text(m.text, 10, x, m.color);
+        var temp = game.debug.text(m.text, 10, x, m.color);
+        //dbld.push(temp);
     }
     dbl = [];  // clear debug list
 }
@@ -82,4 +96,8 @@ function debug(text, color){
     */
 
     dbl.push({text: text, color: color});
+}
+
+function toggleDebug() {
+    toDebug = !toDebug;
 }

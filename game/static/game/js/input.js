@@ -28,7 +28,7 @@ function handleKeys(e){
         break;
 
         case 51:
-        toDebug = !toDebug;
+        toggleDebug();
         break;
 
         default:
@@ -42,6 +42,9 @@ function handleKeys(e){
 }
 
 function handleTap(){
+    console.log("handleTap()");
+    if(game.input.pointer1.isMouse) return;
+
     player = m.player;
     if (Math.floor(game.input.pointer1.x/(this.game.width/3)) === 0) {
         player.move(player.posx - 1, player.posy);
@@ -56,8 +59,6 @@ function handleTap(){
 
     else if (Math.floor(game.input.pointer1.y/(this.game.height/3)) === 2) {
         player.move(player.posx, player.posy + 1);
-    } else {
-        gofull();
     }
 
     for (var i = 0; i < m.entitiesL.length; i++) {
@@ -71,4 +72,12 @@ function gofull() {
     } else {
         game.scale.startFullScreen(false);
     }
+}
+
+function dbutton_down(){
+    toggleDebug();
+}
+
+function fbutton_down(){
+    gofull();
 }
