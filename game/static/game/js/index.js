@@ -50,7 +50,7 @@ function update() {
 
 function render() {
     if(toDebug){
-        console.log("toDebug");
+        //console.log("toDebug");
         debug("playerHP: " + m.player.hp, "#000000");
         if(m.entitiesL[0]){
             debug("PrincessHP: " + m.entitiesL[0].hp);
@@ -62,6 +62,7 @@ function render() {
 
 function preload() {
     /* entities */
+    game.load.image('heart', '/static/game/assets/hearth.png');
     game.load.image('greeny', '/static/game/assets/greeny.png');
     game.load.image('princess', '/static/game/assets/princess.png');
 

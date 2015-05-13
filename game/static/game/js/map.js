@@ -65,7 +65,7 @@ map.prototype.loadMap = function(){
         async: false
     }).responseText;
     this.parseLevel(JSON.parse(t).content);
-    this.player = Player('greeny');
+    this.player = new Player('greeny');
     this.entitiesL[0] = new Entity('princess');
 
     console.log("LoadMap ended");
