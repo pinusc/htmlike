@@ -48,7 +48,7 @@ function render() {
         }
         renderDebug();
     }
-    game.debug.pointer(game.input.pointer1);
+    //game.debug.pointer(game.input.pointer1);
 }
 
 function preload() {
