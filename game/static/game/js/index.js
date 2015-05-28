@@ -16,7 +16,7 @@ $(document).ready(function (){
     frame_width = frame_width_px / gdim;
 
     // TODO see if Phaser can handle the size itself
-    game = new Phaser.Game(frame_width_px, frame_height_px, Phaser.AUTO, 'main',
+    game = new Phaser.Game(frame_width_px, frame_height_px, Phaser.CANVAS, 'main',
         { preload: preload, create: create, update: update, render: render });
 });
 
@@ -30,13 +30,8 @@ function create() {
     //input
     $(document.body).on('keydown', handleKeys);
     game.input.onTap.add(handleTap);
-    dbutton = game.add.button(game.width - 32 * 4, 0, 'debug_button', toggleDebug(), this);
-    dbutton.onInputDown.add(dbutton_down, this);
-    dbutton.fixedToCamera = true;
 
-    fbutton = game.add.button(game.width - 32 * 4, 64, 'fullscreen_button', toggleDebug(), this);
-    fbutton.onInputDown.add(fbutton_down, this);
-    fbutton.fixedToCamera = true;
+    createUI();
     //game.world.bringToTop(debug_button);
 
     //fullscreen
