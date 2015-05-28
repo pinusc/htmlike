@@ -13,3 +13,11 @@ function Tile(image, posx, posy, block){
     this.image.x = posx * gdim;
     this.image.y = posy * gdim;
 }
+
+/**
+ * This sets the "visible" property of the tile image
+ * @param {bool} val [the value to set "visible" at]
+ */
+Tile.prototype.setVisible = function(val){
+    this.image.visible = val;
+}
