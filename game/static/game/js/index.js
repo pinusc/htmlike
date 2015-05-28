@@ -36,7 +36,7 @@ function create() {
 
     //fullscreen
     game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
-
+    myUpdate();
 }
 
 function update() {
