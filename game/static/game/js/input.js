@@ -36,9 +36,7 @@ function handleKeys(e){
         break;
     }
 
-    for (var i = 0; i < m.entitiesL.length; i++) {
-        m.entitiesL[i].act();
-    }
+    myUpdate();
 }
 
 function handleTap(){

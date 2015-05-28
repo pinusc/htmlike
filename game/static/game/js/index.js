@@ -97,3 +97,15 @@ function debug(text, color){
 function toggleDebug() {
     toDebug = !toDebug;
 }
+
+/**
+ * This  is called at every move and:
+ * - makes the entities act;
+ * - update FOV
+ * @return {undefinded}
+ */
+function myUpdate(){
+    for (var i = 0; i < m.entitiesL.length; i++) {
+        m.entitiesL[i].act();
+    }
+}
