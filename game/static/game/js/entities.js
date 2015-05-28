@@ -15,6 +15,8 @@ function Entity(image, x, y){
     this.hp = 10;
     this.maxhp = this.hp;
 
+    this.isEntity = true;
+
     this.render();
 }
 
@@ -72,6 +74,12 @@ Entity.prototype.act = function() {
     * For now, it's simply "chase the player" using a very naive algorithm
     * If the entity bumps in the player, it attack it (implemented in move())
     */
+    if (this.distance(m.player) > 4){  // the player is too far, do nothing
+        this.setVisible(false);
+        return;
+    }
+
+    this.setVisible(true);
     var x = this.posx, y = this.posy;
     var px = player.posx, py = player.posy;
     var xdiff = Math.abs(x - px), ydiff = Math.abs(y - py);
@@ -130,3 +138,33 @@ Entity.prototype.die = function() {
     m.entitiesL.splice(m.entitiesL.indexOf(this), 1);
     this.image.destroy(true);
 };
+
+
+/**
+ * Calculates the distance from an entity or an array of coordinates
+ * @param  {Entity} coordinates [The entity to which calculate the distance from]
+ * @param  {Array} coordinates [The pair of [x, y] coordinates to which calculate the distance from]
+ * @return {[type]}             [description]
+ */
+Entity.prototype.distance = function(coordinates) {
+    if (coordinates.isEntity || coordinates.isPlayer){
+        // ectract coordinates from entity
+        coordinates = [coordinates.posx, coordinates.posy]
+    }
+    var x = this.posx;
+    var y = this.posy;
+    var x1 = coordinates[0];
+    var y1 = coordinates[1];
+    var difx = x - x1;
+    var dify = y - y1;
+    var dist = Math.sqrt(difx * difx + dify * dify);
+    return dist;
+}
+
+/**
+ * This sets the "visible" property of the entity sprite
+ * @param {bool} val [the value to set "visible" at]
+ */
+Entity.prototype.setVisible = function(val){
+    this.image.visible = val;
+}
