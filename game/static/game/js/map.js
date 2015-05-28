@@ -43,7 +43,7 @@ map.prototype.parseLevel = function(t) {
             if(t.t[i][j] === '#'){
                 l[j] = new Tile('dirt', i, j, true);
             } else {
-                l[j] = 0;
+                l[j] = null;
             }
             this.level[1][i] = l;
         }
