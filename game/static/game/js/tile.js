@@ -1,9 +1,11 @@
+/**
+ * Handles tiles
+ * @param {String} image [The name of the resource to be loaded as image]
+ * @param {int} posx  [The x position of the tile]
+ * @param {int} posy  [The y position of the tile]
+ * @param {bool} block [If true, entities can not step on block]
+ */
 function Tile(image, posx, posy, block){
-    /**
-    * This object will handle Tiles.
-    * They have an image and a block property. If a tile blocks, nothing can
-    * pass through it.
-    */
     this.block = block || false;
     posx = posx || 0;
     posy = posy || 0;
@@ -20,4 +22,4 @@ function Tile(image, posx, posy, block){
  */
 Tile.prototype.setVisible = function(val){
     this.image.visible = val;
-}
+};

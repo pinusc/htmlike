@@ -4,6 +4,9 @@ var m = new map();
 var gdim = 13 * 4; // 12 is the original image size, 4 the scaling;
 var toDebug = true, dbl = [];
 
+/**
+ * The only thing this does is to create  a new Phaser.Game object and assign it to game
+ */
 $(document).ready(function (){
     /* initializazion */
 
@@ -20,6 +23,14 @@ $(document).ready(function (){
         { preload: preload, create: create, update: update, render: render });
 });
 
+
+/**
+ * The actual creation of the game.
+ * Makes the camera follow the player.
+ * Initializes UI
+ * First myUpdate() call
+ * @return {[type]} [description]
+ */
 function create() {
 //    player = game.add.sprite(0, 0, 'greeny');
     m.loadMap();
@@ -43,6 +54,10 @@ function update() {
 
 }
 
+/**
+ * Creates info to debug and renders the debug info
+ * @return {[type]} [description]
+ */
 function render() {
     if(toDebug){
         //console.log("toDebug");
@@ -70,30 +85,35 @@ function preload() {
     game.load.image('fullscreen_button', '/static/game/assets/fullscreen_button.png');
 }
 
-
+/**
+ * Actually render the debug info pushed through debug() and clear the dbl list
+ * @return {[type]} [description]
+ */
 function renderDebug(){
-    /**
-    * Tell Phaser to actually render the debug info pushed through debug()
-    */
     var x = 15;
     game.debug.text("DEBUG:", 10, x);
     for(var i = 0; i < dbl.length; i++){
         x += 15;
         var m = dbl[i];
         var temp = game.debug.text(m.text, 10, x, m.color);
-        //dbld.push(temp);
     }
     dbl = [];  // clear debug list
 }
 
+/**
+ * When called, pushes the desired debug message to phaser and is toDebug is set to true, the info will be rendered in the next render
+ * @param  {String} text  [The text to display]
+ * @param  {String} color [The color to display in hex format (ex. #FFFFFF)]
+ * @return {undefined}
+ */
 function debug(text, color){
-    /**
-    * Add a debug text
-    */
-
     dbl.push({text: text, color: color});
 }
 
+/**
+ * When called, if debug info is displayed, it is no longer displayed.
+ * @return {undefined}
+ */
 function toggleDebug() {
     toDebug = !toDebug;
 }
@@ -111,7 +131,7 @@ function myUpdate(){
     // iterate through every level of the map
     for(var l = 0; l < m.level.length; l++) {
         var currLev = m.level[l];
-        for(var i = 0; i < currLev.length; i++){
+        for(i = 0; i < currLev.length; i++){
             for(var j = 0; j < currLev[i].length; j++){
                 var currSprite = currLev[i][j];
                 if(currSprite){

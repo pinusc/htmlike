@@ -1,4 +1,9 @@
 
+/**
+ * @param  {Entity or Array of int} coord1 [The object or the coordinate of the object to calculate the distance of]
+ * @param  {Entity or Array of int} coord2 [The object or the coordinate of the object to calculate the distance of]
+ * @return {float} [The distance between the points indicated]
+ */
 function distance(coord1, coord2) {
     if (coord1.isEntity){
         // ectract coordinates from entity

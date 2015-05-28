@@ -15,7 +15,11 @@ function map() { //todo rename to level
     this.entitiesL = [];
 }
 
-
+/**
+ *  Parse the level contained in t and set the map's level
+ * @param  {Array of String} t [Every String has the same length. If a character is a space, the tile generated will be empty. If is '#', the tile will be a block of dirt]
+ * @return {undefined}
+ */
 map.prototype.parseLevel = function(t) {
     /**
     * Parses the level contained in t and set the map's level to t.
@@ -48,15 +52,14 @@ map.prototype.parseLevel = function(t) {
             this.level[1][i] = l;
         }
     }
-    return 0;
+    return;
 };
 
+/**
+ * Make an AJAX request that will return the map, then call parseLevel() to have it parsed
+ * @return {[type]} [description]
+ */
 map.prototype.loadMap = function(){
-    /**
-    * Get the map file with an AJAX request, then call parseLevel for having it
-    * parsed
-    */
-
     var that = this;
 
     var t = $.ajax({
@@ -70,17 +73,18 @@ map.prototype.loadMap = function(){
 
     console.log("LoadMap ended");
 };
-
+/**
+ * [To get the width of the map]
+ * @return {int} [The width of the map in tiles]
+ */
 map.prototype.getWidth = function() {
-    /**
-    * Returns width of the map, in tiles
-    */
     return this.level[0].length;
 };
 
+/**
+ * [To get the height of the map]
+ * @return {int} [The height of the map in tiles]
+ */
 map.prototype.getHeight = function() {
-    /**
-    * Returns height of the map, in tiles
-    */
     return this.level[0][0].length;
 };
