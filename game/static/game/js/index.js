@@ -108,4 +108,20 @@ function myUpdate(){
     for (var i = 0; i < m.entitiesL.length; i++) {
         m.entitiesL[i].act();
     }
+    // iterate through every level of the map
+    for(var l = 0; l < m.level.length; l++) {
+        var currLev = m.level[l];
+        for(var i = 0; i < currLev.length; i++){
+            for(var j = 0; j < currLev[i].length; j++){
+                var currSprite = currLev[i][j];
+                if(currSprite){
+                    if (distance([i, j], m.player) > 4){
+                        currSprite.setVisible(false);
+                    } else {
+                        currSprite.setVisible(true);
+                    }
+                }
+            }
+        }
+    }
 }
