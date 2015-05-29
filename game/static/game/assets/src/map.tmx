@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="32" height="32" tilewidth="32" tileheight="32" nextobjectid="1">
+ <tileset firstgid="1" name="tiles" tilewidth="32" tileheight="32">
+  <image source="../../../../../../../../../../projects/web/htmlike/game/static/game/assets/tileset.png" width="2048" height="1536"/>
+ </tileset>
+ <layer name="ground" width="32" height="32">
+  <data encoding="base64" compression="zlib">
+   eJyN1ktyA0EIA9AsfKE2ff+zJQu7SnklnCymPB8aEAjheXx9zc91X7/P13Xi930/YXvLufuynThzOXuIk2cn3h1stjPvmJnn+948D7Hy/Q3/4r7lu7ETa9bryTXY3sfvPBu2jDmP37kk5inxh+/Nr7UTh99antnnzLfV0PvW4+RS8kzsDY8cSE4e/Cfei7+D78b37F2re/oe/Mpz65czY45TrrPETQxpk9w4i5/Gq1avxoOLj8xdLC1fc7Ee5j3ESlv9yq8pPp/Fx8bxNltqYXu212LY8mz5qRE5K86Nmni4nDV51fq7zZf4tvnMWPoRi8/yIvOSX2rZxjHtEvt/aqhWtvwTX7Nv+qPGyRv3Yavj4LPV029NLzOenJDjPrtr2k6Sz223+v/DmTQvuSXW1vPWo6ZHTYcbxzL3T9rS8LVd4ew2Dd90t9XM3OR5q1XrcfLK3fipr86gu+cT1xKP9d/0vGlEm2/PWe+DXauvfGtck19icXbEaI3Ut23WxWofU9fVuq1vzVYN2XS11XWbh7ZjrYszbK+2ejVNaDretLvxtL3bNKPV2fl2Jt0Zjbdq+caP1nf3vbVUf9W+La582PpiHRv2zLPtuKZB8t6523jtHKl5f83WhtV+px95e7Fveav533G22gs=
+  </data>
+ </layer>
+ <layer name="walls" width="32" height="32">
+  <data encoding="base64" compression="zlib">
+   eJzFV9sOwyAI7UNfWq///7WrCaSkcesRYZ6E2BXHARWoad+285JIEkjac6bxoDkn6collfQnPVehY33TJbJROnKQvAGZo0E15Oc538aeLV6bWX7J9SYSwTh+VBiJzswsvzZ+Ptez/Cj30wfOk1l+DXdDoPhH/2flQzbcf038VudP68MB5r8Hd0PsvJvxYWRssFx/Dcpi/rjfPWg2/7T8AeT38KHZTD84/sGP5IAnP/IN4sVfaP0ReO7/Sn6k//NcNDdG6jHS/9mmNUbj9+DPi9cfqf9s0xoZrG2e+b+y/sj6u6L+8/fnqv6H9t8g9qns932a79zyd6+nFvGe7/TM/QFRfBMX
+  </data>
+ </layer>
+</map>
