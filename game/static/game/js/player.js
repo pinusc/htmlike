@@ -7,7 +7,7 @@ function Player(image){
 
     this.hp = 20;  // player is STRONGER! TODO remove hardcode
     this.maxhp = 20;
-    this.isPlayer = true
+    this.isPlayer = true;
     this.hearts = [];
     this.alignHearts();
 }
