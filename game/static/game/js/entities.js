@@ -26,14 +26,13 @@ Entity.prototype.move = function(x, y) {
     * player. If not, moves there. If an entity is blocking, attacks it
     */
     //If X and Y are in the margins
-    if( !(x >= 0 &&
-        x < m.level[0].length &&
+    if(!(x >= 0 &&
+        x < m.level[0].width &&  // comparing using 0 level since it should be the larger
         y >= 0 &&
-        y < m.level[0][0].length)){
+        y < m.level[0].height)){
 
         return;
-    } else if((window.m.level[1][x][y] && window.m.level[1][x][y].block) ||
-              (window.m.level[0][x][y] && window.m.level[0][x][y].block)){  // there isn't any blocking tile
+    } else if(m.map.getTile(x, y, 1)){
         return;
     }
 

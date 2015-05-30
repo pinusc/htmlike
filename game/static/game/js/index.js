@@ -34,7 +34,6 @@ $(document).ready(function (){
 function create() {
 //    player = game.add.sprite(0, 0, 'greeny');
     m.loadMap();
-    game.world.setBounds(0, 0, m.getWidth() * gdim, m.getHeight() * gdim);
     game.camera.follow(m.player.image);
     m.player.fixedToCamera = true;
 
@@ -83,6 +82,9 @@ function preload() {
     /* ui */
     game.load.image('debug_button', '/static/game/assets/debug_button.png');
     game.load.image('fullscreen_button', '/static/game/assets/fullscreen_button.png');
+
+    game.load.tilemap("base", "/static/game/assets/map.json", null, Phaser.Tilemap.TILED_JSON);
+    game.load.image("tiles", "/static/game/assets/tileset.png");
 }
 
 /**
@@ -131,17 +133,18 @@ function myUpdate(){
     // iterate through every level of the map
     for(var l = 0; l < m.level.length; l++) {
         var currLev = m.level[l];
-        for(i = 0; i < currLev.length; i++){
-            for(var j = 0; j < currLev[i].length; j++){
-                var currSprite = currLev[i][j];
+        for(i = 0; i < currLev.width; i++){
+            for(var j = 0; j < currLev.height; j++){
+                var currSprite = m.map.getTile(i, j, l);
                 if(currSprite){
                     if (distance([i, j], m.player) > 4){
-                        currSprite.setVisible(false);
+                        currSprite.alpha = 0;
                     } else {
-                        currSprite.setVisible(true);
+                        currSprite.alpha = 1;
                     }
                 }
             }
         }
+        currLev.dirty = true;
     }
 }

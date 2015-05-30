@@ -62,16 +62,24 @@ map.prototype.parseLevel = function(t) {
 map.prototype.loadMap = function(){
     var that = this;
 
-    var t = $.ajax({
+    var t = $.ajax({  // TODO make this receive the map through ajax
         type: "GET",
         url: 'level',
         async: false
     }).responseText;
-    this.parseLevel(JSON.parse(t).content);
+    this.map = game.add.tilemap('base');
+    this.map.addTilesetImage('tiles', 'tiles');
+    this.level[0] = this.map.createLayer('ground');
+    this.level[1] = this.map.createLayer('walls');
+    console.log("loaded");
+    this.level[0].resizeWorld();
+    this.level[1].resizeWorld();
     this.player = new Player('greeny');
     this.entitiesL[0] = new Entity('princess');
-
     console.log("LoadMap ended");
+
+    return;
+    this.parseLevel(JSON.parse(t).content);
 };
 /**
  * [To get the width of the map]
