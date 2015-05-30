@@ -1,7 +1,7 @@
 var context, frame_height_px, frame_width_px, frame_height, frame_width;
 var game;
 var m = new map();
-var gdim = 13 * 4; // 12 is the original image size, 4 the scaling;
+var gdim = 32; // 12 is the original image size, 4 the scaling;
 var toDebug = true, dbl = [];
 
 /**
@@ -73,8 +73,8 @@ function render() {
 function preload() {
     /* entities */
     game.load.image('heart', '/static/game/assets/hearth.png');
-    game.load.image('greeny', '/static/game/assets/greeny.png');
-    game.load.image('princess', '/static/game/assets/princess.png');
+    game.load.image('greeny', '/static/game/assets/character.png');
+    game.load.image('princess', '/static/game/assets/dragon.png');
 
     /* tiles */
     game.load.image('grass', '/static/game/assets/grass.png');
