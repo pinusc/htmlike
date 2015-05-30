@@ -60,7 +60,7 @@ function update() {
 function render() {
     if(toDebug){
         //console.log("toDebug");
-        debug("playerHP: " + m.player.hp, "#000000");
+        debug("playerHP: " + m.player.hp);
         if(m.entitiesL[0]){
             debug("PrincessHP: " + m.entitiesL[0].hp);
         }
