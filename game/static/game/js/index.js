@@ -83,7 +83,6 @@ function preload() {
     game.load.image('debug_button', '/static/game/assets/debug_button.png');
     game.load.image('fullscreen_button', '/static/game/assets/fullscreen_button.png');
 
-    game.load.tilemap("base", "/static/game/assets/map.json", null, Phaser.Tilemap.TILED_JSON);
     game.load.image("tiles", "/static/game/assets/tileset.png");
 }
 
