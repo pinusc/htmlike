@@ -2,7 +2,7 @@ var context, frame_height_px, frame_width_px, frame_height, frame_width;
 var game;
 var m = new map();
 var gdim = 32; // 12 is the original image size, 4 the scaling;
-var toDebug = true, dbl = [];
+var toDebug = false, dbl = [];
 var cursors;
 var yellow_border; // used in debug to see player position
 
