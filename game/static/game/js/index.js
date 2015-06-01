@@ -173,6 +173,7 @@ function myUpdate(){
         }
         currLev.dirty = true;
     }
+    m.map.getTile(m.player.posx, m.player.posy, 0).alpha = 0.5;
     yellow_border.x = m.player.posx * gdim;
     yellow_border.y = m.player.posy * gdim;
 }
