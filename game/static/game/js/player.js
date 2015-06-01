@@ -42,3 +42,20 @@ Player.prototype.alignHearts = function(){
         }
     }
 };
+
+Player.prototype.update = function(){
+    var posx, posy;
+    var body = this.image.body, x = body.x, y = body.y;
+    posx = Math.floor(x / gdim);
+    posy = Math.floor(y / gdim);
+    if(posx === this.posx && posy === this.posy){
+        return;
+    }
+    this.posx = posx;
+    this.posy = posy;
+    myUpdate();
+    console.log("image.x: " + this.image.x, ", image.y: " + this.image.y);
+    console.log("x: ", + x + ", y: " + y);
+    console.log("posx: " + posx + ", posy: " + posy);
+    console.log("\n\n");
+};

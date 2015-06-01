@@ -18,6 +18,10 @@ function Entity(image, x, y){
     this.isEntity = true;
 
     this.render();
+
+    game.physics.p2.enable(this.image);
+    this.image.body.setZeroDamping();
+    this.image.body.fixedRotation = true;
 }
 
 Entity.prototype.move = function(x, y) {

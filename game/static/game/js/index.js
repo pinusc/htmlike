@@ -3,6 +3,8 @@ var game;
 var m = new map();
 var gdim = 32; // 12 is the original image size, 4 the scaling;
 var toDebug = true, dbl = [];
+var cursors;
+var yellow_border; // used in debug to see player position
 
 /**
  * The only thing this does is to create  a new Phaser.Game object and assign it to game
@@ -33,13 +35,15 @@ $(document).ready(function (){
  */
 function create() {
 //    player = game.add.sprite(0, 0, 'greeny');
+    game.physics.startSystem(Phaser.Physics.P2JS);
     m.loadMap();
     game.camera.follow(m.player.image);
     m.player.fixedToCamera = true;
 
+    yellow_border = game.add.image(0, 0, 'yellow_border');
     //input
-    $(document.body).on('keydown', handleKeys);
-    game.input.onTap.add(handleTap);
+    //$(document.body).on('keydown', handleKeys);
+    //game.input.onTap.add(handleTap);
 
     createUI();
     //game.world.bringToTop(debug_button);
@@ -47,10 +51,30 @@ function create() {
     //fullscreen
     game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
     myUpdate();
+    cursors = game.input.keyboard.createCursorKeys();
 }
 
 function update() {
+    m.player.image.body.setZeroVelocity();
 
+    if (cursors.left.isDown)
+    {
+        m.player.image.body.moveLeft(100);
+    }
+    else if (cursors.right.isDown)
+    {
+        m.player.image.body.moveRight(100);
+    }
+
+    if (cursors.up.isDown)
+    {
+        m.player.image.body.moveUp(100);
+    }
+    else if (cursors.down.isDown)
+    {
+        m.player.image.body.moveDown(100);
+    }
+    m.player.update();
 }
 
 /**
@@ -82,6 +106,7 @@ function preload() {
     /* ui */
     game.load.image('debug_button', '/static/game/assets/debug_button.png');
     game.load.image('fullscreen_button', '/static/game/assets/fullscreen_button.png');
+    game.load.image('yellow_border', '/static/game/assets/yellow_border.png');
 
     game.load.image("tiles", "/static/game/assets/tileset.png");
 }
@@ -116,6 +141,7 @@ function debug(text, color){
  * @return {undefined}
  */
 function toggleDebug() {
+    yellow_border.alpha = yellow_border.alpha === 1 ? 0 : 1;
     toDebug = !toDebug;
 }
 
@@ -146,4 +172,6 @@ function myUpdate(){
         }
         currLev.dirty = true;
     }
+    yellow_border.x = m.player.posx * gdim;
+    yellow_border.y = m.player.posy * gdim;
 }
