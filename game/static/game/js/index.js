@@ -157,6 +157,8 @@ function myUpdate(){
     for (var i = 0; i < m.entitiesL.length; i++) {
         m.entitiesL[i].act();
     }
+    m.do_fov(m.player.posx, m.player.posy, 5);
+    console.log(m.light);
     // iterate through every level of the map
     for(var l = 0; l < m.level.length; l++) {
         var currLev = m.level[l];
@@ -164,10 +166,12 @@ function myUpdate(){
             for(var j = 0; j < currLev.height; j++){
                 var currSprite = m.map.getTile(i, j, l);
                 if(currSprite){
-                    if (distance([i, j], m.player) > 4){
-                        currSprite.alpha = 0;
-                    } else {
+                    if (m.lit(i, j)){
                         currSprite.alpha = 1;
+                    } else if(m.light[j][i]){  // if it's already visible
+                        currSprite.alpha = 0.5;
+                    } else {
+                        currSprite.alpha = 0;
                     }
                 }
             }
@@ -177,4 +181,5 @@ function myUpdate(){
     m.map.getTile(m.player.posx, m.player.posy, 0).alpha = 0.5;
     yellow_border.x = m.player.posx * gdim;
     yellow_border.y = m.player.posy * gdim;
+
 }

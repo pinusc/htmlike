@@ -13,6 +13,7 @@ function map() { //todo rename to level
     */
     this.level = [[], []];
     this.entitiesL = [];
+
 }
 
 /**
@@ -80,14 +81,31 @@ map.prototype.loadMap = function(){
     console.log(this.map.tiles.length);
     this.map.setCollisionBetween(1, this.map.tiles.length, true, 'walls');
     game.physics.p2.convertTilemap(this.map, 'walls');
+
+    /* FOV code */
+    this.mult = [ [1,  0,  0, -1, -1,  0,  0,  1],
+                  [0,  1, -1,  0,  0, -1,  1,  0],
+                  [0,  1,  1,  0,  0, -1, -1,  0],
+                  [1,  0,  0,  1, -1,  0,  0, -1] ];
+    this.light = [];
+    for(var i = 0; i < this.getHeight(); i++){
+        var c = []
+        for (var j = 0; j < this.getWidth(); j++){
+            c.push(0);
+        }
+        this.light.push(c);
+    }
+    this.flag = 0;
+    console.log("loadmap ended");
     return;
 };
+
 /**
  * [To get the width of the map]
  * @return {int} [The width of the map in tiles]
  */
 map.prototype.getWidth = function() {
-    return this.level[0].length;
+    return this.map.width;
 };
 
 /**
@@ -95,5 +113,81 @@ map.prototype.getWidth = function() {
  * @return {int} [The height of the map in tiles]
  */
 map.prototype.getHeight = function() {
-    return this.level[0][0].length;
+    return this.map.height;
+};
+
+map.prototype.square = function(x, y){
+    //level = level === null ? 1 : level; // default level to 1
+    // TODO make level configurable
+    return this.map.getTile(x, y, 1);
+};
+
+map.prototype.blocked = function(x, y){
+    return (x < 0 || y < 0
+        || x >= this.getWidth() || y >= this.getHeight()
+        || this.map.getTile(x, y, 1));
+};
+
+map.prototype.lit = function(x, y){
+    return this.light[y][x] === this.flag;
+}
+
+map.prototype.set_lit = function(x, y){
+    if(0 <= x && x < this.getWidth() && 0 <= y && y < this.getHeight()){
+        this.light[y][x] = this.flag;
+    }
+}
+
+map.prototype.cast_light = function(cx, cy, row, start, end, radius, xx, xy, yx, yy, id){
+    var new_start;
+    if(start < end){
+        return;
+    }
+    var radius_squared = radius * radius;
+    for(var j = row; j < radius+1; j++){
+        var dx = -j -1, dy = -j;
+        var blocked = false;
+        while(dx <= 0){
+            dx++;
+            var X = cx + dx * xx + dy * xy, Y = cy + dx * yx + dy * yy;
+            var l_slope  = (dx-0.5)/(dy+0.5);
+            var r_slope = (dx+0.5)/(dy-0.5);
+            if (start < r_slope){
+                continue;
+            } else if (end > l_slope){
+                break;
+            } else {
+                if (dx*dx + dy*dy < radius_squared){
+                    this.set_lit(X, Y);
+                }
+                if (blocked){
+                    if (this.blocked(X, Y)){
+                        new_start = r_slope;
+                        continue;
+                    } else {
+                        blocked = false;
+                        start = new_start;
+                    }
+                } else {
+                    if(this.blocked(X, Y) && j < radius){
+                        blocked = true;
+                        this.cast_light(cx, cy, j+1, start, l_slope, radius, xx, xy, yx, yy, id+1);
+                        new_start = r_slope;
+                    }
+                }
+            }
+        }
+        if (blocked){
+            break;
+        }
+    }
+};
+
+map.prototype.do_fov = function(x, y, radius){
+    this.flag += 1;
+    for(var oct = 0; oct < 8; oct++){
+        this.cast_light(x, y, 1, 1.0, 0.0, radius,
+            this.mult[0][oct], this.mult[1][oct],
+            this.mult[2][oct], this.mult[3][oct], 0);
+    }
 };
