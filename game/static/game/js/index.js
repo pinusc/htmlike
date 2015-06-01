@@ -41,6 +41,7 @@ function create() {
     m.player.fixedToCamera = true;
 
     yellow_border = game.add.image(0, 0, 'yellow_border');
+    yellow_border.alpha = 0;
     //input
     //$(document.body).on('keydown', handleKeys);
     //game.input.onTap.add(handleTap);
