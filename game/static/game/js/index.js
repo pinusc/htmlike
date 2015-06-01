@@ -86,6 +86,7 @@ function render() {
     if(toDebug){
         //console.log("toDebug");
         debug("playerHP: " + m.player.hp);
+        debug("desktop: " + game.device.desktop);
         if(m.entitiesL[0]){
             debug("PrincessHP: " + m.entitiesL[0].hp);
         }
