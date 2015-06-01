@@ -30,7 +30,6 @@ Player.prototype.damage = function(n) {
 
 Player.prototype.alignHearts = function(){
     var nh = Math.floor(this.hp / 5); // number of hearths
-    console.log(nh);
     var nh_now = this.hearts.length;
     if (nh < nh_now){
         for(var i = 0; i < nh_now - nh; i++){
