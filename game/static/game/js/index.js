@@ -6,6 +6,7 @@ var toDebug = false, dbl = [];
 var cursors;
 var yellow_border; // used in debug to see player position
 var globSpeed = 100;
+var joystick_ball, joystick_base;
 
 /**
  * The only thing this does is to create  a new Phaser.Game object and assign it to game
@@ -45,7 +46,9 @@ function create() {
     yellow_border.alpha = 0;
     //input
     //$(document.body).on('keydown', handleKeys);
-    //game.input.onTap.add(handleTap);
+    game.input.onTap.add(handleTap);
+    game.input.onDown.add(handleDown);
+    game.input.onUp.add(handleUp);
 
     createUI();
     //game.world.bringToTop(debug_button);
@@ -62,8 +65,7 @@ function update() {
     if (cursors.left.isDown)
     {
         m.player.image.body.moveLeft(m.player.pixelSpeed);
-    }
-    else if (cursors.right.isDown)
+    } else if (cursors.right.isDown)
     {
         m.player.image.body.moveRight(m.player.pixelSpeed);
     }
@@ -71,11 +73,16 @@ function update() {
     if (cursors.up.isDown)
     {
         m.player.image.body.moveUp(m.player.pixelSpeed);
-    }
-    else if (cursors.down.isDown)
+    } else if (cursors.down.isDown)
     {
         m.player.image.body.moveDown(m.player.pixelSpeed);
     }
+
+    if (game.input.mousePointer.isDown){
+        joystick_ball.cameraOffset.x = game.input.mousePointer.x - joystick_ball.height / 2;
+        joystick_ball.cameraOffset.y = game.input.mousePointer.y - joystick_ball.width / 2;
+    }
+
     m.player.update();
 }
 
