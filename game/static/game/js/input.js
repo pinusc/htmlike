@@ -1,3 +1,5 @@
+var maxJoystickDistance;
+
 function handleKeys(e){
     /**
     * Takes care of any key event.
@@ -94,4 +96,25 @@ function dbutton_down(){
 
 function fbutton_down(){
     gofull();
+}
+
+function handleJoystick(){
+    var point = game.input.activePointer;
+    if (!point.isDown){
+        return;
+    }
+    var baseCenterX = joystick_base.cameraOffset.x + joystick_base.width / 2;
+    var baseCenterY = joystick_base.cameraOffset.y + joystick_base.height / 2;
+    var xdiff = point.x - baseCenterX;
+    var ydiff = point.y - baseCenterY;
+    var dis = Math.sqrt(xdiff*xdiff + ydiff*ydiff);
+    if (dis > maxJoystickDistance){
+        var xOffset = maxJoystickDistance * xdiff / dis; // dis : maxJoystickDistance = xdiff : xOffset
+        var yOffset = maxJoystickDistance * ydiff / dis; // dis : maxJoystickDistance = xdiff : xOffset
+        joystick_ball.cameraOffset.x = baseCenterX + xOffset - joystick_ball.width/ 2;
+        joystick_ball.cameraOffset.y = baseCenterY + yOffset - joystick_ball.height / 2;
+    } else {
+        joystick_ball.cameraOffset.x = point.x - joystick_ball.height / 2;
+        joystick_ball.cameraOffset.y = point.y - joystick_ball.width / 2;
+    }
 }
