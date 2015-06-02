@@ -10,6 +10,11 @@ function Player(image){
     this.isPlayer = true;
     this.hearts = [];
     this.alignHearts();
+
+    this.pixelSpeed = globSpeed;  // pixel / second
+    game.physics.p2.enable(this.image);
+    this.image.body.setZeroDamping();
+    this.image.body.fixedRotation = true;
 }
 
 Player.prototype = Object.create(Entity.prototype, {});

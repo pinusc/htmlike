@@ -5,6 +5,7 @@ var gdim = 32; // 12 is the original image size, 4 the scaling;
 var toDebug = false, dbl = [];
 var cursors;
 var yellow_border; // used in debug to see player position
+var globSpeed = 100;
 
 /**
  * The only thing this does is to create  a new Phaser.Game object and assign it to game
@@ -60,20 +61,20 @@ function update() {
 
     if (cursors.left.isDown)
     {
-        m.player.image.body.moveLeft(100);
+        m.player.image.body.moveLeft(m.player.pixelSpeed);
     }
     else if (cursors.right.isDown)
     {
-        m.player.image.body.moveRight(100);
+        m.player.image.body.moveRight(m.player.pixelSpeed);
     }
 
     if (cursors.up.isDown)
     {
-        m.player.image.body.moveUp(100);
+        m.player.image.body.moveUp(m.player.pixelSpeed);
     }
     else if (cursors.down.isDown)
     {
-        m.player.image.body.moveDown(100);
+        m.player.image.body.moveDown(m.player.pixelSpeed);
     }
     m.player.update();
 }

@@ -77,7 +77,7 @@ map.prototype.loadMap = function(){
     this.level[0].resizeWorld();
     this.level[1].resizeWorld();
     this.player = new Player('greeny');
-    this.entitiesL[0] = new Entity('princess');
+    this.entitiesL[0] = new Entity('princess', 12, 2);
     console.log(this.map.tiles.length);
     this.map.setCollisionBetween(1, this.map.tiles.length, true, 'walls');
     game.physics.p2.convertTilemap(this.map, 'walls');

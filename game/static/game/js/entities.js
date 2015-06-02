@@ -18,10 +18,6 @@ function Entity(image, x, y){
     this.isEntity = true;
 
     this.render();
-
-    game.physics.p2.enable(this.image);
-    this.image.body.setZeroDamping();
-    this.image.body.fixedRotation = true;
 }
 
 Entity.prototype.move = function(x, y) {
@@ -48,7 +44,7 @@ Entity.prototype.move = function(x, y) {
     }
 
     /* Check if player is blocking. If True, attack it */
-    if (! this.isPlayer && player.posx === x && player.posy === y) return this.attack(player);
+    if (! this.isPlayer && m.player.posx === x && m.player.posy === y) return this.attack(m.player);
 
     this.posx = x;
     this.posy = y;
@@ -84,7 +80,7 @@ Entity.prototype.act = function() {
 
     this.setVisible(true);
     var x = this.posx, y = this.posy;
-    var px = player.posx, py = player.posy;
+    var px = m.player.posx, py = m.player.posy;
     var xdiff = Math.abs(x - px), ydiff = Math.abs(y - py);
     if(xdiff > ydiff) {
         if(px > x){  // the player is right
