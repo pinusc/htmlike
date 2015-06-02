@@ -118,3 +118,20 @@ function handleJoystick(){
         joystick_ball.cameraOffset.y = point.y - joystick_ball.width / 2;
     }
 }
+
+function move(x, y, body){
+    if(x){
+        if (x > 0){
+            body.moveRight(x);
+        } else {
+            body.moveLeft(-x);
+        }
+    }
+    if(y){
+        if (y > 0){
+            body.moveDown(y);
+        } else {
+            body.moveUp(-y);
+        }
+    }
+}

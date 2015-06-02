@@ -62,20 +62,16 @@ function create() {
 function update() {
     m.player.image.body.setZeroVelocity();
 
-    if (cursors.left.isDown)
-    {
-        m.player.image.body.moveLeft(m.player.pixelSpeed);
-    } else if (cursors.right.isDown)
-    {
-        m.player.image.body.moveRight(m.player.pixelSpeed);
+    if (cursors.left.isDown) {
+        move(-m.player.pixelSpeed, 0, m.player.image.body);
+    } else if (cursors.right.isDown) {
+        move(m.player.pixelSpeed, 0, m.player.image.body);
     }
 
-    if (cursors.up.isDown)
-    {
-        m.player.image.body.moveUp(m.player.pixelSpeed);
-    } else if (cursors.down.isDown)
-    {
-        m.player.image.body.moveDown(m.player.pixelSpeed);
+    if (cursors.up.isDown) {
+        move(0, -m.player.pixelSpeed, m.player.image.body);
+    } else if (cursors.down.isDown) {
+        move(0, m.player.pixelSpeed, m.player.image.body);
     }
 
     handleJoystick();
