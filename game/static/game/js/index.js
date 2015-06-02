@@ -161,7 +161,6 @@ function myUpdate(){
         m.entitiesL[i].act();
     }
     m.do_fov(m.player.posx, m.player.posy, 5);
-    console.log(m.light);
     // iterate through every level of the map
     for(var l = 0; l < m.level.length; l++) {
         var currLev = m.level[l];
