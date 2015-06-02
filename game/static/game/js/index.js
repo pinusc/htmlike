@@ -110,6 +110,8 @@ function preload() {
     game.load.image('debug_button', '/static/game/assets/debug_button.png');
     game.load.image('fullscreen_button', '/static/game/assets/fullscreen_button.png');
     game.load.image('yellow_border', '/static/game/assets/yellow_border.png');
+    game.load.image('controller_ball', '/static/game/assets/controller_ball.png');
+    game.load.image('controller_base', '/static/game/assets/controller_base.png');
 
     game.load.image("tiles", "/static/game/assets/tileset.png");
 }
