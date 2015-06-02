@@ -78,9 +78,11 @@ function update() {
         m.player.image.body.moveDown(m.player.pixelSpeed);
     }
 
-    if (game.input.mousePointer.isDown){
-        joystick_ball.cameraOffset.x = game.input.mousePointer.x - joystick_ball.height / 2;
-        joystick_ball.cameraOffset.y = game.input.mousePointer.y - joystick_ball.width / 2;
+    var point = game.input.activePointer;
+
+    if (point.isDown){
+        joystick_ball.cameraOffset.x = point.x - joystick_ball.height / 2;
+        joystick_ball.cameraOffset.y = point.y - joystick_ball.width / 2;
     }
 
     m.player.update();
