@@ -91,12 +91,15 @@ function render() {
         if(m.entitiesL[0]){
             debug("PrincessHP: " + m.entitiesL[0].hp);
         }
+        debug(game.time.fps || '--', "#00ff00");
+        debug("fpsMin: " + game.time.fpsMin || '--', "#00ff00");
         renderDebug();
     }
     //game.debug.pointer(game.input.pointer1);
 }
 
 function preload() {
+    game.time.advancedTiming = true;  // to show fps
     /* entities */
     game.load.image('heart', '/static/game/assets/hearth.png');
     game.load.image('greeny', '/static/game/assets/character.png');
