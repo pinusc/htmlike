@@ -89,7 +89,7 @@ map.prototype.loadMap = function(){
                   [1,  0,  0,  1, -1,  0,  0, -1] ];
     this.light = [];
     for(var i = 0; i < this.getHeight(); i++){
-        var c = []
+        var c = [];
         for (var j = 0; j < this.getWidth(); j++){
             c.push(0);
         }
@@ -123,20 +123,20 @@ map.prototype.square = function(x, y){
 };
 
 map.prototype.blocked = function(x, y){
-    return (x < 0 || y < 0
-        || x >= this.getWidth() || y >= this.getHeight()
-        || this.map.getTile(x, y, 1));
+    return (x < 0 || y < 0 ||
+            x >= this.getWidth() || y >= this.getHeight() ||
+            this.map.getTile(x, y, 1));
 };
 
 map.prototype.lit = function(x, y){
     return this.light[y][x] === this.flag;
-}
+};
 
 map.prototype.set_lit = function(x, y){
     if(0 <= x && x < this.getWidth() && 0 <= y && y < this.getHeight()){
         this.light[y][x] = this.flag;
     }
-}
+};
 
 map.prototype.cast_light = function(cx, cy, row, start, end, radius, xx, xy, yx, yy, id){
     var new_start;
@@ -184,6 +184,7 @@ map.prototype.cast_light = function(cx, cy, row, start, end, radius, xx, xy, yx,
 };
 
 map.prototype.do_fov = function(x, y, radius){
+    console.log("do:fov");
     this.flag += 1;
     for(var oct = 0; oct < 8; oct++){
         this.cast_light(x, y, 1, 1.0, 0.0, radius,
