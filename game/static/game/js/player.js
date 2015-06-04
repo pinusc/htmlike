@@ -28,11 +28,22 @@ Player.prototype.heal = function(n) {
 };
 
 Player.prototype.oldDamage = Player.prototype.damage;
+
+/** 
+ * Decorated definition of damage, this will also set the correct number of hearts
+ * @param int n the amount of HP to loss
+ * @return undefined
+ */
 Player.prototype.damage = function(n) {
     this.oldDamage(n);
     this.alignHearts();
 };
 
+/**
+ * Sets the correct number of hearts
+ * For example, if player has 20hp, 4 hearts are displayed. If he has 18hp, 3 hearts are displayed.
+ * @return undefined
+ */
 Player.prototype.alignHearts = function(){
     var nh = Math.floor(this.hp / 5); // number of hearths
     var nh_now = this.hearts.length;
@@ -48,6 +59,11 @@ Player.prototype.alignHearts = function(){
     }
 };
 
+/**
+ * Check for variations in the player position, if he has moved (relatively to the grid),
+ * calls myUpdate so it triggers
+ * @return {[type]} [description]
+ */
 Player.prototype.update = function(){
     var posx, posy;
     var body = this.image.body, x = body.x, y = body.y;
