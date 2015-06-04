@@ -12,8 +12,8 @@ function map() { //todo rename to level
     * This is the constructor for the map object that will contain every tile in the game.
     */
     this.level = [[], []];
+    this.mask = [];
     this.entitiesL = [];
-
 }
 
 /**
@@ -76,6 +76,21 @@ map.prototype.loadMap = function(){
     this.level[1] = this.map.createLayer('walls');
     this.level[0].resizeWorld();
     this.level[1].resizeWorld();
+
+    //generate level mask
+    for(var l = 0; l < this.level.length; l++){
+        for(var i = 0; i < this.map.width; i++){
+            var temp = [];
+            for(var j = 0; j < this.map.width; j++){
+                var currTile = this.map.getTile(i, j, l);
+                if(currTile){
+                    currTile.alpha = 0;
+                }
+            }
+        } 
+    }
+
+
     this.player = new Player('greeny');
     this.entitiesL[0] = new Entity('princess', 12, 2);
     console.log(this.map.tiles.length);
@@ -95,7 +110,7 @@ map.prototype.loadMap = function(){
         }
         this.light.push(c);
     }
-    this.flag = 0;
+    this.flag = 1;
     console.log("loadmap ended");
     return;
 };

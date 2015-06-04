@@ -160,28 +160,36 @@ function toggleDebug() {
  * @return {undefinded}
  */
 function myUpdate(){
-    for (var i = 0; i < m.entitiesL.length; i++) {
-        m.entitiesL[i].act();
+    var width = m.light.length;
+    var height = m.light[0].length;
+    var ll = m.level.length;
+    for (var e = 0; e < m.entitiesL.length; e++) {
+        m.entitiesL[e].act();
     }
-    m.do_fov(m.player.posx, m.player.posy, 5);
     // iterate through every level of the map
-    for(var l = 0; l < m.level.length; l++) {
-        var currLev = m.level[l];
-        for(i = 0; i < currLev.width; i++){
-            for(var j = 0; j < currLev.height; j++){
-                var currSprite = m.map.getTile(i, j, l);
-                if(currSprite){
-                    if (m.lit(i, j)){
-                        currSprite.alpha = 1;
-                    } else if(m.light[j][i]){  // if it's already visible
-                        currSprite.alpha = 0.5;
-                    } else {
-                        currSprite.alpha = 0;
+    m.do_fov(m.player.posx, m.player.posy, 5);
+    for(var i = 0; i < width; i++){
+        for(var j = 0; j < height; j++){
+            var q = 0;
+            var curr = m.light[i][j];
+            if(curr === m.flag){
+                q = 1;
+            } else if(curr === m.flag - 1){
+                q = 0.5;
+            }
+
+            if (q){
+                for(var l = 0; l < m.level.length; l++){
+                    var currTile = m.map.getTile(j, i, l);
+                    if(currTile){
+                        currTile.alpha = q;
                     }
                 }
             }
         }
-        currLev.dirty = true;
+    }
+    for(var l = 0; l < m.level.length; l++) {
+        m.level[l].dirty = true;
     }
     m.map.getTile(m.player.posx, m.player.posy, 0).alpha = 0.5;
     yellow_border.x = m.player.posx * gdim;
