@@ -65,7 +65,7 @@ function update() {
     m.player.image.body.setZeroVelocity();
     handleKeys();
 
-    if(game.device !== desktop){  // joystick is needed on mobile only
+    if(! game.device.desktop){  // joystick is needed on mobile only
         handleJoystick();
     }
 
