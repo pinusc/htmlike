@@ -4,3 +4,4 @@ staticfiles
 todo.txt
 *.sublime*
 .idea/*
+scrap.js
