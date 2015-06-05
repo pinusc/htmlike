@@ -9,6 +9,7 @@ function Player(image){
     this.maxhp = 20;
     this.isPlayer = true;
     this.hearts = [];
+    this.inventory = [];
     this.alignHearts();
 
     this.pixelSpeed = globSpeed;  // pixel / second
@@ -18,6 +19,22 @@ function Player(image){
 }
 
 Player.prototype = Object.create(Entity.prototype, {});
+
+Player.prototype.addToInventory = function(item){
+    this.inventory.push(item);
+};
+
+
+Player.prototype.getItemOnGround = function(){
+    //all the items which coordinates are the same as the player
+    var to_add = _.filter(m.itemsL, function(item) {return item.posx === this.posx && item.posy === this.posy; }, this);
+    m.itemsL = _.filter(m.itemsL, function(item) {return item.posx !== this.posx || item.posy !== this.posy; }, this);
+    // TODO optimize
+    _.each(to_add, function(it){
+        this.addToInventory(it);
+        it.setVisible(false);
+    }, this);
+};
 
 Player.prototype.constructor = Player;
 

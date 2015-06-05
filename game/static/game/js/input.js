@@ -12,6 +12,9 @@ function handleKeys(e){
     } else if (cursors.down.isDown) {
         move(0, m.player.pixelSpeed, m.player.image.body);
     }
+    if(game.input.keyboard.isDown(71)){  // g
+        m.player.getItemOnGround();
+    }
 }
 
 function handleTap(){
