@@ -91,7 +91,7 @@ function render() {
         debug("playerHP: " + m.player.hp);
         debug("desktop: " + game.device.desktop);
         if(m.entitiesL[0]){
-            debug("PrincessHP: " + m.entitiesL[0].hp);
+            debug("Wolf HP: " + m.entitiesL[0].hp);
         }
         debug(game.time.fps || '--', "#00ff00");
         debug("fpsMin: " + game.time.fpsMin || '--', "#00ff00");
