@@ -57,6 +57,8 @@ function create() {
     game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
     myUpdate();
     cursors = game.input.keyboard.createCursorKeys();
+
+    game.add.plugin(Phaser.Plugin.Debug);
 }
 
 function update() {
