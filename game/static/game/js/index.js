@@ -107,6 +107,9 @@ function preload() {
     game.load.image('greeny', '/static/game/assets/character.png');
     game.load.image('princess', '/static/game/assets/dragon.png');
 
+    /* objects */
+    game.load.image('potion', '/static/game/assets/potion.png');
+
     /* tiles */
     game.load.image('grass', '/static/game/assets/grass.png');
     game.load.image('dirt', '/static/game/assets/dirt.png');
@@ -165,6 +168,10 @@ function myUpdate(){
     var ll = m.level.length;
     _.each(m.entitiesL, function(en){
         en.act();
+    });
+
+    _.each(m.itemsL, function(item){
+        item.update();
     });
     // iterate through every level of the map
     m.do_fov(m.player.posx, m.player.posy, 5);

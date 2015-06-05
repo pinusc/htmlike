@@ -12,7 +12,7 @@ function map() { //todo rename to level
     * This is the constructor for the map object that will contain every tile in the game.
     */
     this.level = [[], []];
-    this.mask = [];
+    this.itemsL = [];  //DijkistraMap
     this.entitiesL = [];
 }
 
@@ -78,7 +78,7 @@ map.prototype.loadMap = function(){
     this.level[1].resizeWorld();
 
 
-    //generate level mask
+    // set all level tiles to not visible
     for(var l = 0; l < this.level.length; l++){
         for(var i = 0; i < this.map.width; i++){
             var temp = [];
@@ -94,6 +94,7 @@ map.prototype.loadMap = function(){
 
     this.player = new Player('greeny');
     this.entitiesL[0] = new Entity('princess', 12, 2);
+    this.itemsL.push(new Item('potion', 20, 20));
     console.log(this.map.tiles.length);
     this.map.setCollisionBetween(1, this.map.tiles.length, true, 'walls');
     game.physics.p2.convertTilemap(this.map, 'walls');

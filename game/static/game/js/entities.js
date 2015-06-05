@@ -80,7 +80,7 @@ Entity.prototype.act = function() {
 
     this.setVisible(true);
     var x = this.posx, y = this.posy;
-    var px = m.player.posx, py = m.player.posy;
+    /*var px = m.player.posx, py = m.player.posy;
     var xdiff = Math.abs(x - px), ydiff = Math.abs(y - py);
     if(xdiff > ydiff) {
         if(px > x){  // the player is right
@@ -94,8 +94,19 @@ Entity.prototype.act = function() {
         } else {
             y--;
         }
+    }*/
+    var curr = 0, coor = {x: x, y: y};
+    for(var i = x-1; i <= x+1; i++){
+        for(var j = y-1; j <= y+1; j++){
+            if(m.light[j][i] > curr){
+                curr = m.light[j][i];
+                console.log(curr);
+                coor = {x: i, y: j};
+            }
+        }
     }
-    this.move(x, y);
+
+    this.move(coor.x, coor.y);
 };
 
 Entity.prototype.attack = function(enemy) {
@@ -158,7 +169,7 @@ Entity.prototype.distance = function(coordinates) {
     var dify = y - y1;
     var dist = Math.sqrt(difx * difx + dify * dify);
     return dist;
-}
+};
 
 /**
  * This sets the "visible" property of the entity sprite
