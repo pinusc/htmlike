@@ -77,6 +77,7 @@ map.prototype.loadMap = function(){
     this.level[0].resizeWorld();
     this.level[1].resizeWorld();
 
+
     //generate level mask
     for(var l = 0; l < this.level.length; l++){
         for(var i = 0; i < this.map.width; i++){
@@ -102,14 +103,12 @@ map.prototype.loadMap = function(){
                   [0,  1, -1,  0,  0, -1,  1,  0],
                   [0,  1,  1,  0,  0, -1, -1,  0],
                   [1,  0,  0,  1, -1,  0,  0, -1] ];
-    this.light = [];
-    for(var i = 0; i < this.getHeight(); i++){
-        var c = [];
-        for (var j = 0; j < this.getWidth(); j++){
-            c.push(0);
-        }
-        this.light.push(c);
-    }
+    this.light = _.range(this.getHeight()).map(function () {
+        // Create one row
+        return _.range(this.getWidth()).map(function () {
+            return 0;
+        });
+    }, this);
     this.flag = 1;
     console.log("loadmap ended");
     return;
