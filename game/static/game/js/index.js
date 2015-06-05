@@ -160,37 +160,35 @@ function toggleDebug() {
  * @return {undefinded}
  */
 function myUpdate(){
-    var width = m.light.length;
-    var height = m.light[0].length;
     var ll = m.level.length;
-    for (var e = 0; e < m.entitiesL.length; e++) {
-        m.entitiesL[e].act();
-    }
+    _.each(m.entitiesL, function(en){
+        en.act();
+    });
     // iterate through every level of the map
     m.do_fov(m.player.posx, m.player.posy, 5);
-    for(var i = 0; i < width; i++){
-        for(var j = 0; j < height; j++){
+
+    _.each(m.light, function(el, i){
+        _.each(el, function(v, j){
             var q = 0;
-            var curr = m.light[i][j];
-            if(curr === m.flag){
+            if(v === m.flag){
                 q = 1;
-            } else if(curr === m.flag - 1){
+            } else if (v === m.flag -1){
                 q = 0.5;
             }
 
-            if (q){
-                for(var l = 0; l < m.level.length; l++){
+            if(q){
+                _.each(m.level, function(f, l){
                     var currTile = m.map.getTile(j, i, l);
                     if(currTile){
                         currTile.alpha = q;
                     }
-                }
+                }, this);
             }
-        }
-    }
-    for(var l = 0; l < m.level.length; l++) {
-        m.level[l].dirty = true;
-    }
+        }, this);
+    });
+    _.each(m.level, function(level){
+        level.dirty = true;
+    });
     m.map.getTile(m.player.posx, m.player.posy, 0).alpha = 0.5;
     yellow_border.x = m.player.posx * gdim;
     yellow_border.y = m.player.posy * gdim;
