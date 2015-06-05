@@ -63,20 +63,11 @@ function create() {
 
 function update() {
     m.player.image.body.setZeroVelocity();
+    handleKeys();
 
-    if (cursors.left.isDown) {
-        move(-m.player.pixelSpeed, 0, m.player.image.body);
-    } else if (cursors.right.isDown) {
-        move(m.player.pixelSpeed, 0, m.player.image.body);
+    if(game.device !== desktop){  // joystick is needed on mobile only
+        handleJoystick();
     }
-
-    if (cursors.up.isDown) {
-        move(0, -m.player.pixelSpeed, m.player.image.body);
-    } else if (cursors.down.isDown) {
-        move(0, m.player.pixelSpeed, m.player.image.body);
-    }
-
-    handleJoystick();
 
     m.player.update();
 }

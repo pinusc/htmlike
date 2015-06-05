@@ -1,44 +1,17 @@
 var maxJoystickDistance;
 
 function handleKeys(e){
-    /**
-    * Takes care of any key event.
-    * If an arrow is pressed, moves the player in the given direction
-    * If Enter is pressed, heals the player
-    * F3: toggle debug info
-    */
-    player = m.player;  //much less ugly than repeating it
-    switch (e.which) {
-        case 37: // left arrow
-        player.move(player.posx - 1, player.posy);
-        break;
-
-        case 38: // up arrow
-        player.move(player.posx, player.posy - 1);
-        break;
-
-        case 39: // right arrow
-        player.move(player.posx + 1, player.posy);
-        break;
-
-        case 40: // down arrow
-        player.move(player.posx, player.posy + 1);
-        break;
-
-        case 13: //enter
-        player.heal(1);
-        break;
-
-        case 51:
-        toggleDebug();
-        break;
-
-        default:
-        console.log("Key pressed: " + e.which);
-        break;
+    if (cursors.left.isDown) {
+        move(-m.player.pixelSpeed, 0, m.player.image.body);
+    } else if (cursors.right.isDown) {
+        move(m.player.pixelSpeed, 0, m.player.image.body);
     }
 
-    myUpdate();
+    if (cursors.up.isDown) {
+        move(0, -m.player.pixelSpeed, m.player.image.body);
+    } else if (cursors.down.isDown) {
+        move(0, m.player.pixelSpeed, m.player.image.body);
+    }
 }
 
 function handleTap(){
