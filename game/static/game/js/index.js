@@ -6,7 +6,6 @@ var toDebug = false, dbl = [];
 var cursors;  // the arrow keys
 var yellow_border; // used in debug to see player position
 var globSpeed = 100;  // GLOBalSPEED
-var joystick_ball, joystick_base;  // joystick_base is the grey circle, joystick_ball the red circle
 
 /**
  * The only thing this does is to create  a new Phaser.Game object and assign it to game
@@ -99,6 +98,7 @@ function preload() {
     game.load.image('fullscreen_button', '/static/game/assets/fullscreen_button.png');
     game.load.image('yellow_border', '/static/game/assets/yellow_border.png');
     game.load.image('controller_ball', '/static/game/assets/controller_ball.png');
+    game.load.image('controller_ball_blue', '/static/game/assets/controller_ball_r.png');
     game.load.image('controller_base', '/static/game/assets/controller_base.png');
 
     game.load.image("tiles", "/static/game/assets/tileset.png");

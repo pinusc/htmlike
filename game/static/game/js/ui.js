@@ -16,15 +16,27 @@ function createUI()
     fbutton.onInputDown.add(fbutton_down, this);
     fbutton.fixedToCamera = true;
 
-    /* joystick */
-    joystick_base = game.add.sprite(0, 0, 'controller_base');
-    joystick_base.alpha = 0.5;
-	joystick_base.visible = false;
-	joystick_base.fixedToCamera = true;
-	maxJoystickDistance = joystick_base.width / 2;  // radius of the ball
+    /* joystick l*/
+    joystick_base_l = game.add.sprite(0, 0, 'controller_base');
+    joystick_base_l.alpha = 0.5;
+	joystick_base_l.visible = false;
+	joystick_base_l.fixedToCamera = true;
+	maxJoystickDistance_l = joystick_base_l.width / 2;  // radius of the ball
 
-    joystick_ball = game.add.image(0, 0, 'controller_ball');
-    joystick_ball.alpha = 0.5;
-    joystick_ball.fixedToCamera = true;
-	joystick_ball.visible = false;
+    joystick_ball_l = game.add.image(0, 0, 'controller_ball');
+    joystick_ball_l.alpha = 0.5;
+    joystick_ball_l.fixedToCamera = true;
+	joystick_ball_l.visible = false;
+
+    /* joystick r*/
+    joystick_base_r = game.add.sprite(0, 0, 'controller_base');
+    joystick_base_r.alpha = 0.5;
+    joystick_base_r.visible = false;
+    joystick_base_r.fixedToCamera = true;
+    maxJoystickDistance_r = joystick_base_r.width / 2;  // radius of the ball
+
+    joystick_ball_r = game.add.image(0, 0, 'controller_ball_blue');
+    joystick_ball_r.alpha = 0.5;
+    joystick_ball_r.fixedToCamera = true;
+    joystick_ball_r.visible = false;
 }
