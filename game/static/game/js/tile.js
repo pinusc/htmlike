@@ -6,6 +6,7 @@
  * @param {bool} block [If true, entities can not step on block]
  */
 function Tile(image, posx, posy, block){
+	Thing.call(this);
     this.block = block || false;
     posx = posx || 0;
     posy = posy || 0;

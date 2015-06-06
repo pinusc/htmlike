@@ -1,4 +1,5 @@
 function Item(image, x, y){
+    Thing.call(this);
     x = x || 0;
     y = y || 0;
     this.image = game.add.sprite(0, 0, image);

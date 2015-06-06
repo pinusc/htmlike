@@ -7,6 +7,7 @@ function Entity(image, x, y){
     * Phaser.Sprite() image;
     * int maxhp;
     */
+    Thing.call(this);
     x = x || 0;
     y = y || 0;
     this.image = game.add.sprite(0, 0, image);
