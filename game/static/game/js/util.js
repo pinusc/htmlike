@@ -24,3 +24,22 @@ function distance(coord1, coord2) {
     var dist = Math.sqrt(difx * difx + dify * dify);
     return dist;
 }
+
+
+function direction(x1, y1, x2, y2){
+    var xdiff = Math.abs(x1 - x2);
+    var ydiff = Math.abs(y1 - y2);
+    if (xdiff > ydiff){
+        if (x1 > x2){
+            return "right"
+        } else {
+            return "left"
+        }
+    } else {
+        if (y1 > y2){
+            return "down"
+        } else {
+            return "up"
+        }
+    }
+}
