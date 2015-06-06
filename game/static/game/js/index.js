@@ -50,13 +50,14 @@ function create() {
     game.input.onUp.add(handleUp);
 
     createUI();
+    createKeys();
 
     myUpdate();
-    cursors = game.input.keyboard.createCursorKeys();
 }
 
 function update() {
     m.player.image.body.setZeroVelocity();
+
     handleKeys();
 
     if(! game.device.desktop){  // joystick is needed on mobile only

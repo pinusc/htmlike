@@ -1,5 +1,11 @@
 var maxJoystickDistance;
 
+function createKeys(){
+    //movement arrows
+    cursors = game.input.keyboard.createCursorKeys();
+}
+
+
 function handleKeys(e){
     if (cursors.left.isDown) {
         move(-m.player.pixelSpeed, 0, m.player.image.body);
