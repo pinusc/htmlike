@@ -3,6 +3,7 @@ function map() { //todo rename to level
     this.level = [[], []];
     this.itemsL = [];  //DijkistraMap
     this.entitiesL = [];
+    this.time = new Time();
 }
 
 /**

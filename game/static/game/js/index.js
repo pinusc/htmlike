@@ -51,7 +51,7 @@ function create() {
 
     createUI();
 
-    myUpdate();
+    m.time.myUpdate();
 }
 
 function update() {

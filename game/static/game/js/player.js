@@ -91,7 +91,7 @@ Player.prototype.update = function(){
     }
     this.posx = posx;
     this.posy = posy;
-    myUpdate();
+    m.time.myUpdate();
     //console.log("image.x: " + this.image.x, ", image.y: " + this.image.y);
     //console.log("x: ", + x + ", y: " + y);
     //console.log("posx: " + posx + ", posy: " + posy);

@@ -12,6 +12,7 @@ function Entity(image, x, y){
     this.maxhp = this.hp;
     this.isEntity = true;
     this.render();
+    this.speed = 10;
 }
 Entity.prototype = Thing.prototype; // let Entity subclass Thing
 
@@ -54,9 +55,6 @@ Entity.prototype.act = function() {
     * For now, it's simply "chase the player" using a very naive algorithm
     * If the entity bumps in the player, it attack it (implemented in move())
     */
-
-    this.update();
-
     var x = this.posx, y = this.posy;
     var curr = 0, coor = {x: x, y: y};
     for(var i = x-1; i <= x+1; i++){

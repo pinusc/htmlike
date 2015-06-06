@@ -3,12 +3,30 @@ function Time(){
 }
 
 Time.prototype.advanceWorld = function(){
+	this.tick++;
 	_.each(m.entitiesL, function(entity){
-		if (this.tick % entity.speed === 0){
+		if ((this.tick % entity.speed) === 0){
 			entity.act();
+			entity.update();
 		}
-	});
+	}, this);
+
+	if((this.tick % m.player.speed) === 0){
+		return;
+	} else {
+		this.advanceWorld();
+	}
 };
+
+Time.prototype.updateWorld = function(){
+    _.each(m.itemsL, function(item){
+        item.update();
+    });
+
+    _.each(m.entitiesL, function(entity){
+    	entity.update();
+    })
+}
 
 /**
  * This  is called at every move and:
@@ -16,15 +34,11 @@ Time.prototype.advanceWorld = function(){
  * - update FOV
  * @return {undefinded}
  */
-function myUpdate(){
+Time.prototype.myUpdate = function(){
     var ll = m.level.length;
-    _.each(m.entitiesL, function(en){
-        en.act();
-    });
+    m.time.updateWorld();
+    m.time.advanceWorld();
 
-    _.each(m.itemsL, function(item){
-        item.update();
-    });
     // iterate through every level of the map
     m.do_fov(m.player.posx, m.player.posy, 5);
 

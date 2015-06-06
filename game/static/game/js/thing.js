@@ -40,7 +40,6 @@ Thing.prototype.render = function() {
     }
     this.image.x = x;
     this.image.y = y;
-
 };
 
 /**

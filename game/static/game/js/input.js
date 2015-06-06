@@ -157,6 +157,7 @@ function handleJoystick(){
         move(xVelocity, yVelocity, m.player.image.body);
     } else {
         m.player.interact(direction(joystick_ball.cameraOffset.x, joystick_ball.cameraOffset.y, baseCenterX, baseCenterY));
+        m.time.myUpdate();
     }
 }
 
