@@ -1,10 +1,16 @@
 var maxJoystickDistance;
 
+/**
+ * Just creates cursor keys
+ */
 function createKeys(){
     //movement arrows
     cursors = game.input.keyboard.createCursorKeys();
 }
 
+/**
+ * Call handleKeys and if necessary handleJoystick
+ */
 function handleInput(){
     handleKeys();
 
@@ -13,8 +19,13 @@ function handleInput(){
     }
 }
 
-
-function handleKeys(e){
+/**
+ * Checks for keypresses and execute desired action.
+ * Currently implemented: 
+ * - arrow keys(for movement)
+ * - g key (for picking up items)
+ */
+function handleKeys(){
     if (cursors.left.isDown) {
         move(-m.player.pixelSpeed, 0, m.player.image.body);
     } else if (cursors.right.isDown) {
@@ -31,9 +42,14 @@ function handleKeys(e){
     }
 }
 
+/** Actually does nothing (for now) */
 function handleTap(){
 }
 
+/**
+ * When pointer1 is down...
+ * Just makes the joystick visible
+ */
 function handleDown(){
     if(! game.device.desktop){  // joystick is needed on mobile only
         joystick_base.visible = true;
@@ -46,6 +62,7 @@ function handleDown(){
     }
 }
 
+/** Hides the joystick if the screen is not being pressed */
 function handleUp(){
     if(joystick_ball.visible || joystick_base.visible){
         joystick_base.visible = false;
@@ -53,6 +70,7 @@ function handleUp(){
     }
 }
 
+/** Toggles fullscreen */
 function gofull() {
     if (game.scale.isFullScreen){
         game.scale.stopFullScreen();
@@ -61,10 +79,12 @@ function gofull() {
     }
 }
 
+/** Handler for dbutton presses, toggles debug */
 function dbutton_down(){
     toggleDebug();
 }
 
+/** handler for fbutton presses, toggles fullscreen */
 function fbutton_down(){
     gofull();
 }
@@ -93,7 +113,6 @@ function handleJoystick(){
     }
     var xVelocity = xOffset / maxJoystickDistance * m.player.pixelSpeed;
     var yVelocity = yOffset / maxJoystickDistance * m.player.pixelSpeed;
-    //console.log("xVelocity: " + xVelocity + ", yVelocity: " + yVelocity);
     move(xVelocity, yVelocity, m.player.image.body);
 }
 
