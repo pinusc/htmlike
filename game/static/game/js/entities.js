@@ -56,12 +56,11 @@ Entity.prototype.act = function() {
     * If the entity bumps in the player, it attack it (implemented in move())
     */
     var x = this.posx, y = this.posy;
-    var curr = 0, coor = {x: x, y: y};
+    var curr = m.DKMap[x][y], coor = {x: x, y: y};
     for(var i = x-1; i <= x+1; i++){
         for(var j = y-1; j <= y+1; j++){
-            if(m.light[j][i] > curr){
-                curr = m.light[j][i];
-                console.log(curr);
+            if(m.DKMap[i][j] >= 0 && m.DKMap[i][j] < curr){
+                curr = m.DKMap[i][j];
                 coor = {x: i, y: j};
             }
         }

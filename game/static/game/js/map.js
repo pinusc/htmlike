@@ -4,6 +4,7 @@ function map() { //todo rename to level
     this.itemsL = [];  //DijkistraMap
     this.entitiesL = [];
     this.time = new Time();
+    this.DKMap = []
 }
 
 /**
@@ -61,6 +62,15 @@ map.prototype.loadMap = function(){
             return 0;
         });
     }, this);
+
+    this.DKMap = _.range(this.getHeight()).map(function () {
+        // Create one row
+        return _.range(this.getWidth()).map(function () {
+            return 0;
+        });
+    }, this);
+
+
     this.flag = 1;
     console.log("loadmap ended");
     return;
@@ -178,4 +188,52 @@ map.prototype.do_fov = function(x, y, radius){
             this.mult[0][oct], this.mult[1][oct],
             this.mult[2][oct], this.mult[3][oct], 0);
     }
+};
+
+
+map.prototype.generateDKMap = function(){
+    for(var kx = 0; kx < this.DKMap.length; kx++){
+        for(var ky = 0; ky < this.DKMap[0].length; ky++){
+            if(this.map.getTile(kx, ky, 1)){
+                this.DKMap[kx][ky] = -1;
+            } else {
+                this.DKMap[kx][ky] = 100;
+            }
+        }
+    }
+    this.DKMap[this.player.posx][this.player.posy] = 0;  // the player is the only goal
+
+    var changed = false;
+    do {
+        changed = false;
+        for(var x = 0; x < this.DKMap.length; x++){
+            for(var y = 0; y < this.DKMap[0].length; y++){
+                var curr = this.DKMap[x][y];
+                if (curr <= 0){
+                    continue;
+                }
+                var lowest = curr;
+                for(var i = x - 1; i <= x + 1; i++){
+                    for(var j = y - 1; j <= y + 1; j++){
+                        if(i >= 0 && j >= 0 &&
+                            i < this.DKMap.length && j < this.DKMap[0].length){
+
+                            var icurr = this.DKMap[i][j];
+
+                            if(icurr < 0){ // solid block0
+                                continue;
+                            } else if(icurr < lowest){
+                                lowest = icurr;
+                            }
+                        }
+                    }
+                }
+                if(lowest <= curr - 2){
+                    this.DKMap[x][y] = lowest + 1;
+                    changed = true;
+                }
+            }
+        }
+    } while (changed);
+    console.log(this.DKMap)
 };

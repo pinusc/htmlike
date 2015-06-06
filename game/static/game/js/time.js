@@ -36,6 +36,7 @@ Time.prototype.updateWorld = function(){
  */
 Time.prototype.myUpdate = function(){
     var ll = m.level.length;
+    m.generateDKMap();
     m.time.updateWorld();
     m.time.advanceWorld();
 
