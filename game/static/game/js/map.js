@@ -1,24 +1,15 @@
-/* The level is composed by many grids.
-* Ex. level[0] contains grass
-*     level[1] contains walls
-* They are rendered in order, so that level[1] overrides level[0];
-* trasparency will work however;
-*/
-
-var ox = 6, oy = 4; //Where the player is located repect the screen
-
+/** The map contains tilemap, player, entities and items */
 function map() { //todo rename to level
-    /**
-    * This is the constructor for the map object that will contain every tile in the game.
-    */
     this.level = [[], []];
     this.itemsL = [];  //DijkistraMap
     this.entitiesL = [];
 }
 
 /**
- * Make an AJAX request that will return the map, then call parseLevel() to have it parsed
- * @return {[type]} [description]
+ * Make an AJAX request  to get map, then actyally create it by calling game.add.tilemap
+ * Instantiate base entities and objects, including player
+ * Set all tiles of the map to be hidden
+ * @return undefined
  */
 map.prototype.loadMap = function(){
     var that = this;
@@ -36,6 +27,8 @@ map.prototype.loadMap = function(){
     this.level[1] = this.map.createLayer('walls');
     this.level[0].resizeWorld();
     this.level[1].resizeWorld();
+    this.map.setCollisionBetween(1, this.map.tiles.length, true, 'walls');
+    game.physics.p2.convertTilemap(this.map, 'walls');
 
 
     // set all level tiles to not visible
@@ -55,9 +48,6 @@ map.prototype.loadMap = function(){
     this.player = new Player('greeny');
     this.entitiesL[0] = new Entity('princess', 12, 2);
     this.itemsL.push(new Item('potion', 20, 20));
-    console.log(this.map.tiles.length);
-    this.map.setCollisionBetween(1, this.map.tiles.length, true, 'walls');
-    game.physics.p2.convertTilemap(this.map, 'walls');
 
     /* FOV code */
     this.mult = [ [1,  0,  0, -1, -1,  0,  0,  1],
@@ -76,7 +66,6 @@ map.prototype.loadMap = function(){
 };
 
 /**
- * [To get the width of the map]
  * @return {int} [The width of the map in tiles]
  */
 map.prototype.getWidth = function() {
@@ -84,7 +73,6 @@ map.prototype.getWidth = function() {
 };
 
 /**
- * [To get the height of the map]
  * @return {int} [The height of the map in tiles]
  */
 map.prototype.getHeight = function() {
@@ -97,15 +85,27 @@ map.prototype.square = function(x, y){
     return this.map.getTile(x, y, 1);
 };
 
+/**
+ * To know if a tille blocks the view or not
+ * @param  int x x coordinate in tiles
+ * @param  int y y coord in tiles
+ * @return bool
+ */
 map.prototype.blocked = function(x, y){
     return (x < 0 || y < 0 ||
             x >= this.getWidth() || y >= this.getHeight() ||
             this.map.getTile(x, y, 1));
 };
 
+/**
+ * @param  int x x coordinate in tiles
+ * @param  int y y coord in tiles
+ * @return bool The tile is currently visible
+ */
 map.prototype.lit = function(x, y){
     return this.light[y][x] === this.flag;
 };
+
 
 map.prototype.set_lit = function(x, y){
     if(0 <= x && x < this.getWidth() && 0 <= y && y < this.getHeight()){
@@ -113,6 +113,10 @@ map.prototype.set_lit = function(x, y){
     }
 };
 
+/**
+ * The core of the FOV algorithm
+ * Uses recursive shadowcasting to accomplish Line of Sight
+ */
 map.prototype.cast_light = function(cx, cy, row, start, end, radius, xx, xy, yx, yy, id){
     var new_start;
     if(start < end){
@@ -158,6 +162,13 @@ map.prototype.cast_light = function(cx, cy, row, start, end, radius, xx, xy, yx,
     }
 };
 
+/**
+ * Call this to compute FOV
+ * @param  int x [the coordinate to start at]
+ * @param  int y [the coordinate to start at]
+ * @param  int radius [How many tiles the player can see]
+ * @return undefined
+ */
 map.prototype.do_fov = function(x, y, radius){
     console.log("do:fov");
     this.flag += 1;
