@@ -29,13 +29,13 @@ function createUI()
 	joystick_ball_l.visible = false;
 
     /* joystick r*/
-    joystick_base_r = game.add.sprite(0, 0, 'controller_base');
+    joystick_base_r = game.add.sprite(0, 0, 'controller_base_r');
     joystick_base_r.alpha = 0.5;
     joystick_base_r.visible = false;
     joystick_base_r.fixedToCamera = true;
     maxJoystickDistance_r = joystick_base_r.width / 2;  // radius of the ball
 
-    joystick_ball_r = game.add.image(0, 0, 'controller_ball_blue');
+    joystick_ball_r = game.add.image(0, 0, 'controller_ball_r');
     joystick_ball_r.alpha = 0.5;
     joystick_ball_r.fixedToCamera = true;
     joystick_ball_r.visible = false;

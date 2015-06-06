@@ -98,8 +98,9 @@ function preload() {
     game.load.image('fullscreen_button', '/static/game/assets/fullscreen_button.png');
     game.load.image('yellow_border', '/static/game/assets/yellow_border.png');
     game.load.image('controller_ball', '/static/game/assets/controller_ball.png');
-    game.load.image('controller_ball_blue', '/static/game/assets/controller_ball_r.png');
+    game.load.image('controller_ball_r', '/static/game/assets/controller_ball_r.png');
     game.load.image('controller_base', '/static/game/assets/controller_base.png');
+    game.load.image('controller_base_r', '/static/game/assets/controller_base_r.png');
 
     game.load.image("tiles", "/static/game/assets/tileset.png");
 }
