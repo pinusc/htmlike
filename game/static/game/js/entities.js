@@ -111,3 +111,27 @@ Entity.prototype.die = function() {
     m.entitiesL.splice(m.entitiesL.indexOf(this), 1);
     this.image.destroy(true);
 };
+
+Entity.prototype.interact = function(direction){
+    var toInteractX = this.posx, toInteractY = this.posy;
+    switch(direction){
+        case "up":
+            toInteractY -= 1;
+            break;
+        case "down":
+            toInteractY += 1;
+            break;
+        case "left":
+            toInteractX -= 1;
+            break;
+        case "right":
+            toInteractX += 1;
+            break;
+    }
+    var en = _.find(m.entitiesL, function(en) {
+        return en.posx === toInteractX && en.posy === toInteractY;
+    })
+    if (en){
+        this.attack(en);
+    }
+}
