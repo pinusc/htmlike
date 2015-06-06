@@ -79,14 +79,15 @@ function handleJoystick(){
     var xdiff = point.x - baseCenterX;
     var ydiff = point.y - baseCenterY;
     var dis = Math.sqrt(xdiff*xdiff + ydiff*ydiff);
+    var xOffset, yOffset;
     if (dis > maxJoystickDistance){
-        var xOffset = maxJoystickDistance * xdiff / dis; // dis : maxJoystickDistance = xdiff : xOffset
-        var yOffset = maxJoystickDistance * ydiff / dis;
+        xOffset = maxJoystickDistance * xdiff / dis; // dis : maxJoystickDistance = xdiff : xOffset
+        yOffset = maxJoystickDistance * ydiff / dis;
         joystick_ball.cameraOffset.x = baseCenterX + xOffset - joystick_ball.width/ 2;
         joystick_ball.cameraOffset.y = baseCenterY + yOffset - joystick_ball.height / 2;
     } else {
-        var xOffset = xdiff;
-        var yOffset = ydiff;
+        xOffset = xdiff;
+        yOffset = ydiff;
         joystick_ball.cameraOffset.x = point.x - joystick_ball.height / 2;
         joystick_ball.cameraOffset.y = point.y - joystick_ball.width / 2;
     }
