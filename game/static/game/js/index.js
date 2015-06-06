@@ -1,12 +1,12 @@
-var context, frame_height_px, frame_width_px, frame_height, frame_width;
+var frame_height_px, frame_width_px, frame_height, frame_width;
 var game;
 var m = new map();
-var gdim = 32; // 12 is the original image size, 4 the scaling;
+var gdim = 32; // tile size, stands for GraphicDIMension
 var toDebug = false, dbl = [];
-var cursors;
+var cursors;  // the arrow keys
 var yellow_border; // used in debug to see player position
-var globSpeed = 100;
-var joystick_ball, joystick_base;
+var globSpeed = 100;  // GLOBalSPEED
+var joystick_ball, joystick_base;  // joystick_base is the grey circle, joystick_ball the red circle
 
 /**
  * The only thing this does is to create  a new Phaser.Game object and assign it to game
@@ -36,7 +36,6 @@ $(document).ready(function (){
  * @return {[type]} [description]
  */
 function create() {
-//    player = game.add.sprite(0, 0, 'greeny');
     game.physics.startSystem(Phaser.Physics.P2JS);
     m.loadMap();
     game.camera.follow(m.player.image);
@@ -44,21 +43,16 @@ function create() {
 
     yellow_border = game.add.image(0, 0, 'yellow_border');
     yellow_border.alpha = 0;
+
     //input
-    //$(document.body).on('keydown', handleKeys);
     game.input.onTap.add(handleTap);
     game.input.onDown.add(handleDown);
     game.input.onUp.add(handleUp);
 
     createUI();
-    //game.world.bringToTop(debug_button);
 
-    //fullscreen
-    game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
     myUpdate();
     cursors = game.input.keyboard.createCursorKeys();
-
-    game.add.plugin(Phaser.Plugin.Debug);
 }
 
 function update() {
