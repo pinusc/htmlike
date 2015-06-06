@@ -17,46 +17,6 @@ function map() { //todo rename to level
 }
 
 /**
- *  Parse the level contained in t and set the map's level
- * @param  {Array of String} t [Every String has the same length. If a character is a space, the tile generated will be empty. If is '#', the tile will be a block of dirt]
- * @return {undefined}
- */
-map.prototype.parseLevel = function(t) {
-    /**
-    * Parses the level contained in t and set the map's level to t.
-    * t is an array of strings where a space means nothing and a # means a block of dirt.
-    * In future this will be implemented in JSON or XML.
-    */
-    var i, j, l;
-
-    // initial level is grass only
-    for(l = 0; l < 1; l++){
-        var grid = this.level[l];
-        for(i = 0; i < 15; i++){  // TODO remove hardcoded 15
-            grid[i] = [];
-            for (j = 0; j < 15; j++) {
-                grid[i][j] = new Tile('grass', i, j);
-            }
-        }
-        this.level[l] = grid;
-    }
-
-    // read the map
-    for(i = 0; i < 15; i++){  // TODO remove hardcoded 15
-        l = [];
-        for (j = 0; j < 15; j++) {
-            if(t.t[i][j] === '#'){
-                l[j] = new Tile('dirt', i, j, true);
-            } else {
-                l[j] = null;
-            }
-            this.level[1][i] = l;
-        }
-    }
-    return;
-};
-
-/**
  * Make an AJAX request that will return the map, then call parseLevel() to have it parsed
  * @return {[type]} [description]
  */
