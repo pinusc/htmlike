@@ -111,11 +111,10 @@ function preload() {
 function renderDebug(){
     var x = 15;
     game.debug.text("DEBUG:", 10, x);
-    for(var i = 0; i < dbl.length; i++){
+    _.each(dbl, function(m){
         x += 15;
-        var m = dbl[i];
-        var temp = game.debug.text(m.text, 10, x, m.color);
-    }
+        game.debug.text(m.text, 10, x, m.color);
+    });
     dbl = [];  // clear debug list
 }
 
@@ -181,5 +180,4 @@ function myUpdate(){
     m.map.getTile(m.player.posx, m.player.posy, 0).alpha = 0.5;
     yellow_border.x = m.player.posx * gdim;
     yellow_border.y = m.player.posy * gdim;
-
 }
