@@ -45,25 +45,19 @@ function create() {
     yellow_border.alpha = 0;
 
     //input
+    createKeys();
     game.input.onTap.add(handleTap);
     game.input.onDown.add(handleDown);
     game.input.onUp.add(handleUp);
 
     createUI();
-    createKeys();
 
     myUpdate();
 }
 
 function update() {
     m.player.image.body.setZeroVelocity();
-
-    handleKeys();
-
-    if(! game.device.desktop){  // joystick is needed on mobile only
-        handleJoystick();
-    }
-
+    handleInput();
     m.player.update();
 }
 

@@ -5,6 +5,14 @@ function createKeys(){
     cursors = game.input.keyboard.createCursorKeys();
 }
 
+function handleInput(){
+    handleKeys();
+
+    if(! game.device.desktop){  // joystick is needed on mobile only
+        handleJoystick();
+    }
+}
+
 
 function handleKeys(e){
     if (cursors.left.isDown) {
@@ -24,44 +32,25 @@ function handleKeys(e){
 }
 
 function handleTap(){
-    console.log("handleTap()");
-    //if(game.input.pointer1.isMouse) return;
-
-    player = m.player;
-    /*if (Math.floor(game.input.pointer1.x/(this.game.width/3)) === 0) {
-        player.move(player.posx - 1, player.posy);
-    }
-
-    else if (Math.floor(game.input.pointer1.x/(this.game.width/3)) === 2) {
-        player.move(player.posx + 1, player.posy);
-    }
-    else if (Math.floor(game.input.pointer1.y/(this.game.height/3)) === 0) {
-        player.move(player.posx, player.posy - 1);
-    }
-
-    else if (Math.floor(game.input.pointer1.y/(this.game.height/3)) === 2) {
-        player.move(player.posx, player.posy + 1);
-    }
-
-    for (var i = 0; i < m.entitiesL.length; i++) {
-        m.entitiesL[i].act();
-    }*/
 }
 
 function handleDown(){
-    joystick_base.visible = true;
-    joystick_base.cameraOffset.x = game.input.x - joystick_base.height / 2;
-    joystick_base.cameraOffset.y = game.input.y - joystick_base.width / 2;
+    if(! game.device.desktop){  // joystick is needed on mobile only
+        joystick_base.visible = true;
+        joystick_base.cameraOffset.x = game.input.x - joystick_base.height / 2;
+        joystick_base.cameraOffset.y = game.input.y - joystick_base.width / 2;
 
-    joystick_ball.visible = true;
-    joystick_ball.cameraOffset.x = game.input.x - joystick_ball.height / 2;
-    joystick_ball.cameraOffset.y = game.input.y - joystick_ball.width / 2;
-    console.log(game.input.y);
+        joystick_ball.visible = true;
+        joystick_ball.cameraOffset.x = game.input.x - joystick_ball.height / 2;
+        joystick_ball.cameraOffset.y = game.input.y - joystick_ball.width / 2;
+    }
 }
 
 function handleUp(){
-    joystick_base.visible = false;
-    joystick_ball.visible = false;
+    if(joystick_ball.visible || joystick_base.visible){
+        joystick_base.visible = false;
+        joystick_ball.visible = false;
+    }
 }
 
 function gofull() {
