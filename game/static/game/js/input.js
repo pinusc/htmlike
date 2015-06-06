@@ -47,6 +47,8 @@ function handleKeys(){
     }
     if(game.input.keyboard.isDown(71)){  // g
         m.player.getItemOnGround();
+    } else if(game.input.keyboard.isDown(13)){
+        m.time.myUpdate();
     }
 }
 
