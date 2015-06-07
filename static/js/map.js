@@ -4,7 +4,8 @@ function map() { //todo rename to level
     this.itemsL = [];  //DijkistraMap
     this.entitiesL = [];
     this.time = new Time();
-    this.DKMap = []
+    this.DKMap = [];
+    this.loaded = false;
 }
 
 /**
@@ -13,17 +14,17 @@ function map() { //todo rename to level
  * Set all tiles of the map to be hidden
  * @return undefined
  */
-map.prototype.loadMap = function(){
+map.prototype.loadMap = function(t){
     var that = this;
 
     /*var t = $.ajax({  // TODO make this receive the map through ajax
         type: "GET",
         url: 'level',
         async: false
-    }).responseText;
-    t = JSON.parse(t).content;
-    game.load.tilemap('base', null, t, Phaser.Tilemap.TILED_JSON);*/
-    this.map = game.add.tilemap('tilemap');
+    }).responseText;*/
+    //t = JSON.parse(t).content;
+    game.load.tilemap('base', null, t, Phaser.Tilemap.TILED_JSON);
+    this.map = game.add.tilemap('base');
     this.map.addTilesetImage('tiles', 'tiles');
     this.level[0] = this.map.createLayer('ground');
     this.level[1] = this.map.createLayer('walls');
@@ -72,7 +73,7 @@ map.prototype.loadMap = function(){
 
 
     this.flag = 1;
-    console.log("loadmap ended");
+    this.loaded = true;
     return;
 };
 

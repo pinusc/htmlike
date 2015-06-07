@@ -6,6 +6,7 @@ var toDebug = false, dbl = [];
 var cursors;  // the arrow keys
 var yellow_border; // used in debug to see player position
 var globSpeed = 100;  // GLOBalSPEED
+var socket;
 
 /**
  * The only thing this does is to create  a new Phaser.Game object and assign it to game
@@ -23,7 +24,7 @@ $(document).ready(function (){
 
     // TODO see if Phaser can handle the size itself
     game = new Phaser.Game(frame_width_px, frame_height_px, Phaser.CANVAS, 'main',
-        { preload: preload, create: create, update: update, render: render });
+        { preload: preload, create: create, update: update, render:render});
 });
 
 
@@ -35,8 +36,17 @@ $(document).ready(function (){
  * @return {[type]} [description]
  */
 function create() {
+    socket = io.connect('http://localhost:5000/game');
+    socket.on('map', function(msg){
+        myCreate(msg);
+    });
+    game.paused = true;
+}
+
+function myCreate(jMap){
+    console.log(jMap);
     game.physics.startSystem(Phaser.Physics.P2JS);
-    m.loadMap();
+    m.loadMap(jMap);
     game.camera.follow(m.player.image);
     m.player.fixedToCamera = true;
 
@@ -52,6 +62,8 @@ function create() {
     createUI();
 
     m.time.myUpdate();
+    //socket.send("ciao");
+    game.paused = false;
 }
 
 function update() {
