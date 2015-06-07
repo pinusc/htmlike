@@ -16,14 +16,14 @@ function map() { //todo rename to level
 map.prototype.loadMap = function(){
     var that = this;
 
-    var t = $.ajax({  // TODO make this receive the map through ajax
+    /*var t = $.ajax({  // TODO make this receive the map through ajax
         type: "GET",
         url: 'level',
         async: false
     }).responseText;
     t = JSON.parse(t).content;
-    game.load.tilemap('base', null, t, Phaser.Tilemap.TILED_JSON);
-    this.map = game.add.tilemap('base');
+    game.load.tilemap('base', null, t, Phaser.Tilemap.TILED_JSON);*/
+    this.map = game.add.tilemap('tilemap');
     this.map.addTilesetImage('tiles', 'tiles');
     this.level[0] = this.map.createLayer('ground');
     this.level[1] = this.map.createLayer('walls');

@@ -82,27 +82,28 @@ function render() {
 function preload() {
     game.time.advancedTiming = true;  // to show fps
     /* entities */
-    game.load.image('heart', '/static/game/assets/hearth.png');
-    game.load.image('greeny', '/static/game/assets/character.png');
-    game.load.image('princess', '/static/game/assets/dragon.png');
+    game.load.image('heart', '/static/assets/hearth.png');
+    game.load.image('greeny', '/static/assets/character.png');
+    game.load.image('princess', '/static/assets/dragon.png');
 
     /* objects */
-    game.load.image('potion', '/static/game/assets/potion.png');
+    game.load.image('potion', '/static/assets/potion.png');
 
     /* tiles */
-    game.load.image('grass', '/static/game/assets/grass.png');
-    game.load.image('dirt', '/static/game/assets/dirt.png');
+    game.load.image('grass', '/static/assets/grass.png');
+    game.load.image('dirt', '/static/assets/dirt.png');
 
     /* ui */
-    game.load.image('debug_button', '/static/game/assets/debug_button.png');
-    game.load.image('fullscreen_button', '/static/game/assets/fullscreen_button.png');
-    game.load.image('yellow_border', '/static/game/assets/yellow_border.png');
-    game.load.image('controller_ball', '/static/game/assets/controller_ball.png');
-    game.load.image('controller_ball_r', '/static/game/assets/controller_ball_r.png');
-    game.load.image('controller_base', '/static/game/assets/controller_base.png');
-    game.load.image('controller_base_r', '/static/game/assets/controller_base_r.png');
+    game.load.image('debug_button', '/static/assets/debug_button.png');
+    game.load.image('fullscreen_button', '/static/assets/fullscreen_button.png');
+    game.load.image('yellow_border', '/static/assets/yellow_border.png');
+    game.load.image('controller_ball', '/static/assets/controller_ball.png');
+    game.load.image('controller_ball_r', '/static/assets/controller_ball_r.png');
+    game.load.image('controller_base', '/static/assets/controller_base.png');
+    game.load.image('controller_base_r', '/static/assets/controller_base_r.png');
 
-    game.load.image("tiles", "/static/game/assets/tileset.png");
+    game.load.image("tiles", "/static/assets/tileset.png");
+    game.load.tilemap("tilemap", "/static/assets/map.json", null, Phaser.Tilemap.TILED_JSON);
 }
 
 /**

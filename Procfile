@@ -1,1 +1,1 @@
-web: gunicorn htmlike.wsgi --log-file -
+web: gunicorn main:app --log-file=-
