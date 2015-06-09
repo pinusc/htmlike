@@ -50,7 +50,7 @@ map.prototype.loadMap = function(t){
 
     this.player = new Player('greeny');
     this.entitiesL[0] = new Entity('princess', 12, 2);
-    this.itemsL.push(new Item('potion', 20, 20));
+    this.itemsL.push(new Items.Potion('potion', 20, 20));
 
     /* FOV code */
     this.mult = [ [1,  0,  0, -1, -1,  0,  0,  1],
