@@ -3,8 +3,6 @@ var game;
 var m = new map();
 var gdim = 32; // tile size, stands for GraphicDIMension
 var toDebug = false, dbl = [];
-var cursors;  // the arrow keys
-var yellow_border; // used in debug to see player position
 var globSpeed = 100;  // GLOBalSPEED
 var socket;
 

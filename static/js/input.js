@@ -1,8 +1,7 @@
 var maxJoystickDistance_l;
 var maxJoystickDistance_r;
-var joystick_ball_l, joystick_base_l;  // joystick_base is the grey circle, joystick_ball the red circle
-var joystick_ball_r, joystick_base_r;  // joystick_base is the grey circle, joystick_ball the red circle
 var joystick_l_down = false, joystick_r_down = false;
+var cursors;  // the arrow keys
 
 /**
  * Just creates cursor keys

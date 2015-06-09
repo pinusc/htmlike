@@ -1,3 +1,7 @@
+var joystick_ball_l, joystick_base_l;  // joystick_base is the grey circle, joystick_ball the red circle
+var joystick_ball_r, joystick_base_r;  // joystick_base is the grey circle, joystick_ball the blue circle
+var yellow_border; // used in debug to see player position
+
 function createUI()
 {
     //enable fullscreen
