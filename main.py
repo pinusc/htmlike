@@ -1,10 +1,10 @@
 from flask import Flask, render_template
-from flask.ext.socketio import SocketIO, emit
+from flask_sockets import Sockets
 import json
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'secret!'
-socketio = SocketIO(app)
+sockets = Sockets(app)
+# app.config['SECRET_KEY'] = 'secret!'
 
 
 @app.route("/")
@@ -12,16 +12,12 @@ def hello():
     return render_template('index.html')
 
 
-@socketio.on('message', namespace="/game")
-def handle_message(message):
-    print('received message: ' + str(message))
-
-
-@socketio.on('connect', namespace="/game")
-def test_connect():
+# @socketio.on('connect', namespace="/game")
+@sockets.route('/game')
+def test_connect(ws):
     with open('static/assets/map.json', 'r') as f:
         m = f.read()
-    emit('map', json.loads(m))
-
-if __name__ == '__main__':
-    socketio.run(app)
+    j = json.loads(m)
+    with open('log', 'w') as f:
+        f.write(str(type(j)))
+    ws.send(m)
