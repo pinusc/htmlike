@@ -36,7 +36,7 @@ $(document).ready(function (){
  * @return {[type]} [description]
  */
 function create() {
-    socket = new WebSocket('ws://' + document.domain + ':' + location.port + '/game');
+    socket = new WebSocket('wss://' + document.domain + ':' + location.port + '/game');
     socket.onmessage = function(msg){
         myCreate(JSON.parse(msg.data));
     };
