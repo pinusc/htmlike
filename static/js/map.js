@@ -9,20 +9,17 @@ function map() { //todo rename to level
 }
 
 /**
- * Make an AJAX request  to get map, then actyally create it by calling game.add.tilemap
+ * This method is a callback made when a new map object is received.
  * Instantiate base entities and objects, including player
- * Set all tiles of the map to be hidden
+ * Set all tiles of the map to be hidden, sets collisions
+ * Creates the first DKMap
+ * @parameter OBject t the tilemap to be loaded
  * @return undefined
  */
 map.prototype.loadMap = function(t){
     var that = this;
 
-    /*var t = $.ajax({  // TODO make this receive the map through ajax
-        type: "GET",
-        url: 'level',
-        async: false
-    }).responseText;*/
-    //t = JSON.parse(t).content;
+    /* Create map */
     game.load.tilemap('base', null, t, Phaser.Tilemap.TILED_JSON);
     this.map = game.add.tilemap('base');
     this.map.addTilesetImage('tiles', 'tiles');
@@ -47,12 +44,14 @@ map.prototype.loadMap = function(t){
         } 
     }
 
-
+    /* entities and items */
+    // FIXME: make them be received by the map  
     this.player = new Player('greeny');
     this.entitiesL[0] = new Entity('princess', 12, 2);
-    this.itemsL.push(new Item('potion', 20, 20));
+    this.itemsL.push(new Items.Potion('potion', 20, 20));
 
     /* FOV code */
+    this.flag = 1;
     this.mult = [ [1,  0,  0, -1, -1,  0,  0,  1],
                   [0,  1, -1,  0,  0, -1,  1,  0],
                   [0,  1,  1,  0,  0, -1, -1,  0],
@@ -71,8 +70,6 @@ map.prototype.loadMap = function(t){
         });
     }, this);
 
-
-    this.flag = 1;
     this.loaded = true;
     return;
 };

@@ -3,8 +3,12 @@ var game;
 var m = new map();
 var gdim = 32; // tile size, stands for GraphicDIMension
 var toDebug = false, dbl = [];
+var cursors;  // the arrow keys
+var yellow_border; // used in debug to see player position
 var globSpeed = 100;  // GLOBalSPEED
 var socket;
+    
+var baseAssetsFolder = '/static/assets';
 
 /**
  * The only thing this does is to create  a new Phaser.Game object and assign it to game
@@ -92,28 +96,31 @@ function render() {
 function preload() {
     game.time.advancedTiming = true;  // to show fps
     /* entities */
-    game.load.image('heart', '/static/assets/hearth.png');
-    game.load.image('greeny', '/static/assets/character.png');
-    game.load.image('princess', '/static/assets/dragon.png');
+    game.load.image('heart', baseAssetsFolder + '/hearth.png');
+    game.load.image('greeny', baseAssetsFolder + '/character.png');
+    game.load.image('princess', baseAssetsFolder + '/dragon.png');
 
     /* objects */
-    game.load.image('potion', '/static/assets/potion.png');
+    game.load.image('potion', baseAssetsFolder + '/potion.png');
 
     /* tiles */
-    game.load.image('grass', '/static/assets/grass.png');
-    game.load.image('dirt', '/static/assets/dirt.png');
+    game.load.image('grass', baseAssetsFolder + '/grass.png');
+    game.load.image('dirt', baseAssetsFolder + '/dirt.png');
 
     /* ui */
-    game.load.image('debug_button', '/static/assets/debug_button.png');
-    game.load.image('fullscreen_button', '/static/assets/fullscreen_button.png');
-    game.load.image('yellow_border', '/static/assets/yellow_border.png');
-    game.load.image('controller_ball', '/static/assets/controller_ball.png');
-    game.load.image('controller_ball_r', '/static/assets/controller_ball_r.png');
-    game.load.image('controller_base', '/static/assets/controller_base.png');
-    game.load.image('controller_base_r', '/static/assets/controller_base_r.png');
+    game.load.image('debug_button', baseAssetsFolder + '/debug_button.png');
+    game.load.image('fullscreen_button', baseAssetsFolder + '/fullscreen_button.png');
+    game.load.image('yellow_border', baseAssetsFolder + '/yellow_border.png');
+    game.load.image('controller_ball', baseAssetsFolder + '/controller_ball.png');
+    game.load.image('controller_ball_r', baseAssetsFolder + '/controller_ball_r.png');
+    game.load.image('controller_base', baseAssetsFolder + '/controller_base.png');
+    game.load.image('controller_base_r', baseAssetsFolder + '/controller_base_r.png');
 
-    game.load.image("tiles", "/static/assets/tileset.png");
-    game.load.tilemap("tilemap", "/static/assets/map.json", null, Phaser.Tilemap.TILED_JSON);
+    /* icons */
+    game.load.image('bag', baseAssetsFolder + '/bag.png');
+
+    game.load.image('tiles', baseAssetsFolder + '/tileset.png');
+    game.load.tilemap('tilemap', baseAssetsFolder + "/map.json", null, Phaser.Tilemap.TILED_JSON);
 }
 
 /**
