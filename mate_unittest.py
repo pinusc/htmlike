@@ -52,5 +52,9 @@ def levenshtein(a,b):
             
     return current[n]
 
+
+def generate_map_json(matrix, tileset, Gk):
+    pass
+
 if __name__ == '__main__':
     unittest.main()

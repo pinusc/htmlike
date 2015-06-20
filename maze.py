@@ -1,5 +1,6 @@
 import random
 import sys
+import json
 
 def get_neighbour(matrix, x, y, direction, coor=False):
     xx, yy = x, y
@@ -95,6 +96,47 @@ def printMaze(a):
             else:
                 sys.stdout.write(' ')
         print
+
+def maze_to_json(maze):
+    height = len(maze)
+    width = len(maze[0])
+
+    groundTiles = range(1073, 1077)
+    wallTiles = range(1142, 1152)
+    with open("templates/map.json", 'r') as f:
+        jmap_str = f.read()
+    with open("templates/layer.json", 'r') as f:
+        jlayer_str = f.read()
+    jmap = json.loads(jmap_str)
+    jlayer0 = json.loads(jlayer_str)
+    layer0 = [random.choice(groundTiles) for i in range(width * height)]
+    jlayer0["data"] = layer0
+    jlayer0["height"] = height
+    jlayer0["width"] = width
+    jlayer0["name"] = "ground"
+
+    jlayer1 = json.loads(jlayer_str)
+    layer1 = []
+    for i in maze:
+        for j in i:
+            if j:
+                layer1.append(random.choice(wallTiles))
+            else:
+                layer1.append(0)
+    jlayer1["data"] = layer1
+    jlayer1["height"] = height
+    jlayer1["width"] = width
+    jlayer1["name"] = "walls"
+
+    jmap["height"] = height
+    jmap["width"] = width
+    jmap["layers"] = [jlayer0, jlayer1]
+
+    return jmap
+
+def generate_map(height, width):
+    return maze_to_json(generate_maze(height, width))
+
 
 if __name__ == '__main__':
     a = generate_maze(25, 25)

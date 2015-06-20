@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 from flask.ext.socketio import SocketIO, emit
 import json
+import maze
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
@@ -19,9 +20,12 @@ def handle_message(message):
 
 @socketio.on('connect', namespace="/game")
 def test_connect():
-    with open('static/assets/map.json', 'r') as f:
+    """with open('static/assets/map.json', 'r') as f:
         m = f.read()
     emit('map', json.loads(m))
+    """
+    emit('map', maze.generate_map(32, 32))
+    print "emitted"
 
 if __name__ == '__main__':
     socketio.run(app)

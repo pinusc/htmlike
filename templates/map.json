@@ -1,0 +1,24 @@
+{ "height":32,
+ "layers":[],
+ "nextobjectid":1,
+ "orientation":"orthogonal",
+ "properties":{},
+ "renderorder":"right-down",
+ "tileheight":32,
+ "tilesets":[
+        {
+         "firstgid":1,
+         "image":"tileset.png",
+         "imageheight":1536,
+         "imagewidth":2048,
+         "margin":0,
+         "name":"tiles",
+         "properties":{},
+         "spacing":0,
+         "tileheight":32,
+         "tilewidth":32
+        }],
+ "tilewidth":32,
+ "version":1,
+ "width":32
+}

@@ -1,3 +1,4 @@
+
 /** The map contains tilemap, player, entities and items */
 function map() { //todo rename to level
     this.level = [[], []];
@@ -48,7 +49,7 @@ map.prototype.loadMap = function(t){
     // FIXME: make them be received by the map  
     this.player = new Player('greeny');
     this.entitiesL[0] = new Entity('princess', 12, 2);
-    this.itemsL.push(new Items.Potion('potion', 20, 20));
+    this.itemsL.push(new Item('potion', 20, 20));
 
     /* FOV code */
     this.flag = 1;
