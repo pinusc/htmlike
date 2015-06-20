@@ -1,33 +1,36 @@
 import unittest
 from maze import *
 
-m = [[0, 1, 0, 1, 1, 1],
-     [0, 1, 0, 0, 0, 1],
+m = [[0, 1, 1, 1, 1, 1],
+     [0, 1, 1, 0, 0, 1],
      [0, 1, 1, 1, 0, 1],
      [0, 0, 0, 1, 0, 0],
      [0, 1, 0, 1, 0, 1],
      [0, 1, 0, 0, 0, 0]]
 
 class MazeTest(unittest.TestCase):
-	def test(self):
-		self.assertEqual(adj(m, 4, 3), (True, True, True, False))
+    def test_adjacencies(self):
+        self.assertEqual(adjacencies(m, 4, 3), (True, True, True, False))
 
-	def test_edit_distance(self):
-		m1 = [i[:] for i in m]
-		m1[3][3] = False
-		m1[3][4] = True
-		self.assertEqual(edit_distance(m, m1), 2)
+    def test_adj(self):
+        self.assertEqual(adj(m, 1, 3), (False, True, True, False))
 
-	def test_carve(self):
-		m1 = [i[:] for i in m]
-		carve(m1, 4, 3)
-		self.assertEqual(edit_distance(m, m1), 1)
+    def test_edit_distance(self):
+        m1 = [i[:] for i in m]
+        m1[3][3] = False
+        m1[3][4] = True
+        self.assertEqual(edit_distance(m, m1), 2)
+
+    def test_carve(self):
+        m1 = [i[:] for i in m]
+        carve(m1, 1, 3)
+        self.assertEqual(edit_distance(m, m1), 1)
 
 def edit_distance(a, b):
-	changes = 0
-	for i in range(len(a)):
-		changes += levenshtein(a[i], b[i])
-	return changes
+    changes = 0
+    for i in range(len(a)):
+        changes += levenshtein(a[i], b[i])
+    return changes
 
 def levenshtein(a,b):
     "Calculates the Levenshtein distance between a and b."
@@ -50,4 +53,4 @@ def levenshtein(a,b):
     return current[n]
 
 if __name__ == '__main__':
-	unittest.main()
+    unittest.main()
