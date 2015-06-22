@@ -1,17 +1,19 @@
-function Time(){
+function Time(map){
+    this.map = map
+    this.box = map.box;
 	this.tick = 0;
 }
 
 Time.prototype.advanceWorld = function(){
 	this.tick++;
-	_.each(box.m.entitiesL, function(entity){
+	_.each(this.map.entitiesL, function(entity){
 		if ((this.tick % entity.speed) === 0){
 			entity.act();
 			entity.update();
 		}
 	}, this);
 
-	if((this.tick % box.m.player.speed) === 0){
+	if((this.tick % this.map.player.speed) === 0){
 		return;
 	} else {
 		this.advanceWorld();
@@ -19,11 +21,11 @@ Time.prototype.advanceWorld = function(){
 };
 
 Time.prototype.updateWorld = function(){
-    _.each(box.m.itemsL, function(item){
+    _.each(this.map.itemsL, function(item){
         item.update();
     });
 
-    _.each(box.m.entitiesL, function(entity){
+    _.each(this.map.entitiesL, function(entity){
     	entity.update();
     })
 }
@@ -35,37 +37,37 @@ Time.prototype.updateWorld = function(){
  * @return {undefinded}
  */
 Time.prototype.myUpdate = function(){
-    var ll = box.m.level.length;
-    box.m.generateDKMap();
-    box.m.time.updateWorld();
-    box.m.time.advanceWorld();
+    var ll = this.map.level.length;
+    this.map.generateDKMap();
+    this.updateWorld();
+    this.advanceWorld();
 
     // iterate through every level of the map
-    box.m.do_fov(box.m.player.posx, box.m.player.posy, 5);
+    this.map.do_fov(this.map.player.posx, this.map.player.posy, 5);
 
-    _.each(box.m.light, function(el, i){
+    _.each(this.map.light, function(el, i){
         _.each(el, function(v, j){
             var q = 0;
-            if(v === box.m.flag){
+            if(v === this.map.flag){
                 q = 1;
-            } else if (v === box.m.flag -1){
+            } else if (v === this.map.flag -1){
                 q = 0.5;
             }
 
             if(q){
-                _.each(box.m.level, function(f, l){
-                    var currTile = box.m.map.getTile(j, i, l);
+                _.each(this.map.level, function(f, l){
+                    var currTile = this.map.map.getTile(j, i, l);
                     if(currTile){
                         currTile.alpha = q;
                     }
                 }, this);
             }
         }, this);
-    });
-    _.each(box.m.level, function(level){
+    }, this);
+    _.each(this.map.level, function(level){
         level.dirty = true;
     });
-    box.m.map.getTile(box.m.player.posx, box.m.player.posy, 0).alpha = 0.5;
-    yellow_border.x = box.m.player.posx * box.properties.gdim;
-    yellow_border.y = box.m.player.posy * box.properties.gdim;
+    this.map.map.getTile(this.map.player.posx, this.map.player.posy, 0).alpha = 0.5;
+    yellow_border.x = this.map.player.posx * this.box.properties.gdim;
+    yellow_border.y = this.map.player.posy * this.box.properties.gdim;
 }

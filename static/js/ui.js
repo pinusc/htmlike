@@ -2,7 +2,7 @@ var joystick_ball_l, joystick_base_l;  // joystick_base is the grey circle, joys
 var joystick_ball_r, joystick_base_r;  // joystick_base is the grey circle, joystick_ball the blue circle
 var yellow_border; // used in debug to see player position
 
-function createUI()
+function createUI(box)
 {
     //enable fullscreen
     box.game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;

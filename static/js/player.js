@@ -12,8 +12,8 @@ function Player(image, map){
     this.inventory = [];
     this.alignHearts();
 
-    this.pixelSpeed = box.properties.globSpeed;  // pixel / second
-    box.game.physics.p2.enable(this.image);
+    this.pixelSpeed = this.map.box.properties.globSpeed;  // pixel / second
+    this.map.box.game.physics.p2.enable(this.image);
     this.image.body.setZeroDamping();
     this.image.body.fixedRotation = true;
 }
@@ -71,7 +71,7 @@ Player.prototype.alignHearts = function(){
         }
     } else if (nh > nh_now){
         for(var i = 0; i < nh - nh_now; i++){
-            this.hearts.push(box.game.add.sprite(box.game.width - 50 * (this.hearts.length + 1), box.game.height - 55, 'heart'));
+            this.hearts.push(this.map.box.game.add.sprite(this.map.box.game.width - 50 * (this.hearts.length + 1), this.map.box.game.height - 55, 'heart'));
             this.hearts[this.hearts.length - 1].fixedToCamera = true;
         }
     }
@@ -85,8 +85,8 @@ Player.prototype.alignHearts = function(){
 Player.prototype.update = function(){
     var posx, posy;
     var body = this.image.body, x = body.x, y = body.y;
-    posx = Math.floor(x / box.properties.gdim);
-    posy = Math.floor(y / box.properties.gdim);
+    posx = Math.floor(x / this.map.box.properties.gdim);
+    posy = Math.floor(y / this.map.box.properties.gdim);
     if(posx === this.posx && posy === this.posy){
         return;
     }

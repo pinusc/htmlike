@@ -1,7 +1,8 @@
 function Thing(image, x, y, map){
     x = x || 0;
     y = y || 0;
-    this.image = box.game.add.sprite(0, 0, image);
+    console.log(image)
+    this.image = map.box.game.add.sprite(0, 0, image);
     this.map = map;
     this.posy = y;
     this.posx = x;
@@ -34,7 +35,7 @@ Thing.prototype.distance = function(coordinates) {
  * @return {[type]} [description]
  */
 Thing.prototype.render = function() {
-    var gdim = box.properties.gdim;
+    var gdim = this.map.box.properties.gdim;
     var x = this.posx * gdim;
     var y = this.posy * gdim;
     if (this.image.height > gdim) { // If image is 2 tiles high
@@ -49,7 +50,7 @@ Thing.prototype.render = function() {
  * @return undefined
  */
 Thing.prototype.update = function() {
-    if (this.distance(box.m.player) >= 5){  // the player is too far, do nothing
+    if (this.distance(this.map.box.m.player) >= 5){  // the player is too far, do nothing
         this.setVisible(false);
         return;
     }

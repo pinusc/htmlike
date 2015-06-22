@@ -1,9 +1,10 @@
 /** The map contains tilemap, player, entities and items */
-function map() { //todo rename to level
+function map(box) { //todo rename to level
+    this.box = box;
     this.level = [[], []];
     this.itemsL = [];  //DijkistraMap
     this.entitiesL = [];
-    this.time = new Time();
+    this.time = new Time(this);
     this.DKMap = [];
     this.loaded = false;
 }
@@ -20,15 +21,15 @@ map.prototype.loadMap = function(t){
     var that = this;
 
     /* Create map */
-    box.game.load.tilemap('base', null, t, Phaser.Tilemap.TILED_JSON);
-    this.map = box.game.add.tilemap('base');
+    this.box.game.load.tilemap('base', null, t, Phaser.Tilemap.TILED_JSON);
+    this.map = this.box.game.add.tilemap('base');
     this.map.addTilesetImage('tiles', 'tileset');
     this.level[0] = this.map.createLayer('ground');
     this.level[1] = this.map.createLayer('walls');
     this.level[0].resizeWorld();
     this.level[1].resizeWorld();
     this.map.setCollisionBetween(1, this.map.tiles.length, true, 'walls');
-    box.game.physics.p2.convertTilemap(this.map, 'walls');
+    this.box.game.physics.p2.convertTilemap(this.map, 'walls');
 
 
     // set all level tiles to not visible

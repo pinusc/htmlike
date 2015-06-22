@@ -1,4 +1,5 @@
-function Input(){
+function Input(box){
+    this.box = box;
     this.joystick_l_down = false;
     this.joystick_r_down = false;
 }
@@ -8,7 +9,7 @@ function Input(){
  */
 Input.prototype.createKeys = function(){
     //movement arrows
-    this.cursors = box.game.input.keyboard.createCursorKeys();
+    this.cursors = this.box.game.input.keyboard.createCursorKeys();
 }
 
 /**
@@ -18,7 +19,7 @@ Input.prototype.handleInput = function(){
     this.handleKeys();
 
     // TODO remove true
-    if(box.game.input.x < box.game.world.width){
+    if(this.box.game.input.x < this.box.game.world.width){
         this.handleJoystick(this.joystick_base_l, this.joystick_ball_l, this.maxJoystickDistance_l);
     } else {
         this.handleJoystick(this.joystick_base_r, this.joystick_ball_r, this.maxJoystickDistance_r);
@@ -32,7 +33,7 @@ Input.prototype.handleInput = function(){
  * - g key (for picking up items)
  */
 Input.prototype.handleKeys = function(){
-    var m = box.m;
+    var m = this.box.m;
     if (this.cursors.left.isDown) {
         move(-m.player.pixelSpeed, 0, m.player.image.body);
     } else if (this.cursors.right.isDown) {
@@ -44,9 +45,9 @@ Input.prototype.handleKeys = function(){
     } else if (this.cursors.down.isDown) {
         move(0, m.player.pixelSpeed, m.player.image.body);
     }
-    if(box.game.input.keyboard.isDown(71)){  // g
+    if(this.box.game.input.keyboard.isDown(71)){  // g
         m.player.getItemOnGround();
-    } else if(box.game.input.keyboard.isDown(13)){
+    } else if(this.box.game.input.keyboard.isDown(13)){
         m.time.myUpdate();
     }
 }
@@ -56,9 +57,9 @@ Input.prototype.handleKeys = function(){
  * Just makes the joystick visible
  */
 Input.prototype.handleDown = function(){
-    if(true || ! box.game.device.desktop){  // joystick is needed on mobile only
-        var x = box.game.input.x, y = box.game.input.y;
-        if(x < box.game.world.width / 2){
+    if(true || ! this.box.game.device.desktop){  // joystick is needed on mobile only
+        var x = this.box.game.input.x, y = this.box.game.input.y;
+        if(x < this.box.game.world.width / 2){
             this.joystick_l_down = true;
             this.joystick_base_l.visible = true;
             this.joystick_base_l.cameraOffset.x = x - this.joystick_base_l.height / 2;
@@ -96,10 +97,10 @@ Input.prototype.handleUp = function(){
 
 /** Toggles fullscreen */
 Input.prototype.gofull = function() {
-    if (box.game.scale.isFullScreen){
-        box.game.scale.stopFullScreen();
+    if (this.box.game.scale.isFullScreen){
+        this.box.game.scale.stopFullScreen();
     } else {
-        box.game.scale.startFullScreen(false);
+        this.box.game.scale.startFullScreen(false);
     }
 }
 
@@ -109,7 +110,7 @@ Input.prototype.gofull = function() {
  */
 Input.prototype.toggleDebug = function() {
     yellow_border.alpha = yellow_border.alpha === 1 ? 0 : 1;
-    box.toDebug = !box.toDebug;
+    this.box.toDebug = !this.box.toDebug;
 };
 
 /** Handler for dbutton presses, toggles debug */
@@ -124,13 +125,13 @@ Input.prototype.fbutton_down = function(){
 
 Input.prototype.hJoystick = function(){
     var joystick_ball, joystick_base, maxJoystickDistance;
-    var point = box.game.input.activePointer;
+    var point = this.box.game.input.activePointer;
     if (!point.isDown){
         return;
     } 
 
     //left or rigth?
-    if(point.x < box.game.camera.width / 2){
+    if(point.x < this.box.game.camera.width / 2){
         joystick_ball = this.joystick_ball_l;
         joystick_base = this.joystick_base_l;
         maxJoystickDistance = this.maxJoystickDistance_l;
@@ -165,7 +166,7 @@ Input.prototype.hJoystick = function(){
 
     //actually do sth
     //left or rigth?
-    if(point.x < box.game.camera.width / 2){
+    if(point.x < this.box.game.camera.width / 2){
         var xVelocity = xOffset / maxJoystickDistance * m.player.pixelSpeed;
         var yVelocity = yOffset / maxJoystickDistance * m.player.pixelSpeed;
         move(xVelocity, yVelocity, m.player.image.body);
@@ -178,13 +179,13 @@ Input.prototype.hJoystick = function(){
 
 // TODO remove old definition
 Input.prototype.handleJoystick = function(){
-    var point = box.game.input.activePointer;
+    var point = this.box.game.input.activePointer;
     if (!point.isDown){
         return;
     } 
 
     //left or rigth?
-    if(point.x < box.game.camera.width / 2){
+    if(point.x < this.box.game.camera.width / 2){
         this.handleJoystick_l(point, this.joystick_ball_l, this.joystick_base_l, this.maxJoystickDistance_l);
     } else {
         this.handleJoystick_r(point, this.joystick_ball_r, this.joystick_base_r, this.maxJoystickDistance_r);
@@ -216,10 +217,10 @@ Input.prototype.handleJoystick_l = function(point, joystick_ball, joystick_base,
 
     //actually do sth
     //left or rigth?
-    if(point.x < box.game.camera.width / 2){
-        var xVelocity = xOffset / maxJoystickDistance * box.m.player.pixelSpeed;
-        var yVelocity = yOffset / maxJoystickDistance * box.m.player.pixelSpeed;
-        move(xVelocity, yVelocity, box.m.player.image.body);
+    if(point.x < this.box.game.camera.width / 2){
+        var xVelocity = xOffset / maxJoystickDistance * this.box.m.player.pixelSpeed;
+        var yVelocity = yOffset / maxJoystickDistance * this.box.m.player.pixelSpeed;
+        move(xVelocity, yVelocity, this.box.m.player.image.body);
     }
 
 }
@@ -241,8 +242,8 @@ Input.prototype.handleJoystick_r = function(point, joystick_ball, joystick_base,
         joystick_ball.cameraOffset.x = point.x - joystick_ball.height / 2;
         joystick_ball.cameraOffset.y = point.y - joystick_ball.width / 2;
     } else {
-        box.m.player.interact(direction(joystick_ball.cameraOffset.x, joystick_ball.cameraOffset.y, baseCenterX, baseCenterY));
-        box.m.time.myUpdate();
+        this.box.m.player.interact(direction(joystick_ball.cameraOffset.x, joystick_ball.cameraOffset.y, baseCenterX, baseCenterY));
+        this.box.m.time.myUpdate();
         this.handleUp();
 
     }

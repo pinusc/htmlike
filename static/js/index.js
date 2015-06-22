@@ -1,11 +1,11 @@
-var box;
+var boxx;
 var yellow_border; // used in debug to see player position
     
 function Box(){
     var width = $("#main").width()
     var height = $("#main").height();
     this.properties = new Properties();
-    this.m = new map();
+    this.m = new map(this);
     var that = this;
     this.game = new Phaser.Game(width, height, Phaser.CANVAS, 'main',
         {   preload: preload,
@@ -14,23 +14,23 @@ function Box(){
             render: render});
     this.toDebug = false;
     this.dbl = [];
-    this.input = new Input();
+    this.input = new Input(this);
 }
 
 /**
  * The only thing this does is to create  a new Phaser.Game object and assign it to game
  */
 $(document).ready(function (){
-    box = new Box();
-    $(window).resize(box.onResize);
+    boxx = new Box();
+    $(window).resize(boxx.onResize);
 });
 
 function createGame(){
-    box.socket = io.connect('http://' + document.domain + ':' + location.port + '/game');
-    box.socket.on('map', function(msg){
-        box.myCreate(msg);
+    boxx.socket = io.connect('http://' + document.domain + ':' + location.port + '/game');
+    boxx.socket.on('map', function(msg){
+        boxx.myCreate(msg);
     });
-    box.game.paused = true;
+    boxx.game.paused = true;
 }
 
 
@@ -55,7 +55,7 @@ Box.prototype.myCreate = function(jMap){
     this.game.input.onDown.add(this.input.handleDown, this.input);
     this.game.input.onUp.add(this.input.handleUp, this.input);
 
-    createUI();
+    createUI(this);
 
     this.m.time.myUpdate();
     //socket.send("ciao");
@@ -63,9 +63,9 @@ Box.prototype.myCreate = function(jMap){
 }
 
 function update() {
-    box.m.player.image.body.setZeroVelocity();
-    box.input.handleInput();
-    box.m.player.update();
+    boxx.m.player.image.body.setZeroVelocity();
+    boxx.input.handleInput();
+    boxx.m.player.update();
 }
 
 /**
@@ -73,8 +73,8 @@ function update() {
  * @return {[type]} [description]
  */
 function render() {
+    var box = boxx;
     if(box.toDebug){
-        //console.log("toDebug");
         box.debug("playerHP: " + box.m.player.hp);
         box.debug("desktop: " + box.game.device.desktop);
         if(box.m.entitiesL[0]){
@@ -88,6 +88,7 @@ function render() {
 }
 
 function preload() {
+    var box = boxx;
     var baseAssetsFolder = box.properties.baseAssetsFolder;
     box.game.time.advancedTiming = true;  // to show fps
     /* entities */
@@ -142,6 +143,7 @@ Box.prototype.debug = function(text, color){
 }
 
 Box.prototype.onResize = function() {
+    var box = boxx;
     var width = $("#main").width()
     var height = $("#main").height();
 
