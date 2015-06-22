@@ -48,7 +48,7 @@ Thing.prototype.render = function() {
  * @return undefined
  */
 Thing.prototype.update = function() {
-    if (this.distance(m.player) >= 5){  // the player is too far, do nothing
+    if (this.distance(box.m.player) >= 5){  // the player is too far, do nothing
         this.setVisible(false);
         return;
     }

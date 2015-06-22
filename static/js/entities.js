@@ -23,24 +23,24 @@ Entity.prototype.move = function(x, y) {
     */
     //If X and Y are in the margins
     if(!(x >= 0 &&
-        x < m.level[0].width &&  // comparing using 0 level since it should be the larger
+        x < box.m.level[0].width &&  // comparing using 0 level since it should be the larger
         y >= 0 &&
-        y < m.level[0].height)){
+        y < box.m.level[0].height)){
 
         return;
-    } else if(m.map.getTile(x, y, 1)){
+    } else if(box.m.map.getTile(x, y, 1)){
         return;
     }
 
     /* Check if any entity is blocking the way */
-    for(var i = 0; i < m.entitiesL.length; i++){
-        if (m.entitiesL[i].posx === x && m.entitiesL[i].posy === y){
-            return this.attack(m.entitiesL[i]);
+    for(var i = 0; i < box.m.entitiesL.length; i++){
+        if (box.m.entitiesL[i].posx === x && box.m.entitiesL[i].posy === y){
+            return this.attack(box.m.entitiesL[i]);
         }
     }
 
     /* Check if player is blocking. If True, attack it */
-    if (! this.isPlayer && m.player.posx === x && m.player.posy === y) return this.attack(m.player);
+    if (! this.isPlayer && box.m.player.posx === x && box.m.player.posy === y) return this.attack(m.player);
 
     this.posx = x;
     this.posy = y;
@@ -56,11 +56,11 @@ Entity.prototype.act = function() {
     * If the entity bumps in the player, it attack it (implemented in move())
     */
     var x = this.posx, y = this.posy;
-    var curr = m.DKMap[x][y], coor = {x: x, y: y};
+    var curr = box.m.DKMap[x][y], coor = {x: x, y: y};
     for(var i = x-1; i <= x+1; i++){
         for(var j = y-1; j <= y+1; j++){
-            if(m.DKMap[i][j] >= 0 && m.DKMap[i][j] < curr){
-                curr = m.DKMap[i][j];
+            if(box.m.DKMap[i][j] >= 0 && box.m.DKMap[i][j] < curr){
+                curr = box.m.DKMap[i][j];
                 coor = {x: i, y: j};
             }
         }

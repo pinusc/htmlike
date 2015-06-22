@@ -1,6 +1,5 @@
 var box;
 var game;
-var m = new map();
 var toDebug = false, dbl = [];
 var cursors;  // the arrow keys
 var yellow_border; // used in debug to see player position
@@ -15,6 +14,7 @@ function Box(){
     this.game = new Phaser.Game(width, height, Phaser.CANVAS, 'main',
         { preload: preload, create: create, update: update, render:render});
     this.properties = new Properties();
+    this.m = new map();
 }
 
 /**
@@ -43,9 +43,9 @@ function create() {
 function myCreate(jMap){
     console.log(jMap);
     box.game.physics.startSystem(Phaser.Physics.P2JS);
-    m.loadMap(jMap);
-    box.game.camera.follow(m.player.image);
-    m.player.fixedToCamera = true;
+    box.m.loadMap(jMap);
+    box.game.camera.follow(box.m.player.image);
+    box.m.player.fixedToCamera = true;
 
     yellow_border = box.game.add.image(0, 0, 'yellow_border');
     yellow_border.alpha = 0;
@@ -58,15 +58,15 @@ function myCreate(jMap){
 
     createUI();
 
-    m.time.myUpdate();
+    box.m.time.myUpdate();
     //socket.send("ciao");
     box.game.paused = false;
 }
 
 function update() {
-    m.player.image.body.setZeroVelocity();
+    box.m.player.image.body.setZeroVelocity();
     handleInput();
-    m.player.update();
+    box.m.player.update();
 }
 
 /**
@@ -76,10 +76,10 @@ function update() {
 function render() {
     if(toDebug){
         //console.log("toDebug");
-        debug("playerHP: " + m.player.hp);
+        debug("playerHP: " + box.m.player.hp);
         debug("desktop: " + box.game.device.desktop);
-        if(m.entitiesL[0]){
-            debug("Wolf HP: " + m.entitiesL[0].hp);
+        if(box.m.entitiesL[0]){
+            debug("Wolf HP: " + box.m.entitiesL[0].hp);
         }
         debug(box.game.time.fps || '--', "#00ff00");
         debug("fpsMin: " + box.game.time.fpsMin || '--', "#00ff00");
