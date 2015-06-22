@@ -1,5 +1,5 @@
-function Item(image, x, y){
-    Thing.call(this, image, x, y);
+function Item(image, x, y, map){
+    Thing.call(this, image, x, y, map);
     this.isItem = true;
 
     this.render();

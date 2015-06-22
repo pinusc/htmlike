@@ -1,5 +1,5 @@
-function Player(image){
-    Entity.call(this, image, 10, 10);
+function Player(image, map){
+    Entity.call(this, image, 10, 10, map);
     /**
     * A player isn't an entity like other... but in the core, he is.
     * Returns a modified entity.
@@ -26,7 +26,7 @@ Player.prototype.addToInventory = function(item){
 
 
 Player.prototype.getItemOnGround = function(){
-    var m = box.m;
+    var m = this.map;
     //all the items which coordinates are the same as the player
     var to_add = _.filter(m.itemsL, function(item) {return item.posx === this.posx && item.posy === this.posy; }, this);
     m.itemsL = _.filter(m.itemsL, function(item) {return item.posx !== this.posx || item.posy !== this.posy; }, this);
@@ -92,7 +92,7 @@ Player.prototype.update = function(){
     }
     this.posx = posx;
     this.posy = posy;
-    box.m.time.myUpdate();
+    this.map.time.myUpdate();
     //console.log("image.x: " + this.image.x, ", image.y: " + this.image.y);
     //console.log("x: ", + x + ", y: " + y);
     //console.log("posx: " + posx + ", posy: " + posy);

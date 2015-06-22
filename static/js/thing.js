@@ -1,7 +1,8 @@
-function Thing(image, x, y){
+function Thing(image, x, y, map){
     x = x || 0;
     y = y || 0;
     this.image = box.game.add.sprite(0, 0, image);
+    this.map = map;
     this.posy = y;
     this.posx = x;
 }

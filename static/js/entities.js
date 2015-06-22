@@ -6,8 +6,8 @@
 * Phaser.Sprite() image;
 * int maxhp;
 */
-function Entity(image, x, y){
-    Thing.call(this, image, x, y);
+function Entity(image, x, y, map){
+    Thing.call(this, image, x, y, map);
     this.hp = 10;
     this.maxhp = this.hp;
     this.isEntity = true;
@@ -23,24 +23,24 @@ Entity.prototype.move = function(x, y) {
     */
     //If X and Y are in the margins
     if(!(x >= 0 &&
-        x < box.m.level[0].width &&  // comparing using 0 level since it should be the larger
+        x < this.map.level[0].width &&  // comparing using 0 level since it should be the larger
         y >= 0 &&
-        y < box.m.level[0].height)){
+        y < this.map.level[0].height)){
 
         return;
-    } else if(box.m.map.getTile(x, y, 1)){
+    } else if(this.map.map.getTile(x, y, 1)){
         return;
     }
 
     /* Check if any entity is blocking the way */
-    for(var i = 0; i < box.m.entitiesL.length; i++){
-        if (box.m.entitiesL[i].posx === x && box.m.entitiesL[i].posy === y){
-            return this.attack(box.m.entitiesL[i]);
+    for(var i = 0; i < this.map.entitiesL.length; i++){
+        if (this.map.entitiesL[i].posx === x && this.map.entitiesL[i].posy === y){
+            return this.attack(this.map.entitiesL[i]);
         }
     }
 
     /* Check if player is blocking. If True, attack it */
-    if (! this.isPlayer && box.m.player.posx === x && box.m.player.posy === y) return this.attack(box.m.player);
+    if (! this.isPlayer && this.map.player.posx === x && this.map.player.posy === y) return this.attack(this.map.player);
 
     this.posx = x;
     this.posy = y;
@@ -56,11 +56,11 @@ Entity.prototype.act = function() {
     * If the entity bumps in the player, it attack it (implemented in move())
     */
     var x = this.posx, y = this.posy;
-    var curr = box.m.DKMap[x][y], coor = {x: x, y: y};
+    var curr = this.map.DKMap[x][y], coor = {x: x, y: y};
     for(var i = x-1; i <= x+1; i++){
         for(var j = y-1; j <= y+1; j++){
-            if(box.m.DKMap[i][j] >= 0 && box.m.DKMap[i][j] < curr){
-                curr = box.m.DKMap[i][j];
+            if(this.map.DKMap[i][j] >= 0 && this.map.DKMap[i][j] < curr){
+                curr = this.map.DKMap[i][j];
                 coor = {x: i, y: j};
             }
         }
@@ -125,7 +125,7 @@ Entity.prototype.interact = function(direction){
             toInteractX += 1;
             break;
     }
-    var en = _.find(box.m.entitiesL, function(en) {
+    var en = _.find(this.map.entitiesL, function(en) {
         return en.posx === toInteractX && en.posy === toInteractY;
     })
     if (en){
