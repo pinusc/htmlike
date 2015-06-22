@@ -33,6 +33,7 @@ function handleInput(){
  * - g key (for picking up items)
  */
 function handleKeys(){
+    var m = box.m;
     if (cursors.left.isDown) {
         move(-m.player.pixelSpeed, 0, m.player.image.body);
     } else if (cursors.right.isDown) {
@@ -212,9 +213,9 @@ function handleJoystick_l(point, joystick_ball, joystick_base, maxJoystickDistan
     //actually do sth
     //left or rigth?
     if(point.x < box.game.camera.width / 2){
-        var xVelocity = xOffset / maxJoystickDistance * m.player.pixelSpeed;
-        var yVelocity = yOffset / maxJoystickDistance * m.player.pixelSpeed;
-        move(xVelocity, yVelocity, m.player.image.body);
+        var xVelocity = xOffset / maxJoystickDistance * box.m.player.pixelSpeed;
+        var yVelocity = yOffset / maxJoystickDistance * box.m.player.pixelSpeed;
+        move(xVelocity, yVelocity, box.m.player.image.body);
     }
 
 }
@@ -236,8 +237,8 @@ function handleJoystick_r(point, joystick_ball, joystick_base, maxJoystickDistan
         joystick_ball.cameraOffset.x = point.x - joystick_ball.height / 2;
         joystick_ball.cameraOffset.y = point.y - joystick_ball.width / 2;
     } else {
-        m.player.interact(direction(joystick_ball.cameraOffset.x, joystick_ball.cameraOffset.y, baseCenterX, baseCenterY));
-        m.time.myUpdate();
+        box.m.player.interact(direction(joystick_ball.cameraOffset.x, joystick_ball.cameraOffset.y, baseCenterX, baseCenterY));
+        box.m.time.myUpdate();
         handleUp();
 
     }

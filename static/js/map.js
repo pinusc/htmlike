@@ -22,7 +22,7 @@ map.prototype.loadMap = function(t){
     /* Create map */
     box.game.load.tilemap('base', null, t, Phaser.Tilemap.TILED_JSON);
     this.map = box.game.add.tilemap('base');
-    this.map.addTilesetImage('tiles', 'tiles');
+    this.map.addTilesetImage('tiles', 'tileset');
     this.level[0] = this.map.createLayer('ground');
     this.level[1] = this.map.createLayer('walls');
     this.level[0].resizeWorld();

@@ -40,7 +40,7 @@ Entity.prototype.move = function(x, y) {
     }
 
     /* Check if player is blocking. If True, attack it */
-    if (! this.isPlayer && box.m.player.posx === x && box.m.player.posy === y) return this.attack(m.player);
+    if (! this.isPlayer && box.m.player.posx === x && box.m.player.posy === y) return this.attack(box.m.player);
 
     this.posx = x;
     this.posy = y;
@@ -125,7 +125,7 @@ Entity.prototype.interact = function(direction){
             toInteractX += 1;
             break;
     }
-    var en = _.find(m.entitiesL, function(en) {
+    var en = _.find(box.m.entitiesL, function(en) {
         return en.posx === toInteractX && en.posy === toInteractY;
     })
     if (en){

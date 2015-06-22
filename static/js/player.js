@@ -26,6 +26,7 @@ Player.prototype.addToInventory = function(item){
 
 
 Player.prototype.getItemOnGround = function(){
+    var m = box.m;
     //all the items which coordinates are the same as the player
     var to_add = _.filter(m.itemsL, function(item) {return item.posx === this.posx && item.posy === this.posy; }, this);
     m.itemsL = _.filter(m.itemsL, function(item) {return item.posx !== this.posx || item.posy !== this.posy; }, this);

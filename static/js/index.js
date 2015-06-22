@@ -1,20 +1,18 @@
 var box;
-var game;
 var toDebug = false, dbl = [];
 var cursors;  // the arrow keys
 var yellow_border; // used in debug to see player position
-var socket;
     
 
 
 function Box(){
     var width = $("#main").width()
     var height = $("#main").height();
-    $(window).resize(onResize);
-    this.game = new Phaser.Game(width, height, Phaser.CANVAS, 'main',
-        { preload: preload, create: create, update: update, render:render});
     this.properties = new Properties();
     this.m = new map();
+    $(window).resize(onResize);
+    this.game = new Phaser.Game(width, height, Phaser.CANVAS, 'main',
+        { preload: preload, create: createGame, update: update, render:render});
 }
 
 /**
@@ -24,6 +22,14 @@ $(document).ready(function (){
     box = new Box();
 });
 
+function createGame(){
+    box.socket = io.connect('http://' + document.domain + ':' + location.port + '/game');
+    box.socket.on('map', function(msg){
+        myCreate(msg);
+    });
+    box.game.paused = true;
+}
+
 
 /**
  * The actual creation of the game.
@@ -32,14 +38,6 @@ $(document).ready(function (){
  * First myUpdate() call
  * @return {[type]} [description]
  */
-function create() {
-    socket = io.connect('http://' + document.domain + ':' + location.port + '/game');
-    socket.on('map', function(msg){
-        myCreate(msg);
-    });
-    box.game.paused = true;
-}
-
 function myCreate(jMap){
     console.log(jMap);
     box.game.physics.startSystem(Phaser.Physics.P2JS);
@@ -113,10 +111,9 @@ function preload() {
     box.game.load.image('controller_base_r', baseAssetsFolder + '/controller_base_r.png');
 
     /* icons */
-    box.game.load.image('bag', baseAssetsFolder + '/bag.png');
-
-    box.game.load.image('tiles', baseAssetsFolder + '/tileset.png');
-    box.game.load.tilemap('tilemap', baseAssetsFolder + "/map.json", null, Phaser.Tilemap.TILED_JSON);
+    //box.game.load.image('bag', baseAssetsFolder + '/bag.png');
+    box.game.load.image('tileset', baseAssetsFolder + '/tileset.png');
+    //box.game.load.tilemap('tilemap', baseAssetsFolder + "/map.json", null, Phaser.Tilemap.TILED_JSON);
 }
 
 /**
@@ -161,3 +158,4 @@ function onResize() {
     box.game.camera.setSize(width, height);
     box.game.scale.setSize();
 }
+
