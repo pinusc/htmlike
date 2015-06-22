@@ -1,18 +1,16 @@
 var box;
-var toDebug = false, dbl = [];
 var cursors;  // the arrow keys
 var yellow_border; // used in debug to see player position
     
-
-
 function Box(){
     var width = $("#main").width()
     var height = $("#main").height();
     this.properties = new Properties();
     this.m = new map();
-    $(window).resize(onResize);
     this.game = new Phaser.Game(width, height, Phaser.CANVAS, 'main',
         { preload: preload, create: createGame, update: update, render:render});
+    this.toDebug = false;
+    this.dbl = [];
 }
 
 /**
@@ -20,6 +18,7 @@ function Box(){
  */
 $(document).ready(function (){
     box = new Box();
+    $(window).resize(box.onResize);
 });
 
 function createGame(){
@@ -72,15 +71,15 @@ function update() {
  * @return {[type]} [description]
  */
 function render() {
-    if(toDebug){
+    if(box.toDebug){
         //console.log("toDebug");
-        debug("playerHP: " + box.m.player.hp);
-        debug("desktop: " + box.game.device.desktop);
+        box.debug("playerHP: " + box.m.player.hp);
+        box.debug("desktop: " + box.game.device.desktop);
         if(box.m.entitiesL[0]){
-            debug("Wolf HP: " + box.m.entitiesL[0].hp);
+            box.debug("Wolf HP: " + box.m.entitiesL[0].hp);
         }
-        debug(box.game.time.fps || '--', "#00ff00");
-        debug("fpsMin: " + box.game.time.fpsMin || '--', "#00ff00");
+        box.debug(box.game.time.fps || '--', "#00ff00");
+        box.debug("fpsMin: " + box.game.time.fpsMin || '--', "#00ff00");
         renderDebug();
     }
     //game.debug.pointer(game.input.pointer1);
@@ -120,14 +119,14 @@ function preload() {
  * Actually render the debug info pushed through debug() and clear the dbl list
  * @return {[type]} [description]
  */
-function renderDebug(){
+Box.prototype.renderDebug = function(){
     var x = 15;
-    box.game.debug.text("DEBUG:", 10, x);
+    this.game.debug.text("DEBUG:", 10, x);
     _.each(dbl, function(m){
         x += 15;
-        box.game.debug.text(m.text, 10, x, m.color);
+        this.game.debug.text(m.text, 10, x, m.color);
     });
-    dbl = [];  // clear debug list
+    this.dbl = [];  // clear debug list
 }
 
 /**
@@ -136,20 +135,20 @@ function renderDebug(){
  * @param  {String} color [The color to display in hex format (ex. #FFFFFF)]
  * @return {undefined}
  */
-function debug(text, color){
-    dbl.push({text: text, color: color});
+Box.prototype.debug = function(text, color){
+    this.dbl.push({text: text, color: color});
 }
 
 /**
  * When called, if debug info is displayed, it is no longer displayed.
  * @return {undefined}
  */
-function toggleDebug() {
+Box.prototype.toggleDebug = function() {
     yellow_border.alpha = yellow_border.alpha === 1 ? 0 : 1;
-    toDebug = !toDebug;
+    this.toDebug = !this.toDebug;
 }
 
-function onResize() {
+Box.prototype.onResize = function() {
     var width = $("#main").width()
     var height = $("#main").height();
 
@@ -158,4 +157,3 @@ function onResize() {
     box.game.camera.setSize(width, height);
     box.game.scale.setSize();
 }
-
