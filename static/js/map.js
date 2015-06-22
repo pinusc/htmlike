@@ -20,15 +20,15 @@ map.prototype.loadMap = function(t){
     var that = this;
 
     /* Create map */
-    game.load.tilemap('base', null, t, Phaser.Tilemap.TILED_JSON);
-    this.map = game.add.tilemap('base');
+    box.game.load.tilemap('base', null, t, Phaser.Tilemap.TILED_JSON);
+    this.map = box.game.add.tilemap('base');
     this.map.addTilesetImage('tiles', 'tiles');
     this.level[0] = this.map.createLayer('ground');
     this.level[1] = this.map.createLayer('walls');
     this.level[0].resizeWorld();
     this.level[1].resizeWorld();
     this.map.setCollisionBetween(1, this.map.tiles.length, true, 'walls');
-    game.physics.p2.convertTilemap(this.map, 'walls');
+    box.game.physics.p2.convertTilemap(this.map, 'walls');
 
 
     // set all level tiles to not visible

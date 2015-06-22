@@ -13,7 +13,7 @@ function Player(image){
     this.alignHearts();
 
     this.pixelSpeed = box.properties.globSpeed;  // pixel / second
-    game.physics.p2.enable(this.image);
+    box.game.physics.p2.enable(this.image);
     this.image.body.setZeroDamping();
     this.image.body.fixedRotation = true;
 }
@@ -70,7 +70,7 @@ Player.prototype.alignHearts = function(){
         }
     } else if (nh > nh_now){
         for(var i = 0; i < nh - nh_now; i++){
-            this.hearts.push(game.add.sprite(game.width - 50 * (this.hearts.length + 1), game.height - 55, 'heart'));
+            this.hearts.push(box.game.add.sprite(box.game.width - 50 * (this.hearts.length + 1), box.game.height - 55, 'heart'));
             this.hearts[this.hearts.length - 1].fixedToCamera = true;
         }
     }

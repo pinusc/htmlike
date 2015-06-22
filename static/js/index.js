@@ -12,7 +12,7 @@ function Box(){
     var width = $("#main").width()
     var height = $("#main").height();
     $(window).resize(onResize);
-    game = new Phaser.Game(width, height, Phaser.CANVAS, 'main',
+    this.game = new Phaser.Game(width, height, Phaser.CANVAS, 'main',
         { preload: preload, create: create, update: update, render:render});
     this.properties = new Properties();
 }
@@ -37,30 +37,30 @@ function create() {
     socket.on('map', function(msg){
         myCreate(msg);
     });
-    game.paused = true;
+    box.game.paused = true;
 }
 
 function myCreate(jMap){
     console.log(jMap);
-    game.physics.startSystem(Phaser.Physics.P2JS);
+    box.game.physics.startSystem(Phaser.Physics.P2JS);
     m.loadMap(jMap);
-    game.camera.follow(m.player.image);
+    box.game.camera.follow(m.player.image);
     m.player.fixedToCamera = true;
 
-    yellow_border = game.add.image(0, 0, 'yellow_border');
+    yellow_border = box.game.add.image(0, 0, 'yellow_border');
     yellow_border.alpha = 0;
 
     //input
     createKeys();
-    game.input.onTap.add(handleTap);
-    game.input.onDown.add(handleDown);
-    game.input.onUp.add(handleUp);
+    box.game.input.onTap.add(handleTap);
+    box.game.input.onDown.add(handleDown);
+    box.game.input.onUp.add(handleUp);
 
     createUI();
 
     m.time.myUpdate();
     //socket.send("ciao");
-    game.paused = false;
+    box.game.paused = false;
 }
 
 function update() {
@@ -77,12 +77,12 @@ function render() {
     if(toDebug){
         //console.log("toDebug");
         debug("playerHP: " + m.player.hp);
-        debug("desktop: " + game.device.desktop);
+        debug("desktop: " + box.game.device.desktop);
         if(m.entitiesL[0]){
             debug("Wolf HP: " + m.entitiesL[0].hp);
         }
-        debug(game.time.fps || '--', "#00ff00");
-        debug("fpsMin: " + game.time.fpsMin || '--', "#00ff00");
+        debug(box.game.time.fps || '--', "#00ff00");
+        debug("fpsMin: " + box.game.time.fpsMin || '--', "#00ff00");
         renderDebug();
     }
     //game.debug.pointer(game.input.pointer1);
@@ -90,33 +90,33 @@ function render() {
 
 function preload() {
     var baseAssetsFolder = box.properties.baseAssetsFolder;
-    game.time.advancedTiming = true;  // to show fps
+    box.game.time.advancedTiming = true;  // to show fps
     /* entities */
-    game.load.image('heart', baseAssetsFolder + '/hearth.png');
-    game.load.image('greeny', baseAssetsFolder + '/character.png');
-    game.load.image('princess', baseAssetsFolder + '/dragon.png');
+    box.game.load.image('heart', baseAssetsFolder + '/hearth.png');
+    box.game.load.image('greeny', baseAssetsFolder + '/character.png');
+    box.game.load.image('princess', baseAssetsFolder + '/dragon.png');
 
     /* objects */
-    game.load.image('potion', baseAssetsFolder + '/potion.png');
+    box.game.load.image('potion', baseAssetsFolder + '/potion.png');
 
     /* tiles */
-    game.load.image('grass', baseAssetsFolder + '/grass.png');
-    game.load.image('dirt', baseAssetsFolder + '/dirt.png');
+    box.game.load.image('grass', baseAssetsFolder + '/grass.png');
+    box.game.load.image('dirt', baseAssetsFolder + '/dirt.png');
 
     /* ui */
-    game.load.image('debug_button', baseAssetsFolder + '/debug_button.png');
-    game.load.image('fullscreen_button', baseAssetsFolder + '/fullscreen_button.png');
-    game.load.image('yellow_border', baseAssetsFolder + '/yellow_border.png');
-    game.load.image('controller_ball', baseAssetsFolder + '/controller_ball.png');
-    game.load.image('controller_ball_r', baseAssetsFolder + '/controller_ball_r.png');
-    game.load.image('controller_base', baseAssetsFolder + '/controller_base.png');
-    game.load.image('controller_base_r', baseAssetsFolder + '/controller_base_r.png');
+    box.game.load.image('debug_button', baseAssetsFolder + '/debug_button.png');
+    box.game.load.image('fullscreen_button', baseAssetsFolder + '/fullscreen_button.png');
+    box.game.load.image('yellow_border', baseAssetsFolder + '/yellow_border.png');
+    box.game.load.image('controller_ball', baseAssetsFolder + '/controller_ball.png');
+    box.game.load.image('controller_ball_r', baseAssetsFolder + '/controller_ball_r.png');
+    box.game.load.image('controller_base', baseAssetsFolder + '/controller_base.png');
+    box.game.load.image('controller_base_r', baseAssetsFolder + '/controller_base_r.png');
 
     /* icons */
-    game.load.image('bag', baseAssetsFolder + '/bag.png');
+    box.game.load.image('bag', baseAssetsFolder + '/bag.png');
 
-    game.load.image('tiles', baseAssetsFolder + '/tileset.png');
-    game.load.tilemap('tilemap', baseAssetsFolder + "/map.json", null, Phaser.Tilemap.TILED_JSON);
+    box.game.load.image('tiles', baseAssetsFolder + '/tileset.png');
+    box.game.load.tilemap('tilemap', baseAssetsFolder + "/map.json", null, Phaser.Tilemap.TILED_JSON);
 }
 
 /**
@@ -125,10 +125,10 @@ function preload() {
  */
 function renderDebug(){
     var x = 15;
-    game.debug.text("DEBUG:", 10, x);
+    box.game.debug.text("DEBUG:", 10, x);
     _.each(dbl, function(m){
         x += 15;
-        game.debug.text(m.text, 10, x, m.color);
+        box.game.debug.text(m.text, 10, x, m.color);
     });
     dbl = [];  // clear debug list
 }
@@ -153,17 +153,11 @@ function toggleDebug() {
 }
 
 function onResize() {
-    console.log("onResize");
     var width = $("#main").width()
     var height = $("#main").height();
 
-    game.width = width;
-    game.height = height;
-    game.stage.bounds.width = width;
-    game.stage.bounds.height = height;
-    game.scale.width = width;
-    game.scale.height = height;
-    game.camera.setSize(width, height);
-    game.scale.setSize();
-
+    box.game.width = width;
+    box.game.height = height;
+    box.game.camera.setSize(width, height);
+    box.game.scale.setSize();
 }

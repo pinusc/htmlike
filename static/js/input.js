@@ -8,7 +8,7 @@ var cursors;  // the arrow keys
  */
 function createKeys(){
     //movement arrows
-    cursors = game.input.keyboard.createCursorKeys();
+    cursors = box.game.input.keyboard.createCursorKeys();
 }
 
 /**
@@ -18,7 +18,7 @@ function handleInput(){
     handleKeys();
 
     // TODO remove true
-    if(game.input.x < game.world.width){
+    if(box.game.input.x < box.game.world.width){
         handleJoystick(joystick_base_l, joystick_ball_l, maxJoystickDistance_l);
     } else {
         console.log("joystick_r");
@@ -44,9 +44,9 @@ function handleKeys(){
     } else if (cursors.down.isDown) {
         move(0, m.player.pixelSpeed, m.player.image.body);
     }
-    if(game.input.keyboard.isDown(71)){  // g
+    if(box.game.input.keyboard.isDown(71)){  // g
         m.player.getItemOnGround();
-    } else if(game.input.keyboard.isDown(13)){
+    } else if(box.game.input.keyboard.isDown(13)){
         m.time.myUpdate();
     }
 }
@@ -60,9 +60,9 @@ function handleTap(){
  * Just makes the joystick visible
  */
 function handleDown(){
-    if(true || ! game.device.desktop){  // joystick is needed on mobile only
-        var x = game.input.x, y = game.input.y;
-        if(x < game.world.width / 2){
+    if(true || ! box.game.device.desktop){  // joystick is needed on mobile only
+        var x = box.game.input.x, y = box.game.input.y;
+        if(x < box.game.world.width / 2){
             joystick_l_down = true;
             joystick_base_l.visible = true;
             joystick_base_l.cameraOffset.x = x - joystick_base_l.height / 2;
@@ -100,10 +100,10 @@ function handleUp(){
 
 /** Toggles fullscreen */
 function gofull() {
-    if (game.scale.isFullScreen){
-        game.scale.stopFullScreen();
+    if (box.game.scale.isFullScreen){
+        box.game.scale.stopFullScreen();
     } else {
-        game.scale.startFullScreen(false);
+        box.game.scale.startFullScreen(false);
     }
 }
 
@@ -119,13 +119,13 @@ function fbutton_down(){
 
 function hJoystick(){
     var joystick_ball, joystick_base, maxJoystickDistance;
-    var point = game.input.activePointer;
+    var point = box.game.input.activePointer;
     if (!point.isDown){
         return;
     } 
 
     //left or rigth?
-    if(point.x < game.camera.width / 2){
+    if(point.x < box.game.camera.width / 2){
         joystick_ball = joystick_ball_l;
         joystick_base = joystick_base_l;
         maxJoystickDistance = maxJoystickDistance_l;
@@ -160,7 +160,7 @@ function hJoystick(){
 
     //actually do sth
     //left or rigth?
-    if(point.x < game.camera.width / 2){
+    if(point.x < box.game.camera.width / 2){
         var xVelocity = xOffset / maxJoystickDistance * m.player.pixelSpeed;
         var yVelocity = yOffset / maxJoystickDistance * m.player.pixelSpeed;
         move(xVelocity, yVelocity, m.player.image.body);
@@ -173,13 +173,13 @@ function hJoystick(){
 
 // TODO remove old definition
 function handleJoystick(){
-    var point = game.input.activePointer;
+    var point = box.game.input.activePointer;
     if (!point.isDown){
         return;
     } 
 
     //left or rigth?
-    if(point.x < game.camera.width / 2){
+    if(point.x < box.game.camera.width / 2){
         handleJoystick_l(point, joystick_ball_l, joystick_base_l, maxJoystickDistance_l);
     } else {
         handleJoystick_r(point, joystick_ball_r, joystick_base_r, maxJoystickDistance_r);
@@ -211,7 +211,7 @@ function handleJoystick_l(point, joystick_ball, joystick_base, maxJoystickDistan
 
     //actually do sth
     //left or rigth?
-    if(point.x < game.camera.width / 2){
+    if(point.x < box.game.camera.width / 2){
         var xVelocity = xOffset / maxJoystickDistance * m.player.pixelSpeed;
         var yVelocity = yOffset / maxJoystickDistance * m.player.pixelSpeed;
         move(xVelocity, yVelocity, m.player.image.body);
