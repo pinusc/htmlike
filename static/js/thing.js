@@ -33,6 +33,7 @@ Thing.prototype.distance = function(coordinates) {
  * @return {[type]} [description]
  */
 Thing.prototype.render = function() {
+    var gdim = box.properties.gdim;
     var x = this.posx * gdim;
     var y = this.posy * gdim;
     if (this.image.height > gdim) { // If image is 2 tiles high

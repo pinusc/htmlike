@@ -12,7 +12,7 @@ function Player(image){
     this.inventory = [];
     this.alignHearts();
 
-    this.pixelSpeed = globSpeed;  // pixel / second
+    this.pixelSpeed = box.properties.globSpeed;  // pixel / second
     game.physics.p2.enable(this.image);
     this.image.body.setZeroDamping();
     this.image.body.fixedRotation = true;
@@ -84,8 +84,8 @@ Player.prototype.alignHearts = function(){
 Player.prototype.update = function(){
     var posx, posy;
     var body = this.image.body, x = body.x, y = body.y;
-    posx = Math.floor(x / gdim);
-    posy = Math.floor(y / gdim);
+    posx = Math.floor(x / box.properties.gdim);
+    posy = Math.floor(y / box.properties.gdim);
     if(posx === this.posx && posy === this.posy){
         return;
     }

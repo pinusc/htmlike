@@ -1,26 +1,27 @@
+var box;
 var game;
 var m = new map();
-var gdim = 32; // tile size, stands for GraphicDIMension
 var toDebug = false, dbl = [];
 var cursors;  // the arrow keys
 var yellow_border; // used in debug to see player position
-var globSpeed = 100;  // GLOBalSPEED
 var socket;
     
-var baseAssetsFolder = '/static/assets';
 
-/**
- * The only thing this does is to create  a new Phaser.Game object and assign it to game
- */
-$(document).ready(function (){
-    /* initializazion */
 
-    // Set canvas height and width based on container dimensions
+function Box(){
     var width = $("#main").width()
     var height = $("#main").height();
     $(window).resize(onResize);
     game = new Phaser.Game(width, height, Phaser.CANVAS, 'main',
         { preload: preload, create: create, update: update, render:render});
+    this.properties = new Properties();
+}
+
+/**
+ * The only thing this does is to create  a new Phaser.Game object and assign it to game
+ */
+$(document).ready(function (){
+    box = new Box();
 });
 
 
@@ -88,6 +89,7 @@ function render() {
 }
 
 function preload() {
+    var baseAssetsFolder = box.properties.baseAssetsFolder;
     game.time.advancedTiming = true;  // to show fps
     /* entities */
     game.load.image('heart', baseAssetsFolder + '/hearth.png');
