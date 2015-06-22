@@ -6,12 +6,14 @@ function Box(){
     var height = $("#main").height();
     this.properties = new Properties();
     this.m = new map();
+    var that = this;
     this.game = new Phaser.Game(width, height, Phaser.CANVAS, 'main',
-        { preload: preload, create: createGame, update: update, render:render});
+        {   preload: preload,
+            create: createGame, 
+            update: update, 
+            render: render});
     this.toDebug = false;
     this.dbl = [];
-
-
     this.input = new Input();
 }
 
@@ -24,9 +26,10 @@ $(document).ready(function (){
 });
 
 function createGame(){
+    console.log(this)
     box.socket = io.connect('http://' + document.domain + ':' + location.port + '/game');
     box.socket.on('map', function(msg){
-        myCreate(msg);
+        box.myCreate(msg);
     });
     box.game.paused = true;
 }
@@ -39,26 +42,25 @@ function createGame(){
  * First myUpdate() call
  * @return {[type]} [description]
  */
-function myCreate(jMap){
-    console.log(jMap);
-    box.game.physics.startSystem(Phaser.Physics.P2JS);
-    box.m.loadMap(jMap);
-    box.game.camera.follow(box.m.player.image);
-    box.m.player.fixedToCamera = true;
+Box.prototype.myCreate = function(jMap){
+    this.game.physics.startSystem(Phaser.Physics.P2JS);
+    this.m.loadMap(jMap);
+    this.game.camera.follow(this.m.player.image);
+    this.m.player.fixedToCamera = true;
 
-    yellow_border = box.game.add.image(0, 0, 'yellow_border');
+    yellow_border = this.game.add.image(0, 0, 'yellow_border');
     yellow_border.alpha = 0;
 
     //input
-    box.input.createKeys();
-    box.game.input.onDown.add(box.input.handleDown, box.input);
-    box.game.input.onUp.add(box.input.handleUp, box.input);
+    this.input.createKeys();
+    this.game.input.onDown.add(this.input.handleDown, this.input);
+    this.game.input.onUp.add(this.input.handleUp, this.input);
 
     createUI();
 
-    box.m.time.myUpdate();
+    this.m.time.myUpdate();
     //socket.send("ciao");
-    box.game.paused = false;
+    this.game.paused = false;
 }
 
 function update() {
