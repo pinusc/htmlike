@@ -1,4 +1,3 @@
-var frame_height_px, frame_width_px, frame_height, frame_width;
 var game;
 var m = new map();
 var gdim = 32; // tile size, stands for GraphicDIMension
@@ -17,15 +16,10 @@ $(document).ready(function (){
     /* initializazion */
 
     // Set canvas height and width based on container dimensions
-    var width = $("#main").css("width");
-    var height = $("#main").css("height");
-    frame_width_px = parseInt(width.substring(0, width.length - 2)); // numerical values
-    frame_height_px = parseInt(height.substring(0, height.length - 2));
-    frame_height = frame_height_px / gdim;
-    frame_width = frame_width_px / gdim;
-
-    // TODO see if Phaser can handle the size itself
-    game = new Phaser.Game(frame_width_px, frame_height_px, Phaser.CANVAS, 'main',
+    var width = $("#main").width()
+    var height = $("#main").height();
+    $(window).resize(onResize);
+    game = new Phaser.Game(width, height, Phaser.CANVAS, 'main',
         { preload: preload, create: create, update: update, render:render});
 });
 
@@ -154,4 +148,20 @@ function debug(text, color){
 function toggleDebug() {
     yellow_border.alpha = yellow_border.alpha === 1 ? 0 : 1;
     toDebug = !toDebug;
+}
+
+function onResize() {
+    console.log("onResize");
+    var width = $("#main").width()
+    var height = $("#main").height();
+
+    game.width = width;
+    game.height = height;
+    game.stage.bounds.width = width;
+    game.stage.bounds.height = height;
+    game.scale.width = width;
+    game.scale.height = height;
+    game.camera.setSize(width, height);
+    game.scale.setSize();
+
 }
