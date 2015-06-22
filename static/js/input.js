@@ -21,7 +21,6 @@ Input.prototype.handleInput = function(){
     if(box.game.input.x < box.game.world.width){
         this.handleJoystick(this.joystick_base_l, this.joystick_ball_l, this.maxJoystickDistance_l);
     } else {
-        console.log("joystick_r");
         this.handleJoystick(this.joystick_base_r, this.joystick_ball_r, this.maxJoystickDistance_r);
     }
 }

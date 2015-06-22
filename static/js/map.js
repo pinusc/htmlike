@@ -179,7 +179,6 @@ map.prototype.cast_light = function(cx, cy, row, start, end, radius, xx, xy, yx,
  * @return undefined
  */
 map.prototype.do_fov = function(x, y, radius){
-    console.log("do:fov");
     this.flag += 1;
     for(var oct = 0; oct < 8; oct++){
         this.cast_light(x, y, 1, 1.0, 0.0, radius,
@@ -233,5 +232,4 @@ map.prototype.generateDKMap = function(){
             }
         }
     } while (changed);
-    console.log(this.DKMap)
 };

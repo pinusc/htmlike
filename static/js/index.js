@@ -26,7 +26,6 @@ $(document).ready(function (){
 });
 
 function createGame(){
-    console.log(this)
     box.socket = io.connect('http://' + document.domain + ':' + location.port + '/game');
     box.socket.on('map', function(msg){
         box.myCreate(msg);
