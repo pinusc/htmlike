@@ -11,36 +11,37 @@ function createUI()
     box.game.add.plugin(Phaser.Plugin.Debug);
 
     /* debug button */
-    dbutton = box.game.add.button(box.game.width - 32 * 3, 0, 'debug_button', toggleDebug(), this);
-    dbutton.onInputDown.add(dbutton_down, this);
-    dbutton.fixedToCamera = true;
+    box.input.dbutton = box.game.add.button(box.game.width - 32 * 3, 0, 'debug_button', Box.prototype.toggleDebug, box);
+    box.input.dbutton.onInputDown.add(box.input.dbutton_down, box.input);
+    box.input.dbutton.fixedToCamera = true;
 
     /* fullscreen button */
-    fbutton = box.game.add.button(box.game.width - 32 * 3, 32, 'fullscreen_button', toggleDebug(), this);
-    fbutton.onInputDown.add(fbutton_down, this);
-    fbutton.fixedToCamera = true;
+    box.input.fbutton = box.game.add.button(box.game.width - 32 * 3, 32, 'fullscreen_button', box.input.gofull, box);
+    //box.input.fbutton.onInputDown.add(box.input.fbutton_down, box.input);
+    box.input.fbutton.fixedToCamera = true;
 
     /* joystick l*/
-    joystick_base_l = box.game.add.sprite(0, 0, 'controller_base');
-    joystick_base_l.alpha = 0.5;
-	joystick_base_l.visible = false;
-	joystick_base_l.fixedToCamera = true;
-	maxJoystickDistance_l = joystick_base_l.width / 2;  // radius of the ball
+    box.input.joystick_base_l = box.game.add.sprite(0, 0, 'controller_base');
+    box.input.joystick_base_l.alpha = 0.5;
+	box.input.joystick_base_l.visible = false;
+	box.input.joystick_base_l.fixedToCamera = true;
+	box.input.maxJoystickDistance_l = box.input.joystick_base_l.width / 2;  // radius of the ball
 
-    joystick_ball_l = box.game.add.image(0, 0, 'controller_ball');
-    joystick_ball_l.alpha = 0.5;
-    joystick_ball_l.fixedToCamera = true;
-	joystick_ball_l.visible = false;
+    box.input.joystick_ball_l = box.game.add.image(0, 0, 'controller_ball');
+    box.input.joystick_ball_l.alpha = 0.5;
+    box.input.joystick_ball_l.fixedToCamera = true;
+	box.input.joystick_ball_l.visible = false;
 
     /* joystick r*/
-    joystick_base_r = box.game.add.sprite(0, 0, 'controller_base_r');
-    joystick_base_r.alpha = 0.5;
-    joystick_base_r.visible = false;
-    joystick_base_r.fixedToCamera = true;
-    maxJoystickDistance_r = joystick_base_r.width / 2;  // radius of the ball
+    box.input.joystick_base_r = box.game.add.sprite(0, 0, 'controller_base_r');
+    box.input.joystick_base_r.alpha = 0.5;
+    box.input.joystick_base_r.visible = false;
+    box.input.joystick_base_r.fixedToCamera = true;
+    box.input.maxJoystickDistance_r = box.input.joystick_base_r.width / 2;  // radius of the ball
 
-    joystick_ball_r = box.game.add.image(0, 0, 'controller_ball_r');
-    joystick_ball_r.alpha = 0.5;
-    joystick_ball_r.fixedToCamera = true;
-    joystick_ball_r.visible = false;
+    box.input.joystick_ball_r = box.game.add.image(0, 0, 'controller_ball_r');
+    box.input.joystick_ball_r.alpha = 0.5;
+    box.input.joystick_ball_r.fixedToCamera = true;
+    box.input.joystick_ball_r.visible = false;
+
 }

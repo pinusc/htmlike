@@ -1,5 +1,4 @@
 var box;
-var cursors;  // the arrow keys
 var yellow_border; // used in debug to see player position
     
 function Box(){
@@ -11,6 +10,9 @@ function Box(){
         { preload: preload, create: createGame, update: update, render:render});
     this.toDebug = false;
     this.dbl = [];
+
+
+    this.input = new Input();
 }
 
 /**
@@ -48,10 +50,9 @@ function myCreate(jMap){
     yellow_border.alpha = 0;
 
     //input
-    createKeys();
-    box.game.input.onTap.add(handleTap);
-    box.game.input.onDown.add(handleDown);
-    box.game.input.onUp.add(handleUp);
+    box.input.createKeys();
+    box.game.input.onDown.add(box.input.handleDown, box.input);
+    box.game.input.onUp.add(box.input.handleUp, box.input);
 
     createUI();
 
@@ -62,7 +63,7 @@ function myCreate(jMap){
 
 function update() {
     box.m.player.image.body.setZeroVelocity();
-    handleInput();
+    box.input.handleInput();
     box.m.player.update();
 }
 
@@ -80,7 +81,7 @@ function render() {
         }
         box.debug(box.game.time.fps || '--', "#00ff00");
         box.debug("fpsMin: " + box.game.time.fpsMin || '--', "#00ff00");
-        renderDebug();
+        box.renderDebug();
     }
     //game.debug.pointer(game.input.pointer1);
 }
@@ -122,10 +123,10 @@ function preload() {
 Box.prototype.renderDebug = function(){
     var x = 15;
     this.game.debug.text("DEBUG:", 10, x);
-    _.each(dbl, function(m){
+    _.each(this.dbl, function(m){
         x += 15;
         this.game.debug.text(m.text, 10, x, m.color);
-    });
+    }, this);
     this.dbl = [];  // clear debug list
 }
 
@@ -137,15 +138,6 @@ Box.prototype.renderDebug = function(){
  */
 Box.prototype.debug = function(text, color){
     this.dbl.push({text: text, color: color});
-}
-
-/**
- * When called, if debug info is displayed, it is no longer displayed.
- * @return {undefined}
- */
-Box.prototype.toggleDebug = function() {
-    yellow_border.alpha = yellow_border.alpha === 1 ? 0 : 1;
-    this.toDebug = !this.toDebug;
 }
 
 Box.prototype.onResize = function() {
