@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "items.js",
+  "sourceRoot": "../..",
+  "sources": [
+    "static/src/coffee/items.coffee"
+  ],
+  "names": [],
+  "mappings": ";AAAA;;AAAA"
+}
