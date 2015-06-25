@@ -116,7 +116,6 @@ class @map
     }`
 
     do_fov: `function(x, y, radius){
-        console.log(this.flag)
         this.flag += 1;
         for(var oct = 0; oct < 8; oct++){
             this.cast_light(x, y, 1, 1.0, 0.0, radius,
