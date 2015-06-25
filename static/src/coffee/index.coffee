@@ -1,5 +1,4 @@
 boxx = null
-window.yellow_border = null
 
 class @Box
     constructor: () ->
@@ -44,9 +43,6 @@ class @Box
         this.m.loadMap(jMap)
         this.game.camera.follow(this.m.player.image)
         this.m.player.fixedToCamera = true
-
-        window.yellow_border = this.game.add.image(0, 0, 'yellow_border')
-        window.yellow_border.alpha = 0
 
         # input
         this.input.createKeys()

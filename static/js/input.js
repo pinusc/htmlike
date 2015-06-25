@@ -87,7 +87,6 @@
     };
 
     Input.prototype.toggleDebug = function() {
-      yellow_border.alpha = !yellow_border.alpha;
       return this.box.toDebug = !this.box.toDebug;
     };
 

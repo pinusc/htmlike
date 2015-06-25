@@ -61,9 +61,7 @@
       _.each(this.map.level, function(level) {
         return level.dirty = true;
       });
-      this.map.map.getTile(this.map.player.posx, this.map.player.posy, 0).alpha = 0.5;
-      yellow_border.x = this.map.player.posx;
-      return yellow_border.y = this.map.player.posy;
+      return this.map.map.getTile(this.map.player.posx, this.map.player.posy, 0).alpha = 0.5;
     };
 
     return Time;

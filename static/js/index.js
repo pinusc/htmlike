@@ -4,8 +4,6 @@
 
   boxx = null;
 
-  window.yellow_border = null;
-
   this.Box = (function() {
     function Box() {
       var height, width;
@@ -58,8 +56,6 @@
       this.m.loadMap(jMap);
       this.game.camera.follow(this.m.player.image);
       this.m.player.fixedToCamera = true;
-      window.yellow_border = this.game.add.image(0, 0, 'yellow_border');
-      window.yellow_border.alpha = 0;
       this.input.createKeys();
       this.game.input.onDown.add(this.input.handleDown, this.input);
       this.game.input.onUp.add(this.input.handleUp, this.input);

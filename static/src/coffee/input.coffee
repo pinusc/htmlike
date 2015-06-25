@@ -72,7 +72,6 @@ class @Input
             this.box.game.scale.startFullScreen(false)
 
     toggleDebug: () ->
-        yellow_border.alpha = not yellow_border.alpha
         this.box.toDebug = !this.box.toDebug
 
     dbutton_down: () ->
