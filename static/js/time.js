@@ -52,7 +52,7 @@
               var currTile;
               currTile = this.map.map.getTile(j, i, l);
               if (currTile) {
-                return currTile.alpha = 1;
+                return currTile.alpha = q;
               }
             }, this);
           }
@@ -71,5 +71,3 @@
   })();
 
 }).call(this);
-
-//# sourceMappingURL=time.js.map

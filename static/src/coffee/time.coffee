@@ -45,7 +45,7 @@ class @Time
 								(f, l) ->
 									currTile = this.map.map.getTile(j, i, l)
 									if currTile
-										currTile.alpha = 1
+										currTile.alpha = q
 								, this)
 					, this)
 			, this)
