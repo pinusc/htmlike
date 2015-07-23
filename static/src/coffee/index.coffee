@@ -2,6 +2,7 @@ boxx = null
 
 class @Box
     constructor: () ->
+        # initializes map, properties, game and input. 
         width = $("#main").width()
         height = $("#main").height()
         this.properties = new Properties()
@@ -16,6 +17,7 @@ class @Box
         this.input = new Input(this)
 
     renderDebug: () ->
+        # Tells the game to print out debug info with game.debug.text()
         x = 15
         this.game.debug.text("DEBUG:", 10, x)
         _.each(this.dbl,
@@ -26,9 +28,11 @@ class @Box
         this.dbl = []  # clear debug list
 
     debug: (text, color) ->
+        # pushes a debug text to the queue
         this.dbl.push({text: text, color: color})
 
     onResize: () ->
+        # doesn't work
         box = boxx
         width = $("#main").width()
         height = $("#main").height()
@@ -39,6 +43,10 @@ class @Box
         box.game.scale.setSize()
 
     myCreate: (jMap) ->
+        # actualli loads the map, initializes phyisics and input.
+        # creates UI
+        # starts time cycle
+        # start game
         this.game.physics.startSystem(Phaser.Physics.P2JS)
         this.m.loadMap(jMap)
         this.game.camera.follow(this.m.player.image)
@@ -59,6 +67,8 @@ $(document).ready(() ->
     $(window).resize(boxx.onResize))
 
 createGame = () ->
+    # initializes a socket connection to retrieve the map
+    # when received, game can actually be created
     boxx.socket = io.connect('http://' + document.domain + ':' + location.port + '/game')
     boxx.socket.on('map', (msg) ->
         boxx.myCreate(msg))
