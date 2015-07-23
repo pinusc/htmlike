@@ -2,73 +2,63 @@ import random
 import sys
 import json
 
-def get_neighbour(matrix, x, y, direction, coor=False):
-    xx, yy = x, y
+def get_neighbour(matrix, x, y, direction, count=1):
+    """Starting with the cell at [x][y], walking in versus direction for count steps...
+    You end up in a cell. This method return True if that cell exist and is True, False otherwise
+    """
     if direction == 0:
-        if 0 <= x and y - 1 >= 0 and x < len(matrix) and y - 1 < len(matrix[1]):
-            xx = x
-            yy = y - 1
+        cx = 0
+        cy = -count
     elif direction == 1:
-        if 0 <= x + 1 and y >= 0 and x + 1 < len(matrix) and y - 1 < len(matrix[1]):
-            xx = x + 1
-            yy = y
+        cx = count
+        cy = 0
     elif direction == 2:
-        if 0 <= x and y + 1 >= 0 and x < len(matrix) and y + 1 < len(matrix[1]):
-            xx = x
-            yy = y + 1
+        cx = 0
+        cy = count
     elif direction == 3:
-        if 0 <= x - 1 and y >= 0 and x - 1 < len(matrix) and y - 1 < len(matrix[1]):
-            xx = x - 1
-            yy = y
-    else:
+        cx = -count
+        cy = 0
+    xx, yy = x + cx, y + cy
+    if not (0 <= xx and  0 <= yy and xx < len(matrix) and yy < len(matrix[0])):
+        # Coordinates not in the grid
         return None
-    if coor:
-        return xx, yy
     else:
         return matrix[xx][yy]
 
 def adjacencies(matrix, x, y):
-    """Returns the list of adjacencies for a given coordinate in a given matrix
-    return format = a list of boolean [up, right, down, left]"""
+    """Return a boolean list [up, right, down, left] where each element is True if that cell exist and is true"""
     l = [False, False, False, False]
-    l = [False if get_neighbour(matrix, x, y, i) else True for i in range(len(l))]
-    return tuple(l)
-
-def adj(matrix, x, y):
-    l = [False, False, False, False]
-    l = [False if get_neighbour(matrix, x, y, i) else True for i in range(len(l))]
-    for d, i in enumerate(l):
-        if i:
-            continue
-        cx, cy = get_neighbour(matrix, x, y, d, True)
-        if adjacencies(matrix, cx, cy).count(True) >= 2:
-            l[d] = True
+    l = [get_neighbour(matrix, x, y, i, 2) for i in range(len(l))]
     return tuple(l)
 
 def carve(matrix, x, y, seed=None):
     """Randomly removes a square that is adjacent to the given coordinates"""
     random.seed(seed)
 
-    a = [i for i, k in enumerate(adj(matrix, x, y)) if not k]
+    a = [i for i, k in enumerate(adjacencies(matrix, x, y)) if k]
     if not a: return False
     to_carve = random.choice(a)
 
+    # there must be removed and counted two cells because of walls
     xc = x
-    yx = y
+    xcc = x
+    yc = y
+    ycc = y
     if to_carve == 0:
-        xc = x
         yc = y - 1
+        ycc = y - 2
     elif to_carve == 1:
         xc = x + 1
-        yc = y
+        xcc = x + 2
     elif to_carve == 2:
-        xc = x
         yc = y + 1
+        ycc = y + 2
     elif to_carve == 3:
         xc = x - 1
-        yc = y
+        xcc = x - 2
     matrix[xc][yc] = False
-    return xc, yc
+    matrix[xcc][ycc] = False
+    return xcc, ycc
 
 
 def generate_maze(height, width):
@@ -94,7 +84,7 @@ def printMaze(a):
             if j:
                 sys.stdout.write('#')
             else:
-                sys.stdout.write(' ')
+                sys.stdout.write('.')
         print
 
 def maze_to_json(maze):
