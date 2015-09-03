@@ -37,6 +37,19 @@
     }
   };
 
+  window.roll = function(number, faces) {
+    var i, j, ref, total;
+    total = 0;
+    for (i = j = 0, ref = number; 0 <= ref ? j < ref : j > ref; i = 0 <= ref ? ++j : --j) {
+      total += Math.floor(Math.random() * (faces - 1 + 1)) + 1;
+    }
+    return total;
+  };
+
+  window.r2d6 = function() {
+    return roll(2, 6);
+  };
+
 }).call(this);
 
 //# sourceMappingURL=util.js.map
