@@ -1,7 +1,7 @@
 class @Player extends Entity
 	constructor: (image, map) ->
 		super(image, 10, 10, map)
-		this.hp = 20
+		this.hp = 5
 		this.maxhp = this.hp
 		this.isPlayer = yes
 		this.hearts = []
@@ -39,7 +39,7 @@ class @Player extends Entity
 		this.alignHearts()
 
 	alignHearts: () ->
-		nh = this.hp // 5
+		nh = this.hp
 		nh_now = this.hearts.length
 		if nh < nh_now
 			for i in [0 .. nh_now - nh - 1]

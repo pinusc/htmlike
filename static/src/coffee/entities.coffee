@@ -1,10 +1,11 @@
 class @Entity extends Thing
     constructor: (image, x, y, map) ->
         super(image, x, y, map)
-        this.hp = 10
+        this.hp = 1
         this.maxhp = this.hp
         this.isEntity = yes
         this.speed = 10
+        this.mainWeapon = 
         this.render()
 
     ###
@@ -51,7 +52,7 @@ class @Entity extends Thing
         this.move(coor.x, coor.y)
 
     attack: (enemy) ->
-        if Math.random() < 0.3
+        if r2d6() > 6
             enemy.damage(1)
 
     damage: (hp) ->
@@ -64,7 +65,7 @@ class @Entity extends Thing
         this.hp = this.maxhp if this.hp > this.maxhp
 
     die: () ->
-        m.entitiesL.splice(m.entitiesL.indexOf(this), 1)
+        this.map.entitiesL.splice(this.map.entitiesL.indexOf(this), 1)
         this.image.destroy(true)
 
     interact: (direction) ->
