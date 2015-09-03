@@ -29,3 +29,12 @@ window.direction = (x1, y1, x2, y2) ->
             return "down"
         else
             return "up"
+
+window.roll = (number, faces) ->
+    total = 0
+    (total += Math.floor(Math.random() * (faces - 1 + 1)) + 1) for i in [0...number];
+    return total
+
+window.r2d6 = () ->
+    # roll 2d6
+    return roll(2, 6)
