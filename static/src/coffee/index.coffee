@@ -1,4 +1,4 @@
-boxx = null
+window.boxx = null
 
 class @Box
     constructor: () ->
@@ -7,14 +7,15 @@ class @Box
         height = $("#main").height()
         this.properties = new Properties()
         this.m = new map(this)
-        this.game = new Phaser.Game(width, height, Phaser.CANVAS, 'main',
-            {preload: preload,
-            create: createGame,
+        this.game = new Phaser.Game(width, height, Phaser.CANVAS, 'main', load_status)
+        main_state = 
+            {create: create,
             update: update,
-            render: render})
+            render: render}
+        this.game.state.add('main_state', main_state)
+        this.input = new Input(this)
         this.toDebug = false
         this.dbl = []
-        this.input = new Input(this)
 
     renderDebug: () ->
         # Tells the game to print out debug info with game.debug.text()
@@ -42,37 +43,31 @@ class @Box
         box.game.camera.setSize(width, height)
         box.game.scale.setSize()
 
-    myCreate: (jMap) ->
-        # actualli loads the map, initializes phyisics and input.
-        # creates UI
-        # starts time cycle
-        # start game
-        this.game.physics.startSystem(Phaser.Physics.P2JS)
-        this.m.loadMap(jMap)
-        this.game.camera.follow(this.m.player.image)
-        this.m.player.fixedToCamera = true
-
-        # input
-        this.input.createKeys()
-        this.game.input.onDown.add(this.input.handleDown, this.input)
-        this.game.input.onUp.add(this.input.handleUp, this.input)
-
-        createUI(this)
-
-        this.m.time.myUpdate()
-        this.game.paused = false
-
 $(document).ready(() ->
-    boxx = new Box()
+    window.boxx = new Box()
+    console.log(load_status)
     $(window).resize(boxx.onResize))
 
-createGame = () ->
-    # initializes a socket connection to retrieve the map
-    # when received, game can actually be created
-    boxx.socket = io.connect('http://' + document.domain + ':' + location.port + '/game')
-    boxx.socket.on('map', (msg) ->
-        boxx.myCreate(msg))
-    boxx.game.paused = true
+create = () ->
+    # actualli loads the map, initializes phyisics and input.
+    # creates UI
+    # starts time cycle
+    # start game
+    jMap = this.game.jMap
+    this.game.physics.startSystem(Phaser.Physics.P2JS)
+    boxx.m.loadMap(jMap)
+    this.game.camera.follow(boxx.m.player.image)
+    boxx.m.player.fixedToCamera = true
+
+    # input
+    boxx.input.createKeys()
+    this.game.input.onDown.add(boxx.input.handleDown, boxx.input)
+    this.game.input.onUp.add(boxx.input.handleUp, boxx.input)
+
+    createUI(boxx)
+
+    boxx.m.time.myUpdate()
+    this.game.paused = false
 
 
 update = () ->
@@ -90,33 +85,3 @@ render = () ->
         box.debug(box.game.time.fps || '--', "#00ff00")
         box.debug("fpsMin: " + box.game.time.fpsMin || '--', "#00ff00")
         box.renderDebug()
-
-preload = () ->
-    box = boxx
-    baseAssetsFolder = box.properties.baseAssetsFolder
-    box.game.time.advancedTiming = true;  # to show fps
-    # entities #
-    box.game.load.image('heart', baseAssetsFolder + '/hearth.png');
-    box.game.load.image('greeny', baseAssetsFolder + '/character.png');
-    box.game.load.image('princess', baseAssetsFolder + '/dragon.png');
-
-    # objects
-    box.game.load.image('potion', baseAssetsFolder + '/potion.png');
-
-    # tiles
-    box.game.load.image('grass', baseAssetsFolder + '/grass.png');
-    box.game.load.image('dirt', baseAssetsFolder + '/dirt.png');
-
-    # ui
-    box.game.load.image('debug_button', baseAssetsFolder + '/debug_button.png');
-    box.game.load.image('fullscreen_button', baseAssetsFolder + '/fullscreen_button.png');
-    box.game.load.image('yellow_border', baseAssetsFolder + '/yellow_border.png');
-    box.game.load.image('controller_ball', baseAssetsFolder + '/controller_ball.png');
-    box.game.load.image('controller_ball_r', baseAssetsFolder + '/controller_ball_r.png');
-    box.game.load.image('controller_base', baseAssetsFolder + '/controller_base.png');
-    box.game.load.image('controller_base_r', baseAssetsFolder + '/controller_base_r.png');
-
-    # icons
-    # box.game.load.image('bag', baseAssetsFolder + '/bag.png');
-    box.game.load.image('tileset', baseAssetsFolder + '/tileset.png');
-    # box.game.load.tilemap('tilemap', baseAssetsFolder + "/map.json", null, Phaser.Tilemap.TILED_JSON);
