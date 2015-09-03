@@ -8,7 +8,7 @@
 
     function Player(image, map) {
       Player.__super__.constructor.call(this, image, 10, 10, map);
-      this.hp = 20;
+      this.hp = 5;
       this.maxhp = this.hp;
       this.isPlayer = true;
       this.hearts = [];
@@ -51,7 +51,7 @@
 
     Player.prototype.alignHearts = function() {
       var i, j, k, nh, nh_now, ref, ref1, results, results1;
-      nh = Math.floor(this.hp / 5);
+      nh = this.hp;
       nh_now = this.hearts.length;
       if (nh < nh_now) {
         results = [];

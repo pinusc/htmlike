@@ -8,11 +8,11 @@
 
     function Entity(image, x, y, map) {
       Entity.__super__.constructor.call(this, image, x, y, map);
-      this.hp = 10;
+      this.hp = 1;
       this.maxhp = this.hp;
       this.isEntity = true;
       this.speed = 10;
-      this.render();
+      this.mainWeapon = this.render();
     }
 
 
@@ -74,7 +74,7 @@
     };
 
     Entity.prototype.attack = function(enemy) {
-      if (Math.random() < 0.3) {
+      if (r2d6() > 6) {
         return enemy.damage(1);
       }
     };
@@ -94,7 +94,7 @@
     };
 
     Entity.prototype.die = function() {
-      m.entitiesL.splice(m.entitiesL.indexOf(this), 1);
+      this.map.entitiesL.splice(this.map.entitiesL.indexOf(this), 1);
       return this.image.destroy(true);
     };
 
