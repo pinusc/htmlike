@@ -12,7 +12,12 @@
       this.maxhp = this.hp;
       this.isEntity = true;
       this.speed = 10;
-      this.mainWeapon = this.render();
+      this.mainWeapon = null;
+      this.image.game.physics.arcade.enable(this.image);
+      this.image.body.collideWorldBounds = true;
+      this.pixelSpeed = this.map.box.properties.globSpeed;
+      this.image.body.immovable = true;
+      this.render();
     }
 
 
@@ -32,7 +37,7 @@
       ref = this.map.entitiesL;
       for (k = 0, len = ref.length; k < len; k++) {
         entity = ref[k];
-        if (entity.posx === x && entity.poy === y) {
+        if (entity.posx === x && entity.posy === y) {
           return this.attack(entity);
         }
       }

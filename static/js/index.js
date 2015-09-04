@@ -58,14 +58,13 @@
 
   $(document).ready(function() {
     window.boxx = new Box();
-    console.log(load_status);
     return $(window).resize(boxx.onResize);
   });
 
   create = function() {
     var jMap;
     jMap = this.game.jMap;
-    this.game.physics.startSystem(Phaser.Physics.P2JS);
+    this.game.physics.startSystem(Phaser.Physics.ARCADE);
     boxx.m.loadMap(jMap);
     this.game.camera.follow(boxx.m.player.image);
     boxx.m.player.fixedToCamera = true;
@@ -78,7 +77,12 @@
   };
 
   update = function() {
-    boxx.m.player.image.body.setZeroVelocity();
+    var a;
+    a = boxx.game.physics.arcade.collide(boxx.m.player.image, boxx.m.level[1]);
+    _.each(boxx.m.entitiesL, function(entity) {
+      return boxx.game.physics.arcade.collide(boxx.m.player.image, entity.image);
+    });
+    boxx.m.player.image.body.velocity.set(0);
     boxx.input.handleInput();
     return boxx.m.player.update();
   };

@@ -45,7 +45,6 @@ class @Box
 
 $(document).ready(() ->
     window.boxx = new Box()
-    console.log(load_status)
     $(window).resize(boxx.onResize))
 
 create = () ->
@@ -54,7 +53,8 @@ create = () ->
     # starts time cycle
     # start game
     jMap = this.game.jMap
-    this.game.physics.startSystem(Phaser.Physics.P2JS)
+    #this.game.physics.startSystem(Phaser.Physics.P2JS)
+    this.game.physics.startSystem(Phaser.Physics.ARCADE)
     boxx.m.loadMap(jMap)
     this.game.camera.follow(boxx.m.player.image)
     boxx.m.player.fixedToCamera = true
@@ -71,7 +71,12 @@ create = () ->
 
 
 update = () ->
-    boxx.m.player.image.body.setZeroVelocity()
+    #boxx.m.player.image.body.moves = false
+    a = boxx.game.physics.arcade.collide(boxx.m.player.image, boxx.m.level[1])
+    _.each(boxx.m.entitiesL, (entity) ->
+        boxx.game.physics.arcade.collide(boxx.m.player.image, entity.image)
+        )
+    boxx.m.player.image.body.velocity.set(0)
     boxx.input.handleInput()
     boxx.m.player.update()
 

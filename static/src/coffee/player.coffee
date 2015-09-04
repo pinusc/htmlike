@@ -7,10 +7,8 @@ class @Player extends Entity
 		this.hearts = []
 		this.inventory = []
 		this.alignHearts()
+		this.image.body.immovable = false
 		this.pixelSpeed = this.map.box.properties.globSpeed
-		this.map.box.game.physics.p2.enable(this.image)
-		this.image.body.setZeroDamping()
-		this.image.body.fixedRotation = on
 
 	addToInventory: (item) ->
 		this.inventory.push(item)
@@ -26,8 +24,8 @@ class @Player extends Entity
 
 		_.each(to_add, 
 			(it) -> 
-			    this.addToInventory(it)
-			    it.setVisible(false)
+				this.addToInventory(it)
+				it.setVisible(false)
 			, this)
 
 	heal: (hp) ->
@@ -55,8 +53,8 @@ class @Player extends Entity
 		body = this.image.body
 		x = body.x
 		y = body.y
-		posx = x // this.map.box.properties.gdim
-		posy = y // this.map.box.properties.gdim
+		posx = (x + this.map.box.properties.gdim / 2) // this.map.box.properties.gdim
+		posy = (y + this.map.box.properties.gdim / 2) // this.map.box.properties.gdim
 		if posx is this.posx and posy is this.posy 
 			return
 		this.posx = posx

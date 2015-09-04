@@ -16,12 +16,11 @@
       this.box.game.load.tilemap('base', null, t, Phaser.Tilemap.TILED_JSON);
       this.map = this.box.game.add.tilemap('base');
       this.map.addTilesetImage('tiles', 'tileset');
-      this.level[0] = this.map.createLayer('ground');
-      this.level[1] = this.map.createLayer('walls');
+      this.level[0] = this.map.createLayer(0);
       this.level[0].resizeWorld();
+      this.level[1] = this.map.createLayer(1);
       this.level[1].resizeWorld();
       this.map.setCollisionBetween(1, this.map.tiles.length, true, 'walls');
-      this.box.game.physics.p2.convertTilemap(this.map, 'walls');
       for (l = k = 0, ref = this.level.length - 1; 0 <= ref ? k <= ref : k >= ref; l = 0 <= ref ? ++k : --k) {
         for (i = m = 0, ref1 = this.map.width - 1; 0 <= ref1 ? m <= ref1 : m >= ref1; i = 0 <= ref1 ? ++m : --m) {
           for (j = n = 0, ref2 = this.map.height - 1; 0 <= ref2 ? n <= ref2 : n >= ref2; j = 0 <= ref2 ? ++n : --n) {

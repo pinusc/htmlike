@@ -182,15 +182,19 @@ class @Input
             this.handleUp();
 
 window.move = (x, y, body) ->
+    #body.moves = true
     if x
-        if x > 0
-            body.moveRight(x)
-        else
-            body.moveLeft(-x)
+        body.velocity.x = x
+        #commented line is for p2
+#        if x > 0
+            #body.moveRight(x)
+#        else
+            #body.moveLeft(-x)
 
     if y
-        if y > 0
-            body.moveDown(y)
-        else
-            body.moveUp(-y)
+        body.velocity.y = y
+        #if y > 0
+        #    body.moveDown(y)
+        #else
+        #    body.moveUp(-y)
 

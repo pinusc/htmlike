@@ -14,10 +14,8 @@
       this.hearts = [];
       this.inventory = [];
       this.alignHearts();
+      this.image.body.immovable = false;
       this.pixelSpeed = this.map.box.properties.globSpeed;
-      this.map.box.game.physics.p2.enable(this.image);
-      this.image.body.setZeroDamping();
-      this.image.body.fixedRotation = true;
     }
 
     Player.prototype.addToInventory = function(item) {
@@ -74,8 +72,8 @@
       body = this.image.body;
       x = body.x;
       y = body.y;
-      posx = Math.floor(x / this.map.box.properties.gdim);
-      posy = Math.floor(y / this.map.box.properties.gdim);
+      posx = Math.floor((x + this.map.box.properties.gdim / 2) / this.map.box.properties.gdim);
+      posy = Math.floor((y + this.map.box.properties.gdim / 2) / this.map.box.properties.gdim);
       if (posx === this.posx && posy === this.posy) {
         return;
       }

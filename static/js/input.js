@@ -209,18 +209,10 @@
 
   window.move = function(x, y, body) {
     if (x) {
-      if (x > 0) {
-        body.moveRight(x);
-      } else {
-        body.moveLeft(-x);
-      }
+      body.velocity.x = x;
     }
     if (y) {
-      if (y > 0) {
-        return body.moveDown(y);
-      } else {
-        return body.moveUp(-y);
-      }
+      return body.velocity.y = y;
     }
   };
 

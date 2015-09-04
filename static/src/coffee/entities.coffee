@@ -5,7 +5,13 @@ class @Entity extends Thing
         this.maxhp = this.hp
         this.isEntity = yes
         this.speed = 10
-        this.mainWeapon = 
+        this.mainWeapon = null
+        this.image.game.physics.arcade.enable(this.image)
+        this.image.body.collideWorldBounds = true
+        #this.image.body.setZeroDamping()
+        #this.image.body.fixedRotation = on
+        this.pixelSpeed = this.map.box.properties.globSpeed
+        this.image.body.immovable = true
         this.render()
 
     ###
@@ -23,7 +29,7 @@ class @Entity extends Thing
             return
 
         for entity in this.map.entitiesL
-            if entity.posx is x and entity.poy is y
+            if entity.posx is x and entity.posy is y
                 return this.attack entity
 
         if not this.isPlayer and 
