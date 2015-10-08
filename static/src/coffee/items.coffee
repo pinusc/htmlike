@@ -10,6 +10,10 @@ class Weapon extends Item
 	constructor: (image, x, y, map) ->
 		super(image, x, y, map)
 
+class Sword extends Weapon
+	constructor: (x, y, map) ->
+		super('sword', x, y, map)
+
 
 window.Items =
 	Potion: Potion

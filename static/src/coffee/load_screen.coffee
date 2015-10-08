@@ -12,6 +12,7 @@ window.load_status =
 
 		# objects
 		this.game.load.image('potion', baseAssetsFolder + '/potion.png');
+		this.game.load.image('sword', baseAssetsFolder + '/sword.png');
 
 		# tiles
 		this.game.load.image('grass', baseAssetsFolder + '/grass.png');

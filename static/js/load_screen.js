@@ -15,6 +15,7 @@
       this.game.load.image('princess', baseAssetsFolder + '/dragon.png');
       this.game.load.image('hit', baseAssetsFolder + '/hit.png');
       this.game.load.image('potion', baseAssetsFolder + '/potion.png');
+      this.game.load.image('sword', baseAssetsFolder + '/sword.png');
       this.game.load.image('grass', baseAssetsFolder + '/grass.png');
       this.game.load.image('dirt', baseAssetsFolder + '/dirt.png');
       this.game.load.image('bullets', baseAssetsFolder + '/bullets.png');
