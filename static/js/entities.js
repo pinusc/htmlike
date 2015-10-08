@@ -18,6 +18,8 @@
       this.pixelSpeed = this.map.box.properties.globSpeed;
       this.image.body.immovable = true;
       this.render();
+      this.hitSprite = this.image.game.add.image(this.image.x, this.image.y, 'hit');
+      this.hitSprite.visible = false;
     }
 
 
@@ -46,7 +48,9 @@
       }
       this.posx = x;
       this.posy = y;
-      return this.render();
+      this.render();
+      this.hitSprite.x = this.image.x;
+      return this.hitSprite.y = this.image.y;
     };
 
 
@@ -85,6 +89,12 @@
     };
 
     Entity.prototype.damage = function(hp) {
+      this.hitSprite.x = this.image.x;
+      this.hitSprite.y = this.image.y;
+      this.hitSprite.visible = true;
+      window.setTimeout(function f(sprite){
+			sprite.visible = false
+			}, 300, this.hitSprite);
       this.hp -= hp;
       if (this.hp <= 0) {
         return this.die();

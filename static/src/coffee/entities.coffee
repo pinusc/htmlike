@@ -13,6 +13,8 @@ class @Entity extends Thing
 		this.pixelSpeed = this.map.box.properties.globSpeed
 		this.image.body.immovable = true
 		this.render()
+		this.hitSprite = this.image.game.add.image(this.image.x, this.image.y, 'hit')
+		this.hitSprite.visible = false
 
 	###
 	Check if something blocks at position (x, y).
@@ -39,6 +41,8 @@ class @Entity extends Thing
 		this.posx = x
 		this.posy = y
 		this.render()
+		this.hitSprite.x = this.image.x
+		this.hitSprite.y = this.image.y
 
 	###
 	The AI of the entity,
@@ -62,6 +66,12 @@ class @Entity extends Thing
 			enemy.damage(1)
 
 	damage: (hp) ->
+		this.hitSprite.x = this.image.x
+		this.hitSprite.y = this.image.y
+		this.hitSprite.visible = true
+		window.setTimeout(`function f(sprite){
+			sprite.visible = false
+			}`, 300, this.hitSprite)
 		this.hp -= hp
 		if this.hp <= 0
 			this.die()

@@ -8,6 +8,7 @@ window.load_status =
 		this.game.load.image('heart', baseAssetsFolder + '/hearth.png');
 		this.game.load.image('greeny', baseAssetsFolder + '/character.png');
 		this.game.load.image('princess', baseAssetsFolder + '/dragon.png');
+		this.game.load.image('hit', baseAssetsFolder + '/hit.png');
 
 		# objects
 		this.game.load.image('potion', baseAssetsFolder + '/potion.png');

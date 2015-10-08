@@ -98,6 +98,7 @@
       }
       box.debug(box.game.time.fps || '--', "#00ff00");
       box.debug("fpsMin: " + box.game.time.fpsMin || '--', "#00ff00");
+      box.debug.body(box.m.player.body);
       return box.renderDebug();
     }
   };

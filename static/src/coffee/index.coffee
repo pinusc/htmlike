@@ -89,4 +89,5 @@ render = () ->
 			box.debug("Wolf HP: " + box.m.entitiesL[0].hp)
 		box.debug(box.game.time.fps || '--', "#00ff00")
 		box.debug("fpsMin: " + box.game.time.fpsMin || '--', "#00ff00")
+		box.debug.body(box.m.player.body)
 		box.renderDebug()

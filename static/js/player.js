@@ -15,6 +15,8 @@
       this.inventory = [];
       this.alignHearts();
       this.image.body.immovable = false;
+      console.log(this.image.width);
+      this.image.body.setSize(this.map.box.properties.gdim / 2, this.map.box.properties.gdim / 2);
       this.pixelSpeed = this.map.box.properties.globSpeed;
     }
 
