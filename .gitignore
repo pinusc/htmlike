@@ -5,3 +5,4 @@ todo.txt
 *.sublime*
 .idea/*
 scrap.js
+run.sh
