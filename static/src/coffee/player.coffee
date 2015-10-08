@@ -5,15 +5,12 @@ class @Player extends Entity
 		this.maxhp = this.hp
 		this.isPlayer = yes
 		this.hearts = []
-		this.inventory = []
+		this.inventory = new Inventory()
 		this.alignHearts()
 		this.image.body.immovable = false
 		console.log this.image.width
 		this.image.body.setSize(this.map.box.properties.gdim / 2, this.map.box.properties.gdim / 2)
 		this.pixelSpeed = this.map.box.properties.globSpeed
-
-	addToInventory: (item) ->
-		this.inventory.push(item)
 
 	getItemOnGround: () ->
 		m = this.map
@@ -26,7 +23,7 @@ class @Player extends Entity
 
 		_.each(to_add, 
 			(it) -> 
-				this.addToInventory(it)
+				this.inventory.add(it)
 				it.setVisible(false)
 			, this)
 

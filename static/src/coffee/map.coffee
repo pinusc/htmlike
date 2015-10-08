@@ -32,6 +32,7 @@ class @map
 		this.player = new Player('greeny', this)
 		this.entitiesL[0] = new Entity('princess', 12, 2, this)
 		this.itemsL.push(new Items.Potion('potion', 20, 20, this))
+		this.itemsL.push(new Items.Sword(22, 20, this))
 
 		# FOV code #
 		this.flag = 1

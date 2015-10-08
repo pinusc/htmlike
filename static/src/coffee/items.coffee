@@ -18,3 +18,5 @@ class Sword extends Weapon
 window.Items =
 	Potion: Potion
 	HealPotion1: HealPotion1
+	Weapon: Weapon
+	Sword: Sword

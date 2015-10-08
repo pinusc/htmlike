@@ -12,17 +12,13 @@
       this.maxhp = this.hp;
       this.isPlayer = true;
       this.hearts = [];
-      this.inventory = [];
+      this.inventory = new Inventory();
       this.alignHearts();
       this.image.body.immovable = false;
       console.log(this.image.width);
       this.image.body.setSize(this.map.box.properties.gdim / 2, this.map.box.properties.gdim / 2);
       this.pixelSpeed = this.map.box.properties.globSpeed;
     }
-
-    Player.prototype.addToInventory = function(item) {
-      return this.inventory.push(item);
-    };
 
     Player.prototype.getItemOnGround = function() {
       var m, to_add;
@@ -34,7 +30,7 @@
 				return item.posx !== this.posx || item.posy !== this.posy; 
 			}, this);
       return _.each(to_add, function(it) {
-        this.addToInventory(it);
+        this.inventory.add(it);
         return it.setVisible(false);
       }, this);
     };
