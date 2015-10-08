@@ -45,7 +45,7 @@
       if (true || !this.game.device.desktop) {
         x = this.game.input.x;
         y = this.game.input.y;
-        if (x < this.game.world.width / 2) {
+        if (x < this.game.camera.width / 2) {
           this.joystick_l_down = true;
           this.joystick_base_l.visible = true;
           this.joystick_base_l.cameraOffset.x = x - this.joystick_base_l.height / 2;
