@@ -9,7 +9,7 @@ class @Player extends Entity
 		this.stat = new Stats(2, 2, 2, 2, 2, this.inventory)
 		this.alignHearts()
 		this.image.body.immovable = false
-		this.image.body.setSize(this.map.box.properties.gdim / 2, this.map.box.properties.gdim / 2)
+		#this.image.body.setSize(this.map.box.properties.gdim / 2, this.map.box.properties.gdim / 2)
 		this.pixelSpeed = this.map.box.properties.globSpeed
 
 	getItemOnGround: () ->
