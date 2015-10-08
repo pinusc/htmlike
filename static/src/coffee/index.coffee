@@ -13,7 +13,6 @@ class @Box
 			update: update,
 			render: render}
 		this.game.state.add('main_state', main_state)
-		this.input = new Input(this)
 		this.toDebug = false
 		this.dbl = []
 
@@ -60,9 +59,7 @@ create = () ->
 	boxx.m.player.fixedToCamera = true
 
 	# input
-	boxx.input.createKeys()
-	this.game.input.onDown.add(boxx.input.handleDown, boxx.input)
-	this.game.input.onUp.add(boxx.input.handleUp, boxx.input)
+	boxx.input = new Input(boxx)
 
 	createUI(boxx)
 

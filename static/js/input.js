@@ -5,10 +5,13 @@
       this.box = box;
       this.joystick_l_down = false;
       this.joystick_r_down = false;
+      this.createKeys();
     }
 
     Input.prototype.createKeys = function() {
-      return this.cursors = this.box.game.input.keyboard.createCursorKeys();
+      this.cursors = this.box.game.input.keyboard.createCursorKeys();
+      this.box.game.input.onDown.add(this.handleDown, this);
+      return this.box.game.input.onUp.add(this.handleUp, this);
     };
 
     Input.prototype.handleInput = function() {

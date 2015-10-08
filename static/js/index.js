@@ -18,7 +18,6 @@
         render: render
       };
       this.game.state.add('main_state', main_state);
-      this.input = new Input(this);
       this.toDebug = false;
       this.dbl = [];
     }
@@ -68,9 +67,7 @@
     boxx.m.loadMap(jMap);
     this.game.camera.follow(boxx.m.player.image);
     boxx.m.player.fixedToCamera = true;
-    boxx.input.createKeys();
-    this.game.input.onDown.add(boxx.input.handleDown, boxx.input);
-    this.game.input.onUp.add(boxx.input.handleUp, boxx.input);
+    boxx.input = new Input(boxx);
     createUI(boxx);
     boxx.m.time.myUpdate();
     return this.game.paused = false;

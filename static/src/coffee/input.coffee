@@ -2,9 +2,12 @@ class @Input
 	constructor: (@box) ->
 		this.joystick_l_down = false
 		this.joystick_r_down = false
+		this.createKeys()
 
 	createKeys: () ->
 		this.cursors = this.box.game.input.keyboard.createCursorKeys()
+		this.box.game.input.onDown.add(this.handleDown, this)
+		this.box.game.input.onUp.add(this.handleUp, this)
 
 	handleInput: () ->
 		this.handleKeys()
