@@ -67,7 +67,7 @@
     boxx.m.loadMap(jMap);
     this.game.camera.follow(boxx.m.player.image);
     boxx.m.player.fixedToCamera = true;
-    boxx.input = new Input(boxx);
+    boxx.input = new Input(boxx, boxx.game);
     createUI(boxx);
     boxx.m.time.myUpdate();
     return this.game.paused = false;

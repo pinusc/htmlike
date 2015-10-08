@@ -59,7 +59,7 @@ create = () ->
 	boxx.m.player.fixedToCamera = true
 
 	# input
-	boxx.input = new Input(boxx)
+	boxx.input = new Input(boxx, boxx.game)
 
 	createUI(boxx)
 
