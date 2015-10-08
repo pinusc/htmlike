@@ -5,10 +5,10 @@ class @Player extends Entity
 		this.maxhp = this.hp
 		this.isPlayer = yes
 		this.hearts = []
+		this.stat = new Stat(2, 2, 2, 2, 2)
 		this.inventory = new Inventory()
 		this.alignHearts()
 		this.image.body.immovable = false
-		console.log this.image.width
 		this.image.body.setSize(this.map.box.properties.gdim / 2, this.map.box.properties.gdim / 2)
 		this.pixelSpeed = this.map.box.properties.globSpeed
 
@@ -59,3 +59,16 @@ class @Player extends Entity
 		this.posx = posx
 		this.posy = posy
 		this.map.time.myUpdate()
+
+class Stats
+	constructor: (cool, hard, hot, sharp, weird) ->
+		# player statistics are inspired by Apocalypse World
+		this.setStat('cool', cool)
+		this.setStat('hard', hard)
+		this.setStat('hot', hot)
+		this.setStat('sharp', sharp)
+		this.setStat('weird', weird)
+
+	setStat: (stat, num) ->
+		# TODO: add check
+		this[stat] = num
