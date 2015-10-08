@@ -1,13 +1,16 @@
 class @Inventory
 	constructor: () ->
+		# arr is the main inventory with generic objects
 		this.arr = []
+		#mainweapon is the slot for melee weapon
 		this.mainWeapon = null
 		null
 
 	add: (item) ->
 		#TODO: limit inventory slot number
 		if item instanceof Item
-			if item instanceof Items.Weapon and not this.mainWeapon  # if item is a weapon and player hasn't got one
+			#this if player found a weapon and hasn't got one, auto-equip it
+			if item instanceof Items.Weapon and not this.mainWeapon 
 				this.mainWeapon = item
 			else
 				this.arr.push(item)
