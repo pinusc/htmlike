@@ -3,13 +3,13 @@
   this.Inventory = (function() {
     function Inventory() {
       this.arr = [];
-      this.mainWeapon = null;
+      this.mainWeapon = new Items.Fists();
       null;
     }
 
     Inventory.prototype.add = function(item) {
       if (item instanceof Item) {
-        if (item instanceof Items.Weapon && !this.mainWeapon) {
+        if (item instanceof Items.Weapon && this.mainWeapon instanceof Items.Fists) {
           return this.mainWeapon = item;
         } else {
           return this.arr.push(item);

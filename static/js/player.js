@@ -13,8 +13,8 @@
       this.maxhp = this.hp;
       this.isPlayer = true;
       this.hearts = [];
-      this.stat = new Stat(2, 2, 2, 2, 2);
       this.inventory = new Inventory();
+      this.stat = new Stats(2, 2, 2, 2, 2, this.inventory);
       this.alignHearts();
       this.image.body.immovable = false;
       this.image.body.setSize(this.map.box.properties.gdim / 2, this.map.box.properties.gdim / 2);
@@ -44,6 +44,16 @@
     Player.prototype.damage = function(hp) {
       Player.__super__.damage.call(this, hp);
       return this.alignHearts();
+    };
+
+    Player.prototype.attack = function(enemy) {
+      var roll;
+      roll = r2d6() + this.stat.attack();
+      if (roll >= 10) {
+        return enemy.damage(2);
+      } else if (roll >= 6) {
+        return enemy.damage(1);
+      }
     };
 
     Player.prototype.alignHearts = function() {
@@ -86,7 +96,8 @@
   })(Entity);
 
   Stats = (function() {
-    function Stats(cool, hard, hot, sharp, weird) {
+    function Stats(cool, hard, hot, sharp, weird, inventory) {
+      this.inventory = inventory;
       this.setStat('cool', cool);
       this.setStat('hard', hard);
       this.setStat('hot', hot);
@@ -96,6 +107,10 @@
 
     Stats.prototype.setStat = function(stat, num) {
       return this[stat] = num;
+    };
+
+    Stats.prototype.attack = function() {
+      return this.hard + this.inventory.mainWeapon.attack;
     };
 
     return Stats;

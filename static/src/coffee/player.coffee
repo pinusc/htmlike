@@ -5,8 +5,8 @@ class @Player extends Entity
 		this.maxhp = this.hp
 		this.isPlayer = yes
 		this.hearts = []
-		this.stat = new Stat(2, 2, 2, 2, 2)
 		this.inventory = new Inventory()
+		this.stat = new Stats(2, 2, 2, 2, 2, this.inventory)
 		this.alignHearts()
 		this.image.body.immovable = false
 		this.image.body.setSize(this.map.box.properties.gdim / 2, this.map.box.properties.gdim / 2)
@@ -35,6 +35,13 @@ class @Player extends Entity
 		super(hp)
 		this.alignHearts()
 
+	attack: (enemy) ->
+		roll = r2d6() + this.stat.attack()
+		if  roll >= 10
+			enemy.damage(2)
+		else if roll >= 6
+			enemy.damage(1)
+
 	alignHearts: () ->
 		nh = this.hp
 		nh_now = this.hearts.length
@@ -61,7 +68,7 @@ class @Player extends Entity
 		this.map.time.myUpdate()
 
 class Stats
-	constructor: (cool, hard, hot, sharp, weird) ->
+	constructor: (cool, hard, hot, sharp, weird, @inventory) ->
 		# player statistics are inspired by Apocalypse World
 		this.setStat('cool', cool)
 		this.setStat('hard', hard)
@@ -72,3 +79,7 @@ class Stats
 	setStat: (stat, num) ->
 		# TODO: add check
 		this[stat] = num
+
+	attack: () ->
+		# attack is calculated based on hard score and weapon modifier
+		this.hard + this.inventory.mainWeapon.attack

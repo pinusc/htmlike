@@ -13,6 +13,11 @@ class Weapon extends Item
 class Sword extends Weapon
 	constructor: (x, y, map) ->
 		super('sword', x, y, map)
+		this.attack = 1
+
+class Fists extends Weapon
+	constructor: (map) ->
+		this.attack = 0
 
 
 window.Items =
@@ -20,3 +25,4 @@ window.Items =
 	HealPotion1: HealPotion1
 	Weapon: Weapon
 	Sword: Sword
+	Fists: Fists
