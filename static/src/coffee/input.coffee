@@ -6,9 +6,37 @@ class @Input
 		this.game.input.onUp.add(this.handleUp, this)
 		this.game.input.onDown.add(this.handleDown, this)
 
+
+		this.joystick_l = new Joystick('controller_base', 'controller_ball', this.box,
+			(baseCenter, diff, dis) ->
+				if dis > this.maxJoystickDistance
+					offset =
+						x: this.maxJoystickDistance * diff.x / dis; # dis : maxJoystickDistance = diff.x : offset.x
+						y: this.maxJoystickDistance * diff.y / dis;
+					this.ball.cameraOffset.x = baseCenter.x + offset.x - this.ball.width / 2
+					this.ball.cameraOffset.y = baseCenter.y + offset.y - this.ball.height / 2
+
+				else 
+					offset = diff
+				xVelocity = offset.x / this.maxJoystickDistance * this.box.m.player.pixelSpeed
+				yVelocity = offset.y / this.maxJoystickDistance * this.box.m.player.pixelSpeed
+				move(xVelocity, yVelocity, this.box.m.player.image.body)
+		)
+
+		
+		this.joystick_r = new Joystick('controller_base_r', 'controller_ball_r', this.box, 
+			(baseCenter, diff, dis) ->
+				if dis < this.maxJoystickDistance 
+					return
+				this.box.m.player.interact(direction(this.ball.cameraOffset.x, this.ball.cameraOffset.y, baseCenter.x, baseCenter.y))
+				this.box.m.time.myUpdate()
+				this.handleUp()
+		)
+
 	handleInput: () ->
 		this.handleKeys()
-		this.handleJoystick()
+		this.joystick_l.handle()
+		this.joystick_r.handle()
 
 	handleKeys: () ->
 		m = this.box.m
@@ -33,35 +61,15 @@ class @Input
 			x = this.game.input.x
 			y = this.game.input.y
 			if x < this.game.camera.width / 2
-				this.joystick_l_down = true
-				this.joystick_base_l.visible = true
-				this.joystick_base_l.cameraOffset.x = x - this.joystick_base_l.height / 2
-				this.joystick_base_l.cameraOffset.y = y - this.joystick_base_l.width / 2
-
-				this.joystick_ball_l.visible = true
-				this.joystick_ball_l.cameraOffset.x = x - this.joystick_ball_l.height / 2
-				this.joystick_ball_l.cameraOffset.y = y - this.joystick_ball_l.width / 2
+				this.joystick_l.handleDown(x, y)
 			else
-				this.joystick_r_down = true
-				this.joystick_base_r.visible = true
-				this.joystick_base_r.cameraOffset.x = x - this.joystick_base_r.height / 2
-				this.joystick_base_r.cameraOffset.y = y - this.joystick_base_r.width / 2
-
-				this.joystick_ball_r.visible = true
-				this.joystick_ball_r.cameraOffset.x = x - this.joystick_ball_r.height / 2
-				this.joystick_ball_r.cameraOffset.y = y - this.joystick_ball_r.width / 2
+				this.joystick_r.handleDown(x, y)
 
 	handleUp: () ->
-		if this.joystick_ball_l.visible or this.joystick_base_l.visible
-			this.joystick_l_down = false
-			this.joystick_base_l.visible = false
-			this.joystick_ball_l.visible = false
-		
-		if this.joystick_ball_r.visible or this.joystick_base_r.visible
-			this.joystick_r_down = false
-			this.joystick_base_r.visible = false
-			this.joystick_ball_r.visible = false
+		this.joystick_r.handleUp()
+		this.joystick_l.handleUp()
 
+	# there be buttons #
 	gofull: () ->
 		if this.game.scale.isFullScreen
 			this.game.scale.stopFullScreen()
@@ -76,61 +84,6 @@ class @Input
 
 	fbutton_down: () ->
 		this.gofull()
-
-	handleJoystick: () ->
-		point = this.game.input.activePointer;
-		if not point.isDown
-			return
-		# left or rigth?
-		if point.x < this.game.camera.width / 2
-			this.handleJoystick_l(point, this.joystick_ball_l, this.joystick_base_l, this.maxJoystickDistance_l);
-		else
-			this.handleJoystick_r(point, this.joystick_ball_r, this.joystick_base_r, this.maxJoystickDistance_r);
-
-	handleJoystick_l: (point, joystick_ball, joystick_base, maxJoystickDistance) ->
-		#calculate joystick graphics...
-		baseCenterX = joystick_base.cameraOffset.x + joystick_base.width / 2;
-		baseCenterY = joystick_base.cameraOffset.y + joystick_base.height / 2;
-		xdiff = point.x - baseCenterX;
-		ydiff = point.y - baseCenterY;
-		dis = Math.sqrt(xdiff*xdiff + ydiff*ydiff);
-		if dis > maxJoystickDistance
-			xOffset = maxJoystickDistance * xdiff / dis; # dis : maxJoystickDistance = xdiff : xOffset
-			yOffset = maxJoystickDistance * ydiff / dis;
-			joystick_ball.cameraOffset.x = baseCenterX + xOffset - joystick_ball.width/ 2;
-			joystick_ball.cameraOffset.y = baseCenterY + yOffset - joystick_ball.height / 2;
-		else
-			xOffset = xdiff;
-			yOffset = ydiff;
-			joystick_ball.cameraOffset.x = point.x - joystick_ball.height / 2;
-			joystick_ball.cameraOffset.y = point.y - joystick_ball.width / 2;
-
-
-		#actually do sth
-		#left or rigth?
-		if point.x < this.game.camera.width / 2
-			xVelocity = xOffset / maxJoystickDistance * this.box.m.player.pixelSpeed;
-			yVelocity = yOffset / maxJoystickDistance * this.box.m.player.pixelSpeed;
-			move(xVelocity, yVelocity, this.box.m.player.image.body);
-
-	handleJoystick_r: (point, joystick_ball, joystick_base, maxJoystickDistance) ->
-		if not this.joystick_r_down
-			return
-		# calculate joystick graphics...
-		baseCenterX = joystick_base.cameraOffset.x + joystick_base.width / 2;
-		baseCenterY = joystick_base.cameraOffset.y + joystick_base.height / 2;
-		xdiff = point.x - baseCenterX;
-		ydiff = point.y - baseCenterY;
-		dis = Math.sqrt(xdiff*xdiff + ydiff*ydiff);
-		if dis < maxJoystickDistance
-			xOffset = xdiff;
-			yOffset = ydiff;
-			joystick_ball.cameraOffset.x = point.x - joystick_ball.height / 2;
-			joystick_ball.cameraOffset.y = point.y - joystick_ball.width / 2;
-		else
-			this.box.m.player.interact(direction(joystick_ball.cameraOffset.x, joystick_ball.cameraOffset.y, baseCenterX, baseCenterY));
-			this.box.m.time.myUpdate();
-			this.handleUp();
 
 window.move = (x, y, body) ->
 	#body.moves = true
@@ -149,3 +102,60 @@ window.move = (x, y, body) ->
 		#else
 		#	body.moveUp(-y)
 
+class Joystick
+	constructor: (base, ball, @box, @wrapper) ->
+		# base is the name of the base image
+		# ball is the name of the ball image
+		# box is needed but will be removed soon
+		# wrapper is a function that gets called every time handle is called, with parameters baseCenter, diff, dis
+		this.game = this.box.game
+		this.ball = this.game.add.image(0, 0, ball)
+		this.ball.alpha = 0.5
+		this.ball.fixedToCamera = true
+		this.ball.visible = false
+
+		this.base = this.game.add.image(0, 0, base)
+		this.base.alpha = 0.5
+		this.base.fixedToCamera = true
+		this.base.visible = false
+		this.maxJoystickDistance = this.base.width / 2
+		
+		this.isDown = false
+
+	handle: () ->
+		point = this.game.input.activePointer
+		if not this.isDown
+			return
+		# calculate joystick graphics...
+		baseCenter =  
+			# this is the center of the base of the joystick
+			# it is equal to the coordinates of the point that is touched when the joystick appears
+			x: this.base.cameraOffset.x + this.base.width / 2
+			y: this.base.cameraOffset.y + this.base.height / 2
+		diff = 
+			# this is a point representing the coordinates of the center of the controller ball with respect to the center ball
+			# the point being pressed NOW
+			x: point.x - baseCenter.x
+			y: point.y - baseCenter.y
+		dis = Math.sqrt(diff.x*diff.x + diff.y*diff.y)  # the distance between baseCenter and the point now being pressed 
+		if dis < this.maxJoystickDistance
+			this.ball.cameraOffset.x = point.x - this.ball.height / 2
+			this.ball.cameraOffset.y = point.y - this.ball.width / 2
+		this.wrapper(baseCenter, diff, dis)
+
+	handleDown: (x, y) ->
+		# show the joystick
+		this.isDown = true
+		this.base.visible = true	
+		this.base.cameraOffset.x = x - this.base.height / 2
+		this.base.cameraOffset.y = y - this.base.width / 2
+
+		this.ball.visible = true
+		this.ball.cameraOffset.x = x - this.ball.height / 2
+		this.ball.cameraOffset.y = y - this.ball.width / 2
+
+	handleUp: (x, y) ->
+		# hide the joystick
+		this.isDown = false
+		this.base.visible = false
+		this.ball.visible = false
