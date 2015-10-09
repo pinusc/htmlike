@@ -40,17 +40,37 @@ class @Input
 
 	handleKeys: () ->
 		m = this.box.m
+		# movement keys
 		if this.cursors.left.isDown
-			move(-m.player.pixelSpeed, 0, m.player.image.body)
+			if this.cursors.left.altKey
+				this.box.m.player.interact("left")
+				this.cursors.left.reset()
+				m.time.myUpdate()
+			else
+				move(-m.player.pixelSpeed, 0, m.player.image.body)
 		else if this.cursors.right.isDown
-			move(m.player.pixelSpeed, 0, m.player.image.body)
-
-
+			if this.cursors.right.altKey
+				this.box.m.player.interact("right")
+				this.cursors.right.reset()
+				m.time.myUpdate()
+			else
+				move(m.player.pixelSpeed, 0, m.player.image.body)
 		if this.cursors.up.isDown
-			move(0, -m.player.pixelSpeed, m.player.image.body)
+			if this.cursors.up.altKey
+				this.box.m.player.interact("up")
+				this.cursors.up.reset()
+				m.time.myUpdate()
+			else
+				move(0, -m.player.pixelSpeed, m.player.image.body)
 		else if this.cursors.down.isDown
-			move(0, m.player.pixelSpeed, m.player.image.body)
+			if this.cursors.down.altKey
+				this.box.m.player.interact("down")
+				this.cursors.down.reset()
+				m.time.myUpdate()
+			else
+				move(0, m.player.pixelSpeed, m.player.image.body)
 
+		# other keys
 		if this.game.input.keyboard.isDown(71)  # g
 			m.player.getItemOnGround()
 		else if this.game.input.keyboard.isDown(13)
