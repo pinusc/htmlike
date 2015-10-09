@@ -13,11 +13,7 @@
 
     Input.prototype.handleInput = function() {
       this.handleKeys();
-      if (this.game.input.x < this.game.world.width) {
-        return this.handleJoystick(this.joystick_base_l, this.joystick_ball_l, this.maxJoystickDistance_l);
-      } else {
-        return this.handleJoystick(this.joystick_base_r, this.joystick_ball_r, this.maxJoystickDistance_r);
-      }
+      return this.handleJoystick();
     };
 
     Input.prototype.handleKeys = function() {
@@ -96,51 +92,6 @@
 
     Input.prototype.fbutton_down = function() {
       return this.gofull();
-    };
-
-    Input.prototype.hJoystick = function() {
-      var baseCenterX, baseCenterY, dis, joystick_ball, joystick_base, maxJoystickDistance, point, xOffset, xVelocity, xdiff, yOffset, yVelocity, ydiff;
-      point = this.game.input.activePointer;
-      if (!point.isDown) {
-        return;
-      }
-      if (point.x < this.game.camera.width / 2) {
-        joystick_ball = this.joystick_ball_l;
-        joystick_base = this.joystick_base_l;
-        maxJoystickDistance = this.maxJoystickDistance_l;
-      } else {
-        if (!joystick_r_down) {
-          handleUp();
-        }
-        joystick_ball = this.joystick_ball_r;
-        joystick_base = this.joystick_base_r;
-        maxJoystickDistance = maxJoystickDistance_r;
-      }
-      baseCenterX = joystick_base.cameraOffset.x + joystick_base.width / 2;
-      baseCenterY = joystick_base.cameraOffset.y + joystick_base.height / 2;
-      xdiff = point.x - baseCenterX;
-      ydiff = point.y - baseCenterY;
-      dis = Math.sqrt(xdiff * xdiff + ydiff * ydiff);
-      if (dis > maxJoystickDistance) {
-        xOffset = maxJoystickDistance * xdiff / dis;
-        yOffset = maxJoystickDistance * ydiff / dis;
-        joystick_ball.cameraOffset.x = baseCenterX + xOffset - joystick_ball.width / 2;
-        joystick_ball.cameraOffset.y = baseCenterY + yOffset - joystick_ball.height / 2;
-      } else {
-        xOffset = xdiff;
-        yOffset = ydiff;
-        joystick_ball.cameraOffset.x = point.x - joystick_ball.height / 2;
-        joystick_ball.cameraOffset.y = point.y - joystick_ball.width / 2;
-      }
-      if (point.x < this.game.camera.width / 2) {
-        xVelocity = xOffset / maxJoystickDistance * m.player.pixelSpeed;
-        yVelocity = yOffset / maxJoystickDistance * m.player.pixelSpeed;
-        return move(xVelocity, yVelocity, m.player.image.body);
-      } else {
-        m.player.interact(direction(joystick_ball.cameraOffset.x, joystick_ball.cameraOffset.y, baseCenterX, baseCenterY));
-        m.time.myUpdate();
-        return this.handleUp();
-      }
     };
 
     Input.prototype.handleJoystick = function() {
