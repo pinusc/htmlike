@@ -33,7 +33,6 @@
 
     Time.prototype.myUpdate = function() {
       var ll;
-      console.log("myUpdate");
       ll = this.map.level.length;
       this.map.generateDKMap();
       this.updateWorld();
