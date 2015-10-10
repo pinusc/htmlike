@@ -29,10 +29,11 @@
       m.itemsL = _.filter(m.itemsL, function(item) {
 				return item.posx !== this.posx || item.posy !== this.posy; 
 			}, this);
-      return _.each(to_add, function(it) {
+      _.each(to_add, function(it) {
         this.inventory.add(it);
         return it.setVisible(false);
       }, this);
+      return this.stat.updateStat();
     };
 
     Player.prototype.heal = function(hp) {
@@ -87,8 +88,8 @@
       }
       this.posx = posx;
       this.posy = posy;
-      this.map.time.myUpdate();
-      return this.stat.updateStat();
+      this.stat.updateStat();
+      return this.map.time.myUpdate();
     };
 
     return Player;

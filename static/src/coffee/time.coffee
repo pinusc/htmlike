@@ -26,6 +26,7 @@ class @Time
 				entity.update())
 
 	myUpdate: () ->
+		console.log "myUpdate"
 		ll = this.map.level.length
 		this.map.generateDKMap()
 		this.updateWorld()

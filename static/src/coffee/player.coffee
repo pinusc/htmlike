@@ -26,6 +26,7 @@ class @Player extends Entity
 				this.inventory.add(it)
 				it.setVisible(false)
 			, this)
+		this.stat.updateStat()
 
 	heal: (hp) ->
 		super(hp)
@@ -65,8 +66,8 @@ class @Player extends Entity
 			return
 		this.posx = posx
 		this.posy = posy
-		this.map.time.myUpdate()
 		this.stat.updateStat()
+		this.map.time.myUpdate()
 
 class Stats
 	constructor: (cool, hard, hot, sharp, weird, @inventory, @text) ->
