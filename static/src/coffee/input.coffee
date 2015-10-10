@@ -73,7 +73,9 @@ class @Input
 		# other keys
 		if this.game.input.keyboard.isDown(71)  # g
 			m.player.getItemOnGround()
+			this.game.input.keyboard.reset()
 		else if this.game.input.keyboard.isDown(13)
+			this.game.input.keyboard.reset()
 			m.time.myUpdate()
 
 	handleDown: () ->
