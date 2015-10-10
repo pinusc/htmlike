@@ -14,7 +14,7 @@
       this.isPlayer = true;
       this.hearts = [];
       this.inventory = new Inventory();
-      this.stat = new Stats(2, 2, 2, 2, 2, this.inventory);
+      this.stat = new Stats(2, 2, 2, 2, 2, this.inventory, this.map.box.game.add.text(0, 200));
       this.alignHearts();
       this.image.body.immovable = false;
       this.pixelSpeed = this.map.box.properties.globSpeed;
@@ -87,7 +87,8 @@
       }
       this.posx = posx;
       this.posy = posy;
-      return this.map.time.myUpdate();
+      this.map.time.myUpdate();
+      return this.stat.updateStat();
     };
 
     return Player;
@@ -95,21 +96,46 @@
   })(Entity);
 
   Stats = (function() {
-    function Stats(cool, hard, hot, sharp, weird, inventory) {
+    function Stats(cool, hard, hot, sharp, weird, inventory, text1) {
       this.inventory = inventory;
+      this.text = text1;
       this.setStat('cool', cool);
       this.setStat('hard', hard);
       this.setStat('hot', hot);
       this.setStat('sharp', sharp);
       this.setStat('weird', weird);
+      this.text.fixedToCamera = true;
+      this.text.setStyle({
+        fill: "white",
+        stroke: "black",
+        strokeThickness: 2,
+        font: "VT323",
+        fontSize: 32
+      });
     }
 
+    Stats.prototype.updateStat = function() {
+      return this.text.setText(this.genText());
+    };
+
     Stats.prototype.setStat = function(stat, num) {
-      return this[stat] = num;
+      this[stat] = num;
+      return this.updateStat();
     };
 
     Stats.prototype.attack = function() {
       return this.hard + this.inventory.mainWeapon.attack;
+    };
+
+    Stats.prototype.genText = function() {
+      var j, len, ref, stat, text;
+      text = "";
+      ref = ["cool", "hard", "hot", "sharp", "weird"];
+      for (j = 0, len = ref.length; j < len; j++) {
+        stat = ref[j];
+        text += stat + ": " + this[stat] + "\n";
+      }
+      return text += "attack: " + this.attack();
     };
 
     return Stats;

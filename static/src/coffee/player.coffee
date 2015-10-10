@@ -6,7 +6,7 @@ class @Player extends Entity
 		this.isPlayer = yes
 		this.hearts = []
 		this.inventory = new Inventory()
-		this.stat = new Stats(2, 2, 2, 2, 2, this.inventory)
+		this.stat = new Stats(2, 2, 2, 2, 2, this.inventory, this.map.box.game.add.text(0, 200))
 		this.alignHearts()
 		this.image.body.immovable = false
 		#this.image.body.setSize(this.map.box.properties.gdim / 2, this.map.box.properties.gdim / 2)
@@ -66,9 +66,10 @@ class @Player extends Entity
 		this.posx = posx
 		this.posy = posy
 		this.map.time.myUpdate()
+		this.stat.updateStat()
 
 class Stats
-	constructor: (cool, hard, hot, sharp, weird, @inventory) ->
+	constructor: (cool, hard, hot, sharp, weird, @inventory, @text) ->
 		# player statistics are inspired by Apocalypse World
 		this.setStat('cool', cool)
 		this.setStat('hard', hard)
@@ -76,10 +77,28 @@ class Stats
 		this.setStat('sharp', sharp)
 		this.setStat('weird', weird)
 
+		this.text.fixedToCamera = true
+		this.text.setStyle({
+			fill: "white",
+			stroke: "black",
+			strokeThickness: 2,
+			font: "VT323",
+			fontSize: 32})
+
+	updateStat: () ->
+		this.text.setText(this.genText())
+		
 	setStat: (stat, num) ->
 		# TODO: add check
 		this[stat] = num
+		this.updateStat()
 
 	attack: () ->
 		# attack is calculated based on hard score and weapon modifier
 		this.hard + this.inventory.mainWeapon.attack
+
+	genText: () ->
+		text = ""
+		for stat in ["cool", "hard", "hot", "sharp", "weird"]
+			text += stat + ": " + this[stat] + "\n"
+		text += "attack: " + this.attack()

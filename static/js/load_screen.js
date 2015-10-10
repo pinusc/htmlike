@@ -26,6 +26,7 @@
       this.game.load.image('controller_ball_r', baseAssetsFolder + '/controller_ball_r.png');
       this.game.load.image('controller_base', baseAssetsFolder + '/controller_base.png');
       this.game.load.image('controller_base_r', baseAssetsFolder + '/controller_base_r.png');
+      this.game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
       this;
       this.game.load.image('tileset', baseAssetsFolder + '/tileset.png');
       return this;
@@ -51,6 +52,21 @@
     },
     render: function() {}
   };
+
+  
+WebFontConfig = {
+
+    //  'active' means all requested fonts have finished loading
+    //  We set a 1 second delay before calling 'createText'.
+    //  For some reason if we don't the browser cannot render the text the first time it's created.
+    //active: function() { window.boxx.game.time.events.add(Phaser.Timer.SECOND, createText, this); },
+
+    //  The Google Fonts we want to load (specify as many as you like in the array)
+    google: {
+      families: ['VT323']
+    }
+
+};;
 
 }).call(this);
 
