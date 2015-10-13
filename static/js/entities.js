@@ -22,15 +22,6 @@
       this.hitSprite.visible = false;
     }
 
-
-    /*
-    	Check if something blocks at position (x, y).
-    	If there is a wall or the tile doesn't exist, does nothing and returns 
-    	null.
-    	If an entity is blocking, attacks it.
-    	Else, moves there
-     */
-
     Entity.prototype.move = function(x, y) {
       var entity, k, len, ref;
       if (!((0 <= x && x < this.map.level[0].width) && (0 <= y && y < this.map.level[0].height)) || this.map.map.getTile(x, y, 1)) {
@@ -55,8 +46,8 @@
 
 
     /*
-    	The AI of the entity,
-    	For now, simply chases the player if he's near enough
+    The AI of the entity,
+    For now, simply chases the player if he's near enough
      */
 
     Entity.prototype.act = function() {
@@ -92,9 +83,9 @@
       this.hitSprite.x = this.image.x;
       this.hitSprite.y = this.image.y;
       this.hitSprite.visible = true;
-      window.setTimeout(function f(sprite){
-			sprite.visible = false
-			}, 300, this.hitSprite);
+      window.setTimeout(function(sprite) {
+        return sprite.visible = false;
+      }, 300, this.hitSprite);
       this.hp -= hp;
       if (this.hp <= 0) {
         return this.die();

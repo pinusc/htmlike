@@ -24,11 +24,11 @@
       var m, to_add;
       m = this.map;
       to_add = _.filter(m.itemsL, function(item) {
-        return item.posx === this.posx && item.posy === this.posy;
-      }, this);
+				return item.posx === this.posx && item.posy === this.posy; 
+			}, this);
       m.itemsL = _.filter(m.itemsL, function(item) {
-        return item.posx !== this.posx || item.posy !== this.posy;
-      }, this);
+				return item.posx !== this.posx || item.posy !== this.posy; 
+			}, this);
       _.each(to_add, function(it) {
         this.inventory.add(it);
         return it.setVisible(false);
@@ -144,5 +144,3 @@
   })();
 
 }).call(this);
-
-//# sourceMappingURL=player.js.map
