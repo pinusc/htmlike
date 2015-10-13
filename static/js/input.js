@@ -86,6 +86,9 @@
       } else if (this.game.input.keyboard.isDown(13)) {
         this.game.input.keyboard.reset();
         return m.time.myUpdate();
+      } else if (this.game.input.keyboard.isDown(73)) {
+        m.player.inventory.toggleInventory();
+        return this.game.input.keyboard.reset();
       }
     };
 

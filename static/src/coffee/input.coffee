@@ -86,6 +86,9 @@ class @Input
     else if this.game.input.keyboard.isDown(13)
       this.game.input.keyboard.reset()
       m.time.myUpdate()
+    else if this.game.input.keyboard.isDown(73)  # i
+      m.player.inventory.toggleInventory()
+      this.game.input.keyboard.reset()
 
   handleDown: () ->
     # FIXME: joystick is needed for mobile only

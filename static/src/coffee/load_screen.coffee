@@ -1,4 +1,4 @@
-bullets = null;
+bullets = null
 window.load_status =
   preload: () ->
     box = boxx
@@ -20,6 +20,7 @@ window.load_status =
 
     # ui
     this.game.load.image('bullets', baseAssetsFolder + '/bullets.png');
+    this.game.load.spritesheet('inventory_sprite', baseAssetsFolder + '/inventory.png', 32, 32);
     this.game.load.image('debug_button', baseAssetsFolder + '/debug_button.png');
     this.game.load.image('fullscreen_button', baseAssetsFolder + '/fullscreen_button.png');
     this.game.load.image('yellow_border', baseAssetsFolder + '/yellow_border.png');
@@ -54,17 +55,16 @@ window.load_status =
 
   render: () ->
     return
-`
-WebFontConfig = {
 
-    //  'active' means all requested fonts have finished loading
-    //  We set a 1 second delay before calling 'createText'.
-    //  For some reason if we don't the browser cannot render the text the first time it's created.
-    //active: function() { window.boxx.game.time.events.add(Phaser.Timer.SECOND, createText, this); },
+WebFontConfig =
 
-    //  The Google Fonts we want to load (specify as many as you like in the array)
-    google: {
+    # 'active' means all requested fonts have finished loading
+    # We set a 1 second delay before calling 'createText'.
+    # For some reason if we don't the browser cannot
+    # render the text the first time it's created.
+    active: () ->
+      window.boxx.game.time.events.add(Phaser.Timer.SECOND, createText, this)
+
+    # The Google Fonts we want to load (specify as many as you like in the array
+    google:
       families: ['VT323']
-    }
-
-};`
