@@ -47,8 +47,8 @@ class @Inventory
         if coor.ny >= this.matrix[0].length  # all lines are full
           return
         # show items in the right place
-        i.image.cameraOffset.x = coor.startx + 32 * coor.nx
-        i.image.cameraOffset.y = coor.starty + 32 * coor.ny
+        i.image.cameraOffset.x = coor.startx + 32 * 2 * coor.nx
+        i.image.cameraOffset.y = coor.starty + 32 * 2 * coor.ny
         i.image.visible = true
         i.image.scale.x = 2
         i.image.scale.y = 2
