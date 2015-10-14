@@ -37,21 +37,23 @@
     };
 
     Inventory.prototype.toggleInventory = function() {
-      var coor, i, j, l, len, len1, len2, m, o, ref, ref1;
+      var curr, i, j, l, len, len1, len2, m, o, ref, ref1, start;
       this.UIvisible = !this.UIvisible;
       ref = this.matrix;
       for (l = 0, len = ref.length; l < len; l++) {
         i = ref[l];
         for (m = 0, len1 = i.length; m < len1; m++) {
           j = i[m];
-          j.visible = !j.visible;
+          j.visible = this.UIvisible;
         }
       }
-      coor = {
-        startx: this.matrix[1][1].cameraOffset.x,
-        starty: this.matrix[1][1].cameraOffset.y,
-        nx: 0,
-        ny: 0
+      start = {
+        x: this.matrix[1][1].cameraOffset.x,
+        y: this.matrix[1][1].cameraOffset.y
+      };
+      curr = {
+        x: 0,
+        y: 0
       };
       ref1 = this.arr;
       for (o = 0, len2 = ref1.length; o < len2; o++) {
@@ -59,15 +61,15 @@
         if (!this.UIvisible) {
           i.image.visible = false;
         } else {
-          if (coor.nx >= this.matrix.length) {
-            coor.nx = 0;
-            coor.ny += 1;
+          if (curr.x >= this.matrix.length) {
+            curr.x = 0;
+            curr.y += 1;
           }
-          if (coor.ny >= this.matrix[0].length) {
+          if (curr.y >= this.matrix[0].length) {
             return;
           }
-          i.image.cameraOffset.x = coor.startx + 32 * 2 * coor.nx;
-          i.image.cameraOffset.y = coor.starty + 32 * 2 * coor.ny;
+          i.image.cameraOffset.x = start.x + 32 * 2 * curr.x;
+          i.image.cameraOffset.y = start.y + 32 * 2 * curr.y;
           i.image.visible = true;
           _.extend(i.image.scale, {
             x: 2,
@@ -81,7 +83,6 @@
 
     Inventory.prototype.updateShowInventory = function(game, gdim) {
       var c, height, i, img, j, l, m, num, o, ref, ref1, ref2, results, width;
-      console.log("upshowinv");
       img = game.add.sprite;
       width = Math.floor(game.camera.width / gdim) - 2;
       height = Math.floor(game.camera.height / gdim) - 2;

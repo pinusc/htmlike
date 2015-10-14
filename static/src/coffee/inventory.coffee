@@ -33,24 +33,27 @@ class @Inventory
     this.UIvisible = not this.UIvisible
     for i in this.matrix
       for j in i
-        j.visible = not j.visible
-    coor = #items get drawn from top left + 1
-      startx: this.matrix[1][1].cameraOffset.x
-      starty: this.matrix[1][1].cameraOffset.y
-      nx: 0
-      ny: 0
+        j.visible = this.UIvisible
+
+    start =  # the point where the first object is drawn
+      x: this.matrix[1][1].cameraOffset.x
+      y: this.matrix[1][1].cameraOffset.y
+    curr =  # current index of the object being drawn (NOT position, index)
+      x: 0
+      y: 0
     for i in this.arr
       if not this.UIvisible
         i.image.visible = false
       else
-        if coor.nx >= this.matrix.length  # line is full
-          coor.nx = 0
-          coor.ny += 1
-        if coor.ny >= this.matrix[0].length  # all lines are full
+        if curr.x >= this.matrix.length  # line is full
+          curr.x = 0
+          curr.y += 1
+        if curr.y >= this.matrix[0].length  # all lines are full
           return
         # show items in the right place
-        i.image.cameraOffset.x = coor.startx + 32 * 2 * coor.nx
-        i.image.cameraOffset.y = coor.starty + 32 * 2 * coor.ny
+        # image size is doubled
+        i.image.cameraOffset.x = start.x + 32 * 2 * curr.x
+        i.image.cameraOffset.y = start.y + 32 * 2 * curr.y
         i.image.visible = true
         _.extend(i.image.scale, {x: 2, y: 2})
         i.image.bringToTop()
@@ -61,20 +64,34 @@ class @Inventory
   updateShowInventory: (game, gdim) ->
     # this has to be called whenever the window is resized
     #gdim = game.properties.gdim
-    console.log "upshowinv"
-    img = game.add.sprite
+    img = game.add.sprite  # just a quicker reference
     width = game.camera.width // gdim - 2
     height = game.camera.height // gdim - 2
     console.log width,height
-    c =
+    c =  # coordinates of the current tile being added
       x: gdim
       y: gdim
+
+    # create empty matrix
     this.matrix = []
     for i in [0..height-1]
       this.matrix[i] = new Array(width)
+
     for i in [0..height-1]
       for j in [0..width-1]
-        # cre0ate tile
+        # create tile
+
+        # num is the index of the image being displayed
+        # the spritesheet is arranged like this:
+        #
+        #  _____________
+        #  | 0| 1| 2| 3|
+        #  | 4| 5| 6| 7|
+        #  | 8| 9|10|11|
+        #  |12|13|14|15|
+        #
+        #  where the corners are unique, the edges have 2 variants
+        #  and the inner tiles have four variante
         num = switch
           when i == 0 and j == 0
             #top left
