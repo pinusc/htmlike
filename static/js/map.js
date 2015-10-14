@@ -35,6 +35,8 @@
       this.player.inventory.updateShowInventory(this.box.game, this.box.properties.gdim);
       this.entitiesL[0] = new Entity('princess', 12, 2, this);
       this.itemsL.push(new Items.Potion('potion', 20, 20, this));
+      this.itemsL.push(new Items.Potion('potion', 20, 22, this));
+      this.itemsL.push(new Items.Potion('potion', 20, 17, this));
       this.itemsL.push(new Items.Sword(22, 20, this));
       this.flag = 1;
       this.mult = [[1, 0, 0, -1, -1, 0, 0, 1], [0, 1, -1, 0, 0, -1, 1, 0], [0, 1, 1, 0, 0, -1, -1, 0], [1, 0, 0, 1, -1, 0, 0, -1]];
