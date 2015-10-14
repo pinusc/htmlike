@@ -4,6 +4,7 @@
     function Inventory() {
       this.arr = [];
       this.mainWeapon = new Items.Fists();
+      this.UIvisible = false;
       null;
     }
 
@@ -37,6 +38,7 @@
 
     Inventory.prototype.toggleInventory = function() {
       var coor, i, j, l, len, len1, len2, m, o, ref, ref1;
+      this.UIvisible = !this.UIvisible;
       ref = this.matrix;
       for (l = 0, len = ref.length; l < len; l++) {
         i = ref[l];
@@ -54,7 +56,7 @@
       ref1 = this.arr;
       for (o = 0, len2 = ref1.length; o < len2; o++) {
         i = ref1[o];
-        if (i.image.visible) {
+        if (!this.UIvisible) {
           i.image.visible = false;
         } else {
           if (coor.nx >= this.matrix.length) {
@@ -67,11 +69,11 @@
           i.image.cameraOffset.x = coor.startx + 32 * 2 * coor.nx;
           i.image.cameraOffset.y = coor.starty + 32 * 2 * coor.ny;
           i.image.visible = true;
-          i.image.scale.x = 2;
-          i.image.scale.y = 2;
+          _.extend(i.image.scale, {
+            x: 2,
+            y: 2
+          });
           i.image.bringToTop();
-          console.log(i);
-          console.log(coor);
           coor.nx += 1;
         }
       }

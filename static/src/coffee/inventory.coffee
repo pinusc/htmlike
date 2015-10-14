@@ -4,6 +4,7 @@ class @Inventory
     this.arr = []
     #mainweapon is the slot for melee weapon
     this.mainWeapon = new Items.Fists()
+    this.UIvisible = false
     null
 
   add: (item) ->
@@ -29,6 +30,7 @@ class @Inventory
     k = temp
 
   toggleInventory: () ->
+    this.UIvisible = not this.UIvisible
     for i in this.matrix
       for j in i
         j.visible = not j.visible
@@ -38,7 +40,7 @@ class @Inventory
       nx: 0
       ny: 0
     for i in this.arr
-      if i.image.visible
+      if not this.UIvisible
         i.image.visible = false
       else
         if coor.nx >= this.matrix.length  # line is full
@@ -50,11 +52,8 @@ class @Inventory
         i.image.cameraOffset.x = coor.startx + 32 * 2 * coor.nx
         i.image.cameraOffset.y = coor.starty + 32 * 2 * coor.ny
         i.image.visible = true
-        i.image.scale.x = 2
-        i.image.scale.y = 2
+        _.extend(i.image.scale, {x: 2, y: 2})
         i.image.bringToTop()
-        console.log i
-        console.log coor
         coor.nx += 1
 
       
