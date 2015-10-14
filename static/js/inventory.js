@@ -69,6 +69,7 @@
           i.image.visible = true;
           i.image.scale.x = 2;
           i.image.scale.y = 2;
+          i.image.bringToTop();
           console.log(i);
           console.log(coor);
           coor.nx += 1;
