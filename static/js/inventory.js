@@ -9,6 +9,7 @@
 
     Inventory.prototype.add = function(item) {
       if (item instanceof Item) {
+        item.image.fixedToCamera = true;
         if (item instanceof Items.Weapon && this.mainWeapon instanceof Items.Fists) {
           return this.mainWeapon = item;
         } else {
@@ -35,23 +36,44 @@
     };
 
     Inventory.prototype.toggleInventory = function() {
-      var i, j, l, len, ref, results;
-      console.log(this.matrix);
+      var coor, i, j, l, len, len1, len2, m, o, ref, ref1;
       ref = this.matrix;
-      results = [];
       for (l = 0, len = ref.length; l < len; l++) {
         i = ref[l];
-        results.push((function() {
-          var len1, m, results1;
-          results1 = [];
-          for (m = 0, len1 = i.length; m < len1; m++) {
-            j = i[m];
-            results1.push(j.visible = !j.visible);
-          }
-          return results1;
-        })());
+        for (m = 0, len1 = i.length; m < len1; m++) {
+          j = i[m];
+          j.visible = !j.visible;
+        }
       }
-      return results;
+      coor = {
+        startx: this.matrix[1][1].cameraOffset.x,
+        starty: this.matrix[1][1].cameraOffset.y,
+        nx: 0,
+        ny: 0
+      };
+      ref1 = this.arr;
+      for (o = 0, len2 = ref1.length; o < len2; o++) {
+        i = ref1[o];
+        if (i.image.visible) {
+          i.image.visible = false;
+        } else {
+          if (coor.nx >= this.matrix.length) {
+            coor.nx = 0;
+            coor.ny += 1;
+          }
+          if (coor.ny >= this.matrix[0].length) {
+            return;
+          }
+          i.image.cameraOffset.x = coor.startx + 32 * coor.nx;
+          i.image.cameraOffset.y = coor.starty + 32 * coor.ny;
+          i.image.visible = true;
+          i.image.scale.x = 2;
+          i.image.scale.y = 2;
+          console.log(i);
+          console.log(coor);
+          coor.nx += 1;
+        }
+      }
     };
 
     Inventory.prototype.updateShowInventory = function(game, gdim) {

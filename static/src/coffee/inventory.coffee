@@ -10,6 +10,7 @@ class @Inventory
     #TODO: limit inventory slot number
     if item instanceof Item
       #this if player found a weapon and hasn't got one, auto-equip it
+      item.image.fixedToCamera = true
       if item instanceof Items.Weapon and this.mainWeapon instanceof Items.Fists
         this.mainWeapon = item
       else
@@ -28,10 +29,34 @@ class @Inventory
     k = temp
 
   toggleInventory: () ->
-    console.log this.matrix
     for i in this.matrix
       for j in i
         j.visible = not j.visible
+    coor = #items get drawn from top left + 1
+      startx: this.matrix[1][1].cameraOffset.x
+      starty: this.matrix[1][1].cameraOffset.y
+      nx: 0
+      ny: 0
+    for i in this.arr
+      if i.image.visible
+        i.image.visible = false
+      else
+        if coor.nx >= this.matrix.length  # line is full
+          coor.nx = 0
+          coor.ny += 1
+        if coor.ny >= this.matrix[0].length  # all lines are full
+          return
+        # show items in the right place
+        i.image.cameraOffset.x = coor.startx + 32 * coor.nx
+        i.image.cameraOffset.y = coor.starty + 32 * coor.ny
+        i.image.visible = true
+        i.image.scale.x = 2
+        i.image.scale.y = 2
+        console.log i
+        console.log coor
+        coor.nx += 1
+
+      
   
   updateShowInventory: (game, gdim) ->
     # this has to be called whenever the window is resized
