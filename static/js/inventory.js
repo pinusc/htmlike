@@ -76,7 +76,7 @@
             y: 2
           });
           i.image.bringToTop();
-          coor.nx += 1;
+          curr.x += 1;
         }
       }
     };

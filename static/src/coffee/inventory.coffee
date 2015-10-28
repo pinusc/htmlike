@@ -57,7 +57,7 @@ class @Inventory
         i.image.visible = true
         _.extend(i.image.scale, {x: 2, y: 2})
         i.image.bringToTop()
-        coor.nx += 1
+        curr.x += 1
 
       
   
