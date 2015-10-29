@@ -31,6 +31,7 @@ class @Player extends Entity
     this.stat.updateStat()
 
   heal: (hp) ->
+    console.log "heal"
     super(hp)
     this.alignHearts()
 
@@ -72,6 +73,15 @@ class @Player extends Entity
     this.posy = posy
     this.stat.updateStat()
     this.map.time.myUpdate()
+
+  drinkBestPotion: () ->
+    # selects the best healing potion for current life from
+    # the inventory and automagically drinks it
+    # TODO: actually implement best potion choice
+    # (now only select first potion
+    for item in this.inventory.arr
+      if item instanceof Items.Potion
+        return item.drink(this)
 
 class Stats
   constructor: (cool, hard, hot, sharp, weird, @inventory, @text) ->

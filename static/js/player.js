@@ -37,6 +37,7 @@
     };
 
     Player.prototype.heal = function(hp) {
+      console.log("heal");
       Player.__super__.heal.call(this, hp);
       return this.alignHearts();
     };
@@ -90,6 +91,17 @@
       this.posy = posy;
       this.stat.updateStat();
       return this.map.time.myUpdate();
+    };
+
+    Player.prototype.drinkBestPotion = function() {
+      var item, j, len, ref;
+      ref = this.inventory.arr;
+      for (j = 0, len = ref.length; j < len; j++) {
+        item = ref[j];
+        if (item instanceof Items.Potion) {
+          return item.drink(this);
+        }
+      }
     };
 
     return Player;
