@@ -70,7 +70,7 @@ class @Entity extends Thing
       this.die()
 
   heal: (hp) ->
-    this.hp += heal
+    this.hp += hp
     this.hp = this.maxhp if this.hp > this.maxhp
 
   die: () ->

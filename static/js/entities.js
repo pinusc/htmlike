@@ -93,7 +93,7 @@
     };
 
     Entity.prototype.heal = function(hp) {
-      this.hp += heal;
+      this.hp += hp;
       if (this.hp > this.maxhp) {
         return this.hp = this.maxhp;
       }
