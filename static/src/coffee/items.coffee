@@ -1,10 +1,24 @@
 class Potion extends Item
   constructor: (image, x, y, map) ->
+    this.used = false
     super(image, x, y, map)
+
+  drink: () ->
+    if not this.used
+      this.used = true
+      console.log "drank a potion"
+      return true
+    throw new AlreadyUsedException this
 
 class HealPotion1 extends Potion
   constructor: (x, y, map) ->
     super('potion', x, y, map)
+
+  drink: (entity) ->
+    super()  # check if potion is drinkable and everything
+    if entity instanceof Player
+      entity.heal(1)
+
 
 class Weapon extends Item
   constructor: (image, x, y, map) ->
@@ -19,6 +33,10 @@ class Fists extends Weapon
   constructor: (map) ->
     this.attack = 0
 
+class AlreadyUsedException extends Error
+  constructor: (item) ->
+    this.message = "Already used Item: " + item
+
 
 window.Items =
   Potion: Potion
@@ -26,3 +44,4 @@ window.Items =
   Weapon: Weapon
   Sword: Sword
   Fists: Fists
+
