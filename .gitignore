@@ -9,3 +9,4 @@ scrap.js
 run.sh
 Proc1
 node_modules
+static/js/*.js*
