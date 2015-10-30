@@ -40,18 +40,28 @@ class @Inventory
     n = this.arr[k]
     k = temp
 
-  remove: (n) ->
+  remove: (n, destroy) ->
     # deletes element n from array
     # n can be either a number or an item
     # If there isn't an element n (both if it's a number
     # or an item), fails silently
-    if typeof(n) is number
-      this.arr.splice(n, 1)
+    #
+    # if destroy is set to true (defaults to false)
+    # also delete the item from the world
+    if typeof(n) is "number"
+      i = this.arr.splice(n, 1)
+      if i.length isnt 1
+        throw new Error("Tried to delete a non-item from inventory")
+      i = i[0]
+      if destroy
+        i.destroy()
     else if n instanceof Item
       this.arr = _.filter(this.arr,
         (item) ->
-          item is n
-        , {n})
+          item isnt this.n
+        , {"n": n})
+      if destroy
+        n.destroy()
     else
       throw new Error("Tried to delete a non-item from inventory")
 
@@ -156,8 +166,3 @@ class @Inventory
         c.x += gdim
       c.x = gdim
       c.y += gdim
-
-
-
-
-

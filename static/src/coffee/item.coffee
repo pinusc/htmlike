@@ -19,3 +19,5 @@ class @Item extends Thing
     this.update = undefined
     this.context = undefined
 
+  destroy: () ->
+    this.image.destroy()
