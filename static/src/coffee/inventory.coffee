@@ -21,6 +21,16 @@ class @Inventory
   get: (n) ->
     this.arr[n]
 
+  getAllOf: (type) ->
+    # return an array containing all items of class "type"
+    # uses instanceof
+    # Example: getAll(Items.Potion)
+    _.filter(this.arr,
+      (item) ->
+        item instanceof type
+      , {type})
+
+
   set: (n, item) ->
     if item instanceof Item
       this.arr[n] = item
@@ -29,6 +39,22 @@ class @Inventory
     temp = this.arr[n]
     n = this.arr[k]
     k = temp
+
+  remove: (n) ->
+    # deletes element n from array
+    # n can be either a number or an item
+    # If there isn't an element n (both if it's a number
+    # or an item), fails silently
+    if typeof(n) is number
+      this.arr.splice(n, 1)
+    else if n instanceof Item
+      this.arr = _.filter(this.arr,
+        (item) ->
+          item is n
+        , {n})
+    else
+      throw new Error("Tried to delete a non-item from inventory")
+
 
   toggleInventory: () ->
     this.UIvisible = not this.UIvisible
