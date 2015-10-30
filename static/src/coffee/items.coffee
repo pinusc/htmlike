@@ -6,7 +6,6 @@ class Potion extends Item
   drink: () ->
     if not this.used
       this.used = true
-      console.log "drank a potion"
       return true
     throw new AlreadyUsedException this
 
@@ -18,7 +17,15 @@ class HealPotion1 extends Potion
   drink: (entity) ->
     super()  # check if potion is drinkable and everything
     if entity instanceof Player
+      console.debug("drink potion this")
+      console.debug(this)
       entity.heal(1)
+      entity.inventory.update()  # TODO remove this horrible hack
+      # TODO FIXME this.image.game is null, very big bug
+      # entity.inventory.updateShowInventory(this.map.box.game, 32)
+      # FIXME this is too hacky
+      entity.inventory.toggleInventory()  # refresh the inventory
+      entity.inventory.toggleInventory()
 
   startInventory: (entity) ->
     func = () ->

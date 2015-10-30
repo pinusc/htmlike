@@ -67,6 +67,7 @@ class @Inventory
 
 
   toggleInventory: () ->
+    this.update()
     this.UIvisible = not this.UIvisible
     for i in this.matrix
       for j in i
@@ -97,6 +98,14 @@ class @Inventory
         _.extend(i.image.scale, {x: 2, y: 2})
         i.image.bringToTop()
         curr.x += 1
+
+  update: () ->
+    # check if every item in inventory is good to use
+    # so for example remove used potions and everything
+    for item in this.arr
+      if item.used
+        this.remove(item, true)
+
   
   updateShowInventory: (game, gdim) ->
     # this has to be called whenever the window is resized
