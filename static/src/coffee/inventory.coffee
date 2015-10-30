@@ -1,7 +1,8 @@
 class @Inventory
-  constructor: () ->
+  constructor: (player) ->
     # arr is the main inventory with generic objects
     this.arr = []
+    this.player = player
     #mainweapon is the slot for melee weapon
     this.mainWeapon = new Items.Fists()
     this.UIvisible = false
@@ -45,6 +46,8 @@ class @Inventory
       if not this.UIvisible
         i.image.visible = false
       else
+        if i instanceof Items.HealPotion1
+          i.startInventory(this.player)
         if curr.x >= this.matrix.length  # line is full
           curr.x = 0
           curr.y += 1
@@ -58,8 +61,6 @@ class @Inventory
         _.extend(i.image.scale, {x: 2, y: 2})
         i.image.bringToTop()
         curr.x += 1
-
-      
   
   updateShowInventory: (game, gdim) ->
     # this has to be called whenever the window is resized
@@ -129,6 +130,7 @@ class @Inventory
         c.x += gdim
       c.x = gdim
       c.y += gdim
+
 
 
 

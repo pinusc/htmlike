@@ -5,7 +5,7 @@ class @Player extends Entity
     this.maxhp = this.hp
     this.isPlayer = yes
     this.hearts = []
-    this.inventory = new Inventory()
+    this.inventory = new Inventory(this)
     this.stat = new Stats(2, 2, 2, 2, 2, this.inventory,
       this.map.box.game.add.text(0, 200))
     this.alignHearts()
