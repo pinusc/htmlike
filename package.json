@@ -1,0 +1,10 @@
+{
+  "name": "htmlypse-world",
+  "version": "0.0.1",
+  "dependencies": {
+    "coffee-script": "^1.10.0"
+  },
+  "engines": {
+    "node": "4.2.1"
+  }
+}

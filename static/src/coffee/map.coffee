@@ -31,8 +31,11 @@ class @map
     # TODO: make them be received by the map
     this.player = new Player('greeny', this)
     this.entitiesL[0] = new Entity('princess', 12, 2, this)
-    this.itemsL.push(new Items.Potion('potion', 20, 20, this))
+    this.itemsL.push(new Items.HealPotion1(20, 20, this))
+    this.itemsL.push(new Items.HealPotion1(20, 22, this))
+    this.itemsL.push(new Items.HealPotion1(20, 17, this))
     this.itemsL.push(new Items.Sword(22, 20, this))
+    this.player.inventory.updateShowInventory(this.box.game, this.box.properties.gdim)
 
     # FOV code #
     this.flag = 1
